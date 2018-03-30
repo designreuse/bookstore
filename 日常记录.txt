@@ -1,0 +1,257 @@
+SVN wangm  wangmin
+
+$ git config --global user.name "wangmin"
+$ git config --global user.email "15366181393@189.cn"
+
+mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc7 -Dversion=12.1.0.2 -Dpackaging=jar -Dfile=E:\jar\ojdbc7-12.1.0.2.jar
+
+日报:
+http://221.226.150.188:81/svn/note/2017/ITS
+
+lbsbus  hroskxi8@202.102.112.10:19718/oralnx
+
+------------------------------------------------------------------------
+angular-cli的项目启动
+npm install
+ng serve
+
+angular-cli常用命令
+ng help
+
+新建项目
+ng new my-project1
+ng g c User  创建组件
+ng g cl a       创建类
+ng g d:directive
+ng g e:enum
+ng g m:module
+ng g p:pipe
+ng g s:service
+
+
+
+启动 
+ng serve
+ng serve --prod --aot
+
+构建，生成dist
+ng build
+
+------------------------------------------------------------------------
+
+topic= DOTEXTENDINFO
+
+
+
+起始字节	字段	长度(字节)	备注
+13	COMMAND_ID	2	0x1202
+15	Keyid	16	SIM卡号 string
+31	CARNO	21	String 车牌号, 不足21位右补0，汉字采用GBK编码
+52	CAR_COLOR	1	BYTE车牌颜色，按照JT/T415-2006中5.4.12的规定
+53	ENCRPT	1	BYTE,该字段标识传输的定位信息是否使用国家测绘局批准的地图保密插件进行加密
+加密标识：1-加密，0-未加密
+54	DATE	4	BYTES日月年格式，年的表示是先将年转换成两位16进制，如2009表示0x07，0xD9
+58	TIME	3	BYTES时分秒
+61	LON	4	Uint32_t 经度，单位为1*10-6度
+65	LAT	4	Uint32_t 纬度，单位为1*10-6度
+69	VEC1	2	Uint16_t 速度，指卫星定位车载终端设备上传的行车速度信息，单位为千米每小时（km/h）
+71	VEC2	2	Uint16_t 行驶记录速度，指车辆行驶记录设备上传的的行车速度信息，单位为千米每小时（km/h）
+73	VEC3	4	Uint32_t 车辆当前总里程数，指车辆行驶记录上传的行车里程数，单位为千米（km）
+77	DIRECTION	2	Uint16_t 方向，0~359，单位为度，正北为0，顺时针
+79	ALTITUDE	2	Uint16_t海拔高度，单位为米
+81	STATE	4	Uint32_t 车辆状态，二进制表示，具体定义按照JT/T808-2011表17的规定
+85	ALARM	4	Uint32_t 报警状态，二进制表示，0表示正常，1表示报警。具体JT/T808-2011表18的规定
+
+const keyId = iconv.decode(getByteByIndex(payload, 15, 16), 'gbk');
+const carNo =  iconv.decode(getByteByIndex(payload, 31, 21), 'gbk'); 
+const color = payload[51];
+const day = payload[53];
+const month = payload[54];	
+const year = payload.readInt16BE(55)	
+const time = payload[57] + ':' + payload[58] + ':' + payload[59];
+const gpsTime =year + '-' + month + '-' + day + ' ' + time;
+const mqLon = payload.readUInt32BE(60) / 1000000;		
+const mqLat = payload.readUInt32BE(64) / 1000000;                
+const tmpLatlon = transform(Number(mqLat), Number(mqLon));                
+const lat =tmpLatlon[0];                
+const lon =tmpLatlon[1];                
+const speed = payload.readInt16LE(69);                
+const mile =payload.readInt16LE(72);
+const direct = payload.readInt16LE(77);                
+const status =payload.readInt16LE(80);                
+const curMark = findCurMark(this.options.markList, carNo);                
+// console.log(carNo + '||' + lon + '||' + lat + '||' + year + '||' + month + '||' + day + '||' + time + '||' + keyId);
+                
+报警信息（指令类型编码：0x0303）
+起始字节	字段		长度(字节)	备注
+13		COMMAND_ID		2			0x1402
+15		Keyid			16			SIM卡号 string
+31		CARNO			21			String 车牌号
+52		CAR_COLOR		1			BYTES 车牌颜色，按照JT/T415-2006中5.4.12的规定
+53		WARN_SRC		1			Bytes
+									报警信息来源
+									0x01：车载终端
+									0x02：企业监控平台
+									0x03：政府监控平台
+									0x09：其他
+54		WRAN_TYPE		2			Uint16 报警类型，详见JT/T 809表75
+56		WRAN_TIME		8			Time_t UTC时间格式
+64		INFO_ID			4			Uint32_t 信息ID
+68		INFO_LENGTH		4			Uint32_t 报警长度，最长1024字节
+72		INFO_CONTENT 	INFO_LENGTH	string上报告警信息内容
+
+------------------------------------------------------------------------
+
+[style]="{'font-size':'15.5px'}"
+
+------------------------------------------------------------------------
+使img标签在div中垂直居中
+
+<div>
+	<img src="load/1.gif">
+</div>
+
+div{
+	display:block; 
+	width:200px; 
+	height:120px; 
+	border:1px solid #ccc; 
+	text-align:center; 
+	display:table-cell;
+}
+
+div img{
+	vertical-align:middle;
+	display:inline;
+}
+------------------------------------------------------------------------
+const params = new HttpParams();
+this.httpclient.request('POST', environment.INTERFACE_URL + '/api/searchPlan',
+    {
+		responseType: 'json', params,
+    }).do(console.log).shareReplay()
+      .subscribe(data => {
+        this.searchPlanData = data;
+      });
+
+------------------------------------------------------------------------
+
+let keyIds = '';
+let searchKeyId = '';
+nodeArray.forEach((checkedNode) => {
+	if (checkedNode.iconSkin !== 'm' && checkedNode.iconSkin !== 't') {
+		keyIds += "'" + checkedNode.id + "',";
+		searchKeyId += checkedNode.id + ',';
+	}
+});
+const searchedIdList = searchKeyId.substring(0, searchKeyId.length - 1).split(',');
+let idsMap = new Map();
+for (let i = 0; i < searchedIdList.length; i++) {
+	idsMap.set(searchedIdList[i], searchedIdList[i]);
+}
+
+------------------------------------------------------------------------
+<p-dialog [(visible)]="dealdisplay" [width]="600" [height]="470" [minHeight]="500" modal="modal" [contentStyle]="{'overflow':'visible','font-size':'12px'}"
+          [positionTop]="100" styleClass="dialog" [style]="{'border':'none'}">
+	<p-header>
+        <span> 报警处理</span>
+    </p-header>
+    <div class="ui-g ui-fluid">
+        <div class="ui-g-12 ui-md-6" styleClass="alarmDealForm">
+            <div class="ui-inputgroup">
+                <span class="dialogForms">车牌号码</span>
+                <input type="text" pInputText readonly [value]="alarminfo.CAR_NO">
+            </div>
+        </div>
+		<div class="ui-g-12 ui-md-12" style="border-bottom: 1px solid #a0a0a0;">
+            <div class="ui-inputgroup">
+                <span class="dialogForms">处理意见
+					<span style="color:red">*</span>
+                </span>
+                <textarea pInputTextarea [(ngModel)]="dealComment" [rows]="3" [cols]="70" autoResize="true" required></textarea>
+            </div>
+        </div>
+		<div class="ui-g-12 ui-md-12">
+            <button type="button" pButton icon="fa-times" iconPos="left" label="取消" (click)="cancel()" style="float:right;width:6rem;height:2rem"></button>
+            <button type="button" pButton icon="fa-check" iconPos="left" label="处理" (click)="saveDealResult()" style="float:right;width:6rem;height:2rem"></button>
+        </div>
+    </div>
+------------------------------------------------------------------------
+为什么jvm调优经常会将-Xms和-Xmx参数设置成一样。
+
+通过设置JVM启动参数，我们希望达到一些目标：
+GC的时间足够的小
+GC的次数足够的少
+发生Full GC的周期足够的长
+前两个目前是相悖的，要想GC时间小必须要一个更小的堆，要保证GC次数足够少，必须保证一个更大的堆，我们只能取其平衡。
+针对JVM堆的设置，一般可以通过-Xms -Xmx限定其最小、最大值，为了防止垃圾收集器在最小、最大之间收缩堆而产生额外的时间，我们通常把最大、最小设置为相同的值
+------------------------------------------------------------------------
+
+svn http://221.226.150.188:81/svn/hadoop/trunk/LBSVIDEO/LBSVIDEO 
+
+
+视频平台 http://202.102.112.25:18083/new/index.action# 
+
+账号 yccgj@yccgj
+密码 ztgl@YC123
+
+
+测试页面 http://202.102.112.25:18083/common/index.html 
+
+ip 202.102.112.17 
+
+port 2290
+手机号 
+
+64788852959
+重庆视频
+SVN http://221.226.150.188:81/svn/hadoop/trunk/CQSP/WXGL 
+
+
+http://219.153.20.107:81/new/index.action# 
+
+cqgj1111
+jtjd2015
+------------------------------------------------------------------------
+
+ng new dynamic-loader
+cd dynamic-loader
+ng g c a
+
+此时 有可能出现   Cannot find module '@angular-devkit/core'
+
+需要 
+1.npm update -g @angular/cli
+2.将package.json里面 "@angular/cli": "1.6.0",变为"@angular/cli": "^1.6.0",
+3.npm update
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
