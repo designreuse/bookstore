@@ -1,0 +1,13 @@
+<div>
+  <p-dataTable [value]="cars" [rows]="5" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]">
+    <p-column field="alarmStartTime" header={{alarmStartTime}}></p-column>
+    <p-column field="duration" header={{duration}}></p-column>
+    <p-column field="carNo" header={{carNo}}></p-column>
+    <p-column field="carPlateColor" header={{carPlateColor}}></p-column>
+    <p-column field="alarmType" header={{alarmType}}></p-column>
+    <p-column field="speed" header={{speed}}></p-column>
+    <p-column field="cancelAlarm" header={{cancelAlarm}}></p-column>
+    <p-column field="remarks" header={{remarks}}></p-column>
+
+  </p-dataTable>
+</div>

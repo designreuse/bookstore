@@ -1,0 +1,19 @@
+@import '../../../@theme/styles/themes';
+
+@include nb-install-component() {
+    ngx-echarts-area-stack,
+    
+    /deep/.ui-datatable thead th, .ui-datatable tfoot td {
+        text-align: center;
+    }
+    /deep/.ui-growl {
+        position: fixed;
+        top: 40%;
+        right: 0%;
+        left:42%;
+        width: 30em;
+    }
+    /deep/.ui-dialog .ui-dialog-titlebar {
+        padding: 0em;
+    }
+}

@@ -1,0 +1,33 @@
+<nb-card>
+  <nb-card-body>
+    <div class="ui-lg ui-fluid div-right " >
+      <div class="ui-lg-12 ui-md-6" *ngIf="showSearch">
+        <div class="input-group">
+          <input type="text" class="form-control" (keyup.enter)="searchCar()" (keyup.backspace)="resetTree()" placeholder="输入车牌号" [(ngModel)]="searchCarNo">
+          <span class="input-group-btn">
+            <button class="btn btn-primary" (click)="searchCar()">
+              查询
+            </button>
+          </span>
+        </div>
+      </div>
+
+      <div class="ui-lg-12 ui-md-6">
+        <div class="tree-content" id='treeContainer'>
+          <div id="menu" class="skin">
+            <div class="menuitems">
+              <div (click)="followCar()">车辆追踪</div>
+            </div>
+          </div>
+          <tree-root #tree [nodes]="nodes" [options]="options">
+            <ng-template #treeNodeTemplate let-node="node" let-index="index">
+              <input (change)="check(node, !node.data.checked)" type="checkbox" id="check-{{node.data.id}}" [indeterminate]="node.data.indeterminate"
+                [checked]="node.data.checked">
+              <img style="margin-top:-5px" src="./assets/images/{{node.data.iconSkin}}.png" alt="#" />{{ node.data.name }}
+            </ng-template>
+          </tree-root>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

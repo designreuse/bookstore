@@ -1,0 +1,66 @@
+<div class="ui-g ui-fluid">
+  <div class="ui-g-12 ui-md-12">
+    <div class="ui-inputgroup">
+      <span class="dialogForms">驾驶人</span>
+      <input type="text" pInputText [(ngModel)]="anormityData.DRIVERNAME" readonly>
+    </div>
+  </div>
+  <div class="ui-g-12 ui-md-12">
+    <div class="ui-inputgroup">
+      <span class="dialogForms">IC卡号</span>
+      <input type="text" pInputText [(ngModel)]="anormityData.IC_CARD" readonly>
+    </div>
+  </div>
+  <div class="ui-g-12 ui-md-6">
+    <div class="ui-inputgroup">
+      <span class="dialogForms">照片信息</span>
+      <div class="dialog_photo">
+        <img style="width:120px;height:80px" (click)="viewPhoto(anormityData)" src={{anormityData.PHOTOSTEAM}}/>
+      </div>
+    </div>
+  </div>
+  <div class="ui-g-12 ui-md-6">
+    <div class="ui-inputgroup">
+      <span class="dialogForms">比对照片信息</span>
+      <div class="dialog_photo">
+        <img style="width:120px;height:80px" (click)="viewComparePhoto(anormityData)" src={{anormityData.PHOTO_COMPARE_STEAM}}/>
+      </div>
+    </div>
+  </div>
+  <div class="ui-g-12 ui-md-6">
+    <div class="ui-inputgroup">
+      <span class="dialogForms">比对结果</span>
+      <input type="text" pInputText [(ngModel)]="anormityData.COMPARE_RESULT_STR" readonly>
+    </div>
+  </div>
+  <div class="ui-g-12 ui-md-6">
+    <div class="ui-inputgroup">
+      <span class="dialogForms">处理人</span>
+      <input type="text" pInputText [value]="anormityData.DEAL_USER" readonly>
+    </div>
+  </div>
+  <div class="ui-g-12 ui-md-12">
+    <div class="ui-inputgroup">
+      <span class="dialogForms">发生时间</span>
+      <input type="text" pInputText [value]="anormityData.COMPARE_TIME" readonly>
+    </div>
+  </div>
+  <div class="ui-g-12 ui-md-12">
+    <div class="ui-inputgroup">
+      <span class="dialogForms">处理时间</span>
+      <input type="text" pInputText [value]="anormityData.DEAL_TIME" readonly>
+    </div>
+  </div>
+  <div class="ui-g-12 ui-md-12">
+    <div class="ui-inputgroup">
+      <span class="dialogForms">处理结果</span>
+      <input type="text" pInputText [value]="anormityData.DEAL_RESULT_STR" readonly>
+    </div>
+  </div>
+  <div class="ui-g-12 ui-md-12">
+    <div class="ui-inputgroup">
+      <span class="dialogForms">处理意见</span>
+      <textarea pInputTextarea [(ngModel)]="anormityData.DEAL_CONTENT" [rows]="3" [cols]="50" autoResize="true" readonly></textarea>
+    </div>
+  </div>
+</div>

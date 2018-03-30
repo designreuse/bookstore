@@ -1,0 +1,515 @@
+@import '../../../@theme/styles/themes';
+@include nb-install-component() {
+  ngx-echarts-area-stack,
+  /deep/.ui-datatable thead th,
+  .ui-datatable tfoot td {
+    text-align: center;
+  }
+  /deep/.ui-growl {
+    position: fixed;
+    top: 40%;
+    right: 0%;
+    left: 42%;
+    // width: 35rem;
+    // height: 4rem;
+    font-size: 1rem;
+  }
+  /deep/ .ui-growl-message-warn {
+    background-color: #fac83e;
+    color: #000000;
+  }
+  /deep/.ui-dialog .ui-dialog-titlebar {
+    padding: 0em;
+  }
+  /deep/.different .ui-inputtext {
+    background: #ffffff;
+    padding: 0.5em 0.75em;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0.5em;
+    border-color: #a7a7a9;
+    color: rgb(12, 12, 12);
+    font-size: .8rem;
+    height: 2.4rem;
+    width: 12rem
+  }
+  /deep/.timeInput .ui-inputtext {
+    background: #ffffff;
+    padding: 0.5em 0.75em;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0.5em;
+    border-color: #a7a7a9;
+    color: rgb(29, 29, 29);
+    height: 2.4rem;
+    width: 12rem
+  }
+  /deep/.ui-overlaypanel-content {
+    padding: 0em 0.25em;
+  }
+  * {
+    font-size: 0.8rem;
+    font-family: 微软雅黑, tahoma;
+    color: #333;
+  }
+  .row {
+    padding-right: 0;
+    padding-left: 0;
+  }
+  .col-12 {
+    padding-right: 0;
+    padding-left: 0;
+  }
+  nb-card {
+    height: 100%;
+    font-size: 0.8*0.8rem;
+  }
+  nb-card-header {
+    padding: 0;
+  }
+  nb-card-body {
+    height: calc(100vh - 20.3rem);
+    padding: 1.25*0.8rem;
+  }
+  /* input 在IE下去掉X 去掉密码输入的眼睛图标 */
+  input::-ms-clear {
+    display: none;
+  }
+  input::-ms-reveal {
+    display: none;
+  }
+  /* 导航 */
+  .loaction {
+    height: 4*0.8rem;
+    border-bottom: 1px solid #eceef2;
+    font-weight: 100;
+  }
+  .loaction_box {
+    float: left;
+    margin-left: 1*0.8rem;
+  }
+  .loaction_box img {
+    float: left;
+    display: inline-block;
+    margin-top: .9*0.8rem;
+    margin-right: 1*0.8rem
+  }
+  .loaction_box p {
+    font-size: .8*0.8rem;
+    line-height: 4*0.8rem;
+    color: #999;
+    float: left;
+    font-weight: 100;
+  }
+  .loaction_box p b {
+    display: inline-block;
+    background: url(../../../../assets/images/rrrow-right.png) no-repeat;
+    width: .9*0.8rem;
+    height: 1.3*0.8rem;
+    margin-left: .6*0.8rem;
+    margin-right: .6*0.8rem;
+    vertical-align: middle;
+  }
+  .loaction_box p span {
+    display: inline-block;
+    color: #333;
+    font-size: 1.2*0.8rem;
+    font-weight: 100;
+  }
+  /* 导出按钮 */
+  .btn_01 {
+    display: inline-block;
+    float: right;
+    margin-right: 1*0.8rem;
+    margin-top: .5*0.8rem
+  }
+  .btn_01 a {
+    display: block;
+    width: 8*0.8rem;
+    height: 3*0.8rem;
+    line-height: 3*0.8rem;
+    background: #11bfff;
+    text-align: center;
+    color: #fff;
+    font-size: 1*0.8rem;
+    border-radius: .3*0.8rem;
+    font-weight: 100;
+  }
+  .btn_01 a:hover {
+    background: #19b6f0
+  }
+  .btn_01 a:active {
+    background: #11bfff
+  }
+  .cen_condition {
+    height: 4rem;
+    padding: 0.4rem 0.16rem 0.4rem 1.2rem;
+  }
+  .cen_condition span {
+    font-size: 1rem;
+    font-weight: 100;
+  }
+  .searchCondition {
+    height: 2.4rem;
+    float: left;
+    margin: 0 0.16rem;
+  }
+  .fright {
+    float: right;
+  }
+  /* 时间选择 */
+  .input_desc {
+    border: 1px solid #ACACAC;
+    border-radius: 0.4rem 0 0 0.4rem;
+    width: 4.4rem;
+    text-align: center;
+    display: inline-block;
+    line-height: 2.24rem;
+    font-weight: 100;
+    font-size: 0.96rem;
+    background-color: #efefef;
+  }
+  .input_timearea {
+    width: 17rem;
+    height: 2.4rem;
+    border: 1px solid #ACACAC;
+    border-left: 0px !important;
+    border-radius: 0 0.4rem 0.4rem 0;
+    padding: 0 0.4rem;
+    font-size: 0.8rem;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+  }
+  /* 查询输入框 */
+  .input_textarea {
+    text-align: left;
+    width: 8rem;
+    background: #fff;
+    height: 2.4rem;
+    line-height: 2rem;
+    border-radius: .4rem;
+    -webkit-border-radius: .4rem;
+    border: 1px solid #ACACAC;
+    padding: 0 0 0 0.4rem;
+    font-size: 0.96rem;
+  }
+  .input_textarea2 {
+    text-align: left;
+    width: 12rem;
+    background: #fff;
+    height: 2.4rem;
+    line-height: 2rem;
+    border-radius: .4rem;
+    -webkit-border-radius: .4rem;
+    border: 1px solid #ACACAC;
+    padding: 0 0 0 0.4rem;
+    font-size: 0.96rem;
+  }
+  .input_textarea3 {
+    text-align: left;
+    width: 28rem;
+    background: #fff;
+    height: 2.4rem;
+    line-height: 2rem;
+    border-radius: .4rem;
+    -webkit-border-radius: .4rem;
+    border: 1px solid #ACACAC;
+    padding: 0 0 0 0.4rem;
+    font-size: 0.96rem;
+  }
+  /* 车辆选择input */
+  .carSearchInput {
+    text-align: left;
+    width: 8rem;
+    background: #fff;
+    height: 2.4rem;
+    line-height: 2rem;
+    border-top-left-radius: .4rem;
+    border-bottom-left-radius: .4rem;
+    border: 1px solid #ACACAC;
+    padding: 0 0 0 0.4rem;
+    font-size: 0.96rem;
+  }
+  .btn-arrow-down {
+    border-color: #ACACAC;
+    height: 2.35rem;
+    background-color: #ffffff;
+    border-radius: 0 0.4rem 0.4rem 0;
+  }
+  /* 下拉列表 */
+  /deep/ .input_dropdown {
+    height: 3*0.8rem;
+    border: 1px solid #ACACAC;
+    border-radius: 0.5*0.8rem;
+  }
+  /deep/ .input_dropdown .ui-dropdown-label {
+    height: 100%;
+    border-radius: 0.5*0.8rem;
+    font-size: 1.2*0.8rem;
+  }
+  /deep/ .input_dropdown .ui-dropdown-item {
+    font-size: 1.2*0.8rem;
+  }
+  /deep/ .input_dropdown .ui-dropdown-trigger {
+    border-radius: 0.5*0.8rem;
+  }
+  /deep/ .input_dropdown .fa {
+    margin-top: 1*0.8rem;
+  }
+  /* 查询按钮 */
+  .btn_02 {
+    display: inline-block;
+    height: 2.4rem;
+    margin: 0 0.16rem;
+  }
+  .btn_02 a {
+    display: block;
+    width: 6.4rem;
+    height: 2.4rem;
+    line-height: 2.4rem;
+    text-align: center;
+    background: #49a0d2;
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 100;
+    border-radius: .5em;
+    -webkit-border-radius: .4rem;
+  }
+  .btn_02 a:hover {
+    background: #50abe0;
+    cursor: pointer;
+  }
+  .btn_02 a:active {
+    background: #49a0d2;
+  } //明细按钮
+  .detailBut {
+    width: 12rem;
+    font-size: 1rem;
+    height: 2.4rem;
+    border-radius: 0.5rem;
+    border-color: #ACACAC;
+    background-color: rgb(255, 255, 255);
+    color: rgb(68, 68, 68);
+  } //立即升级弹窗按钮
+  .rightNowBtn {
+    height: 2.5rem;
+    width: 8rem;
+    background-color: #49a0d2;
+    color: #fff;
+  }
+  a {
+    text-decoration: none;
+  }
+  .list_pop_search_right {
+    float: right;
+    margin-right: 1rem;
+  }
+  .input_text {
+    text-align: left;
+    width: 8rem;
+    background: #fff;
+    height: 2.4rem;
+    line-height: 2rem;
+    border-top-left-radius: .4rem;
+    border-bottom-left-radius: .4rem;
+    border: 1px solid #ACACAC;
+    padding: 0 0 0 0.4rem;
+    font-size: 0.96rem;
+  }
+  .list_pop_search_right a {
+    display: inline-block;
+    width: 3rem;
+    height: 2.4rem;
+    line-height: 2rem;
+    text-align: center;
+    background: #4c95d1;
+    border-radius: 0 .3rem .3rem 0;
+    -webkit-border-radius: 0 .3rem .3rem 0;
+    border: 1px solid #4c95d1;
+    cursor: pointer;
+  }
+  .list_pop_search_right a:hover {
+    background: #509bdc
+  }
+  .list_pop_search_right a:active {
+    background: #71b5ec;
+  }
+  .saveButton {
+    width: 7rem;
+    color: #fff;
+    height: 5rem;
+    background-color: #47a2ef;
+  } //终端查询报表
+  .tablebox1 {
+    text-align: center;
+    margin: 0 auto;
+    height: calc(100vh - 318px);
+  } //策略查询报表
+  .tablebox {
+    font-size: .8rem;
+    text-align: center;
+    margin: 0 auto;
+    height: calc(100vh - 318px);
+  } //弹出框中报表
+  .dialogTable {
+    font-size: .8rem;
+    width: 99%;
+    text-align: center;
+    margin: 0 auto;
+  } //详情、修改标签
+  .actions {
+    padding: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .actions .modefyA {
+    color: #59a6d5;
+    cursor: pointer;
+  }
+  .actions .modefyA:hover {
+    text-decoration: underline;
+  }
+  .actions .modefyA:active {
+    text-decoration: none;
+    color: #19b6f0
+  } //删除标签
+  .actions .deleteA {
+    color: #fd0909;
+    cursor: pointer;
+  }
+  .actions .deleteA:hover {
+    text-decoration: underline;
+  }
+  .actions .deleteA:active {
+    text-decoration: none;
+    color: #d81515
+  } // 返回按钮
+  .backButton {
+    height: 2.5rem;
+    width: 8rem;
+    color: #fff; // float:right;
+    font-size: 14px;
+    background-color: #11bfff;
+    border-color: #11bfff;
+  } //策略查询按钮
+  .strategyQuery {
+    height: 2.5rem;
+    width: 6rem;
+    color: #fff;
+    width: 70px;
+    font-size: 14px;
+    background: #509bdc;
+  } // 策略修改保存按钮
+  .modifySave {
+    color: #fff;
+    height: 2.5rem;
+    width: 12rem;
+    font-size: 14px;
+    background: #509bdc;
+  } //明细查询按钮
+  .detailedQuery {
+    color: #fff;
+    height: 2.5rem;
+    width: 8rem;
+    font-size: 14px;
+    background: #509bdc;
+    margin-left: 5rem;
+  } //明细确认按钮
+  .detailedConfirm {
+    color: #fff;
+    height: 2.5rem;
+    width: 12rem;
+    font-size: 14px;
+    background: #509bdc;
+    margin-left: 23rem;
+  } //终端报表导出弹窗
+  .exportTable {
+    height: 2.5rem;
+    width: 8rem;
+    background-color: #11bfff;
+    border-color: #11bfff;
+  } //终端报表查询按钮
+  .queryTable {
+    height: 2.5rem;
+    width: 6rem;
+    color: #fff;
+    background-color: #49a0d2;
+    border-color: #49a0d2;
+  }
+  .rightNow {
+    width: 9rem;
+    font-size: 1rem;
+    color: #fff;
+    height: 2.5rem;
+    background-color: #50abe0;
+    border-color: #50abe0;
+  }
+  .strategyUpdate {
+    width: 9rem;
+    font-size: 1rem;
+    color: #fff;
+    height: 2.5rem;
+    background-color: #50abe0;
+    border-color: #50abe0;
+    margin-left: 2rem;
+  }
+  .strategyCondition {
+    margin: 0 0 0.5rem 1rem;
+  }
+  .strategyTask {
+    color: #fff;
+    width: 12rem;
+    font-size: 1rem;
+    height: 2.5rem; // margin-left: 57%;
+    float: right;
+    background-color: #53bcf2;
+    border-color: #53bcf2;
+  }
+  .confirmDeleteBtn {
+    height: 35px;
+    width: 80px;
+    font-size: 15px;
+    color: #fff;
+    background-color: #4cae4c;
+    border-color: #4cae4c;
+  }
+  .deleteCancelBtn {
+    height: 35px;
+    width: 80px;
+    font-size: 15px;
+    color: #fff;
+    background-color: #53bcf2;
+    border-color: #53bcf2;
+  }
+  .back-btn {
+    float: right;
+    margin-top: .5rem;
+    margin-right: 1rem;
+  }
+  .strategySearch {
+    margin-left: 3%;
+    margin-bottom: 1%;
+    width: 95%;
+    float: left;
+  }
+  .viewdetail-div {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    margin-left: 4.5rem;
+  }
+  .viewdetail-div2 {
+    margin-top: 0rem;
+    margin-bottom: 1rem;
+    margin-left: 4.5rem;
+    float: left;
+  }
+  .template_operation {
+    margin-bottom: 0;
+  }
+  /deep/ .selectDataTable .ui-state-highlight {
+    background-color: #f7f7f7 !important;
+    border-color: inherit !important;
+    color: #333 !important;
+  }
+  /deep/ .selectDataTable .ui-chkbox-box {
+    height: 0.925rem;
+  }
+}

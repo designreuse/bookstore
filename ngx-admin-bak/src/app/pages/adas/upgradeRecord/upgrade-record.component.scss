@@ -1,0 +1,338 @@
+@import '../../../@theme/styles/themes';
+@include nb-install-component() {
+  * {
+    font-size: 0.8rem;
+    font-family: 微软雅黑, tahoma;
+    color: #333;
+  }
+  .row {
+    padding-right: 0;
+    padding-left: 0;
+  }
+  .col-12 {
+    padding-right: 0;
+    padding-left: 0;
+  }
+  nb-card {
+    height: 100%;
+    font-size: 0.8*0.8rem;
+  }
+  nb-card-header {
+    padding: 0;
+  }
+  nb-card-body {
+    height: calc(100vh - 16.3rem);
+    padding: 1rem;
+  }
+  /* input 在IE下去掉X 去掉密码输入的眼睛图标 */
+  input::-ms-clear {
+    display: none;
+  }
+  input::-ms-reveal {
+    display: none;
+  }
+  /* 导航 */
+  .loaction {
+    height: 4*0.8rem;
+    border-bottom: 1px solid #eceef2;
+    font-weight: 100;
+  }
+  .loaction_box {
+    float: left;
+    margin-left: 1*0.8rem;
+  }
+  .loaction_box img {
+    float: left;
+    display: inline-block;
+    margin-top: .9*0.8rem;
+    margin-right: 1*0.8rem
+  }
+  .loaction_box p {
+    font-size: .8*0.8rem;
+    line-height: 4*0.8rem;
+    color: #999;
+    float: left;
+    font-weight: 100;
+  }
+  .loaction_box p b {
+    display: inline-block;
+    background: url(../../../../assets/images/rrrow-right.png) no-repeat;
+    width: .9*0.8rem;
+    height: 1.3*0.8rem;
+    margin-left: .6*0.8rem;
+    margin-right: .6*0.8rem;
+    vertical-align: middle;
+  }
+  .loaction_box p span {
+    display: inline-block;
+    color: #333;
+    font-size: 1.2*0.8rem;
+    font-weight: 100;
+  }
+  /* 导出按钮 */
+  .btn_01 {
+    display: inline-block;
+    float: right;
+    margin-right: 1*0.8rem;
+    margin-top: .5*0.8rem
+  }
+  .btn_01 a {
+    display: block;
+    width: 8*0.8rem;
+    height: 3*0.8rem;
+    line-height: 3*0.8rem;
+    background: #11bfff;
+    text-align: center;
+    color: #fff;
+    font-size: 1*0.8rem;
+    border-radius: .3*0.8rem;
+    font-weight: 100;
+  }
+  .btn_01 a:hover {
+    background: #19b6f0;
+    cursor: pointer;
+  }
+  .btn_01 a:active {
+    background: #11bfff
+  }
+  /* 查询条件span */
+  .cen_condition {
+    height: 4rem;
+    padding: 0.4rem 0.16rem 0.4rem 1.2rem;
+  }
+  .cen_condition span {
+    font-size: 1rem;
+    font-weight: 100;
+    margin-top: .2rem;
+  }
+  .searchCondition {
+    height: 2.4rem;
+    float: left;
+    margin: 0 0.16rem;
+  }
+  /* 查询输入框 */
+  .input_textarea {
+    float: left;
+    width: 12rem;
+    background: #fff;
+    height: 3*0.8rem;
+    line-height: 2rem;
+    border-radius: .5*0.8rem;
+    -webkit-border-radius: .5*0.8rem;
+    border: 1px solid #ACACAC;
+    padding: 0 0 0 0.4rem;
+    font-size: 1.2*0.8rem;
+  }
+  .input_textarea-m {
+    float: left;
+    width: 8rem;
+    background: #fff;
+    height: 3*0.8rem;
+    line-height: 2rem;
+    border-radius: .5*0.8rem;
+    -webkit-border-radius: .5*0.8rem;
+    border: 1px solid #ACACAC;
+    padding: 0 0 0 0.4rem;
+    font-size: 1.2*0.8rem;
+  }
+  .input_textarea-s {
+    float: left;
+    width: 4rem;
+    background: #fff;
+    height: 3*0.8rem;
+    line-height: 2rem;
+    border-radius: .5*0.8rem;
+    -webkit-border-radius: .5*0.8rem;
+    border: 1px solid #ACACAC;
+    padding: 0 0 0 0.4rem;
+    font-size: 1.2*0.8rem;
+  }
+  /* 下拉列表 */
+  /deep/ .input_dropdown {
+    height: 3*0.8rem;
+    border: 1px solid #ACACAC;
+    border-radius: 0.5*0.8rem;
+  }
+  /deep/ .input_dropdown .ui-dropdown-label {
+    height: 100%;
+    border-radius: 0.5*0.8rem;
+    font-size: 1.2*0.8rem;
+  }
+  /deep/ .input_dropdown .ui-dropdown-item {
+    font-size: 1.2*0.8rem;
+  }
+  /deep/ .input_dropdown .ui-dropdown-trigger {
+    border-radius: 0.5*0.8rem;
+  }
+  /deep/ .input_dropdown .fa {
+    margin-top: 1*0.8rem;
+  }
+  /* 查询按钮 */
+  .btn_02 {
+    display: inline-block;
+    height: 3*0.8rem;
+    margin: 0 0.2*0.8rem;
+  }
+  .btn_02 a {
+    display: block;
+    width: 8*0.8rem;
+    height: 3*0.8rem;
+    line-height: 3*0.8rem;
+    text-align: center;
+    background: #49a0d2;
+    color: #fff;
+    font-size: 1*0.8rem;
+    font-weight: 100;
+    border-radius: .5em;
+    -webkit-border-radius: .5*0.8rem;
+  }
+  .btn_02 a:hover {
+    background: #50abe0;
+    cursor: pointer;
+  }
+  .btn_02 a:active {
+    background: #49a0d2;
+  }
+  /deep/ .ui-datatable-header {
+    padding: 0.35em 0.25em;
+  }
+  /deep/ .ui-dialog-titlebar {
+    padding: 0.2em;
+  }
+  /deep/ .ui-dialog-footer {
+    padding: 0.3em;
+    border-radius: 0 0 15px 15px;
+  }
+  /deep/ .ui-inputgroup-addon {
+    background-color: transparent;
+    padding: 0 5px;
+    min-width: 6em;
+    border-style: none;
+  }
+  /deep/ .ui-inputgroup {
+    line-height: 3.6;
+  }
+  /deep/ .ui-inputgroup .ui-inputtext:not(:first-child) {
+    border-top-left-radius: 0.25em;
+    border-bottom-left-radius: 0.25em;
+    border-left: 1px solid rgba(0, 0, 0, 0.15);
+  }
+  /deep/ .ui-inputgroup .ui-inputtext:not(:first-child):focus {
+    border: 1px solid #66afe9;
+  }
+  /deep/ .col-12 {
+    padding-right: 0px;
+    padding-left: 0px;
+  }
+  /deep/ .col-lg-9 {
+    padding-right: 6px;
+    padding-left: 0px;
+  }
+  /deep/.col-lg-3 {
+    padding-right: 6px;
+    padding-left: 0px;
+  }
+  /deep/ .ui-md-6 {
+    padding: 0.5em;
+  }
+  /deep/ .ui-md-12 {
+    padding: 0.3em;
+  }
+  /deep/ .ui-md-10 {
+    padding: 0.3em;
+  }
+  /deep/ .ui-md-2 {
+    padding: 0.3em;
+  }
+  .actions {
+    padding: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .actions a {
+    cursor: pointer;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    width: 100%;
+    line-height: 1rem;
+    font-size: 1rem !important;
+    color: #66bff3;
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+  }
+  .actions a:hover {
+    color: #40dc7e;
+    cursor: pointer;
+  }
+  .center_header {
+    width: 95%;
+    margin: 0 auto;
+    border-bottom: 1px solid #EEEEEE;
+    padding-top: 0
+  }
+  .center_tit {
+    width: 65%;
+    height: 50px;
+  }
+  .center_tit b {
+    float: left;
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background: #70d887;
+    border-radius: 7px;
+    vertical-align: middle;
+    margin-top: 18px;
+    margin-right: 15px;
+  }
+  .center_tit p {
+    font-size: 20px;
+    color: 333;
+    line-height: 50px;
+    font-weight: bold;
+  }
+  .center_tit p span {
+    font-size: 14px;
+    color: #999;
+    line-height: 50px;
+    margin-left: 15px;
+    font-weight: none
+  }
+  .btn_export {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+  }
+  .btn_export a {
+    display: block;
+    width: 100px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background: #70d887;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 14px;
+  }
+  .btn_export a:hover {
+    background: #62c779;
+    cursor: pointer;
+  }
+  .btn_export a:active {
+    background: #70d887;
+  } //报表
+  .historyTable {
+    font-size: .8rem;
+    width: 99%;
+    text-align: center;
+    margin: 0 auto;
+  }
+}

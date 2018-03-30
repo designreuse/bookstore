@@ -1,0 +1,89 @@
+<div class="row">
+  <div class="col-12">
+    <nb-card>
+      <nb-card-header>
+        <div class="loaction">
+          <div class="loaction_box">
+            <img src="../../../../assets/images/location.png">
+            <p>统计报表
+              <b></b>
+              <span>驾驶员评分表</span>
+            </p>
+          </div>
+          <div class="myclear"></div>
+        </div>
+        <div class="cen_condition">
+          <div class="input-group">
+            <div class="searchCondition">
+              <p-dropdown [options]="yearList" [(ngModel)]="selectedYear" placeholder={{defaultYear}} optionField="yearType" styleClass="input_dropdown"></p-dropdown>
+            </div>
+            <div class="searchCondition">
+              <p-dropdown [options]="monthList" [(ngModel)]="selectedMonth" placeholder={{defaultMonth}} optionField="monthType" styleClass="input_dropdown"></p-dropdown>
+            </div>
+            <div class="searchCondition">
+              <input type="text" [(ngModel)]="searchdriverName" pInputText placeholder="驾驶员" class="input_textarea">
+            </div>
+            <div class="btn_02">
+              <a (click)="searchAlarm()">查询</a>
+            </div>
+          </div>
+        </div>
+      </nb-card-header>
+
+      <nb-card-body>
+        <div style="height: calc(100vh - 288px);">
+          <p-dataTable #dt [value]="alarmData" [rows]="7" [paginator]="true" [rowsPerPageOptions]="[5,7,10,20]">
+            <!-- <p-column *ngFor="let col of cols" [field]="col.field" [header]="col.header" [sortable]="col.sort"></p-column> -->
+            <p-column field='D_NAME' header='驾驶员' [style]="{'width':'75px','text-align':'center'}"></p-column>
+            <p-column field='TOTALMILEAGE' header='里程' [style]="{'width':'58px','text-align':'center'}"></p-column>
+            <p-column field='TOTALTIME' header='用时' [style]="{'width':'58px','text-align':'center'}"></p-column>
+            <p-column field='ALARM_NUM' header='一级报警次数' [style]="{'width':'115px','text-align':'center'}" sortable=true></p-column>
+            <p-column field='ALARM_NUM_L2' header='二级报警次数' [style]="{'width':'115px','text-align':'center'}" sortable=true></p-column>
+            <p-column field='ALARM_NUM_NO_AVG' header='百公里一级报警次数' [style]="{'width':'90px','text-align':'center'}" sortable=true></p-column>
+            <p-column field='ALARM_NUM_L2_NO_AVG' header='百公里二级报警次数' [style]="{'width':'90px','text-align':'center'}" sortable=true></p-column>
+            <p-column field='SCORE_COUNT' header='得分' [style]="{'width':'68px','text-align':'center'}" sortable=true></p-column>
+            <p-column field='SURROUND_RATE' header='环比' [style]="{'width':'68px','text-align':'center'}" sortable=true></p-column>
+            <p-column field='COMPANY_SCORE_COUNT' header='公司平均得分' [style]="{'width':'100px','text-align':'center'}"></p-column>
+            <p-column [style]="{'width':'80px','text-align':'center'}" header="查看详情">
+              <!-- <ng-template pTemplate="header">
+              <label>查看详情</label>
+            </ng-template> -->
+              <ng-template let-driverDataInfo="rowData" pTemplate="body">
+                <a (click)="showDetial(driverDataInfo)" class="btn_07">详情</a>
+              </ng-template>
+            </p-column>
+            <ng-template pTemplate="emptymessage">
+              没有获取到数据
+            </ng-template>
+          </p-dataTable>
+        </div>
+        <p-dialog [(visible)]="detailDisplay" modal="modal" [width]="900" [height]="480" [positionTop]="100" [resizable]="false">
+          <!-- <p-header>
+            <span class="fa fa-bars"> 驾驶员得分详情</span>
+          </p-header> -->
+          <p-header>
+            <span> 驾驶员得分详情</span>
+          </p-header>
+          <div class="row">
+            <div>
+              <p-dataTable [value]="driverDetail" [style]="{'height':'380px'}">
+                <p-column field="1" header="报警类型" [style]="{'width':'105px','text-align':'center'}"></p-column>
+                <p-column field="2" header="分值" [style]="{'width':'60px','text-align':'center'}"></p-column>
+                <p-column field="3" header="一级报警次数" [style]="{'width':'121px','text-align':'center'}"></p-column>
+                <p-column field="4" header="二级报警次数" [style]="{'width':'121px','text-align':'center'}"></p-column>
+                <p-column field="5" header="百公里一级报警次数" [style]="{'text-align':'center'}"></p-column>
+                <p-column field="6" header="百公里二级报警次数" [style]="{'text-align':'center'}"></p-column>
+                <p-column field="7" header="得分" [style]="{'width':'60px','text-align':'center'}"></p-column>
+                <p-column field="8" header="环比" [style]="{'width':'60px','text-align':'center'}"></p-column>
+                <p-column field="9" header="公司平均得分" [style]="{'width':'121px','text-align':'center'}"></p-column>
+              </p-dataTable>
+            </div>
+          </div>
+        </p-dialog>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <!-- <div class="col-12 col-lg-3" style="height: calc(100vh - 128px);">
+    <lbstree #lbstree></lbstree>
+  </div> -->
+</div>

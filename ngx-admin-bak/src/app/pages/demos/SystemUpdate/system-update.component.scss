@@ -1,0 +1,96 @@
+@import '../../../@theme/styles/themes';
+@include nb-install-component() {
+  display: block;
+  flex: 1;
+  position: absolute;
+  nb-card {
+    padding: 0;
+    height: 100%;
+  }
+  nb-card-body {
+    padding: 0;
+    height: 100%;
+  }
+  /deep/ .ui-datatable-header {
+    padding: 0.35em 0.25em;
+  }
+  /deep/ .ui-dialog-titlebar {
+    padding: 0.2em;
+  }
+  /deep/ .ui-dialog-footer {
+    padding: 0.3em;
+  }
+  /deep/ .ui-inputgroup-addon {
+    background-color: transparent;
+    padding: 0 5px;
+    min-width: 5.5em;
+    border-style: none;
+  }
+  /deep/ .ui-inputgroup {
+    line-height: 2.26;
+  }
+  /deep/ .ui-inputgroup .ui-inputtext:not(:first-child){
+    border-top-left-radius: 0.25em;
+    border-bottom-left-radius: 0.25em;
+    border-left: 1px solid rgba(0, 0, 0, 0.15);
+  }
+  /deep/ .ui-inputgroup .ui-inputtext:not(:first-child):focus{
+    border: 1px solid #66afe9;
+  }
+  /deep/ .col-12 {
+    padding-right: 6px;
+    padding-left: 0px;
+  }
+  /deep/ .col-lg-9 {
+    padding-right: 6px;
+    padding-left: 0px;
+  }
+  /deep/.col-lg-3 {
+    padding-right: 6px;
+    padding-left: 0px;
+  }
+  /deep/ .ui-md-6 {
+    padding: 0.5em;
+  }
+  /deep/ .ui-md-12 {
+    padding: 0.3em;
+  }
+  /deep/ .ui-md-10 {
+    padding: 0.3em;
+  }
+  /deep/ .ui-md-2 {
+    padding: 0.3em;
+  }
+  .tablediv {
+    margin: 0 .5rem;
+    height: nb-theme(card-height-medium);
+  }
+  .actions {
+    padding: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .actions a {
+    cursor: pointer;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    width: 100%;
+    line-height: 1rem;
+    font-size: 1rem !important;
+    color: #66bff3;
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+  }
+  .actions a:hover {
+    color: #40dc7e;
+  }
+
+}

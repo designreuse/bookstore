@@ -1,0 +1,124 @@
+<div class="row">
+  <div class="col-12 col-lg-12">
+    <nb-card>
+      <nb-card-header>
+          <div class="center_header">
+            <div class="center_tit">
+              <b></b>
+              <p>角色管理</p>
+            </div>
+            <div class="btn_export">
+              <button pButton style="height: 41px;" type="button" (click)="showAddDialog()" label="新增" icon="fa-plus" class="ui-button-success"></button>
+              <button pButton style="height: 41px;" type="button" (click)="searchRoles()" label="刷新" icon="fa-refresh" ></button>
+            </div>
+          </div>
+      </nb-card-header>
+      <nb-card-body>
+            <div class="tablediv">
+              <p-dataTable #dt [value]="roleDatas" [rows]="5" [paginator]="true" [rowsPerPageOptions]="[5,10,20]"
+                [totalRecords]="totalRecords" [loading]="loading">
+                <p-column *ngFor="let col of cols" [field]="col.field" [header]="col.header" [sortable]="col.sort"></p-column>
+                <p-column>
+                  <ng-template pTemplate="header">
+                    <label>操作</label>
+                  </ng-template>
+                  <ng-template let-roleData="rowData" pTemplate="body">
+                      <!-- <button pButton type="button" (click)="showDetailDialog(roleData)" label="查看"  class="ui-button-info"></button> -->
+                      <button pButton type="button" (click)="showEditDialog(roleData)" icon="fa-pencil" label="编辑" ></button>
+                      <button pButton type="button" (click)="showAuthDialog(roleData)" icon="fa-eye" label="权限" class="ui-button-success"></button>
+                      <button pButton type="button" (click)="showDeleteDialog(roleData)" icon="fa-trash" label="删除" class="ui-button-danger"></button>
+                  </ng-template>
+                </p-column>
+                <ng-template pTemplate="emptymessage">
+                  没有获取到数据
+                </ng-template>
+              </p-dataTable>
+
+              <p-growl [(value)]="msgs"></p-growl>
+
+              <!-- 新增角色对话框 -->
+              <p-dialog [(visible)]="addDialog" [modal]="true" [width]="600" [minHeight]="500" [contentStyle]="{'overflow':'visible'}" [closable]="false">
+                  <p-header>
+                    <span>新增角色</span>
+                  </p-header>
+                  <div class="ui-g ui-fluid">
+                    <div class="ui-g-12 ui-md-12">
+                        <div class="ui-inputgroup">
+                          <span class="ui-inputgroup-addon" style="width:150px;">角色名称</span>
+                          <input type="text" pInputText [(ngModel)]="roleData.ROLE_NAME">
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-12">
+                        <div class="ui-inputgroup">
+                          <span class="ui-inputgroup-addon" style="width:150px;">角色描述</span>
+                          <input type="text" pInputText [(ngModel)]="roleData.ROLE_DESC">
+                        </div>
+                    </div>
+
+                  </div>
+      
+                  <p-footer>
+                    <button type="button" pButton icon="fa-check" iconPos="left" label="确定" (click)="addRole()"></button>
+                    <button type="button" pButton icon="fa-times" iconPos="left" label="取消" (click)="addCancel()"></button>
+                  </p-footer>
+              </p-dialog>
+
+              <!-- 修改角色详情对话框 -->
+              <p-dialog [(visible)]="editDialog" [modal]="true" [width]="600" [minHeight]="500" [contentStyle]="{'overflow':'visible'}" [closable]="false">
+                  <p-header>
+                    <span>修改角色</span>
+                  </p-header>
+                  <div class="ui-g ui-fluid">
+                    <div class="ui-g-12 ui-md-12">
+                        <div class="ui-inputgroup">
+                          <span class="ui-inputgroup-addon" style="width:150px;">角色名称</span>
+                          <input type="text" pInputText [(ngModel)]="roleData.ROLE_NAME">
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-12">
+                        <div class="ui-inputgroup">
+                          <span class="ui-inputgroup-addon" style="width:150px;">角色描述</span>
+                          <input type="text" pInputText [(ngModel)]="roleData.ROLE_DESC">
+                        </div>
+                    </div>
+
+                  </div>
+      
+                  <p-footer>
+                    <button type="button" pButton icon="fa-check" iconPos="left" label="确定" (click)="editRoleInfo()"></button>
+                    <button type="button" pButton icon="fa-times" iconPos="left" label="取消" (click)="editCancel()"></button>
+                  </p-footer>
+              </p-dialog>
+
+              <!-- 角色权限对话框 -->
+              <p-dialog [(visible)]="authDialog" [modal]="true" width="450" [contentStyle]="{'overflow':'visible'}" [closable]="false">
+                <p-header>
+                  <span>角色权限</span>
+                </p-header>
+                <role-auth-tree #roleAuthTree ></role-auth-tree>
+                <div style="margin-left:27.5%;margin-top:1%;">
+                  <button type="button" pButton icon="fa-check" (click)="setRoleAuth()" label="保存"></button>
+                  <button type="button" pButton icon="fa-times" iconPos="left" label="取消" (click)="authCancel()"></button>
+                </div>
+              </p-dialog>
+
+              <!-- 删除角色对话框 -->
+              <p-dialog [(visible)]="deleteDialog" [modal]="true" [width]="600" [minHeight]="500" [contentStyle]="{'overflow':'visible'}" [closable]="false">
+                <p-header>
+                  <span>删除角色</span>
+                </p-header>
+                <div class="ui-g">
+                  <i class="fa fa-question-circle"></i><p>是否确定对选中的行进行删除操作，删除后不能够恢复！</p>
+                </div>   
+                <p-footer>
+                  <button type="button" pButton icon="fa-check" iconPos="left" label="确定" (click)="deleteRole()"></button>
+                  <button type="button" pButton icon="fa-times" iconPos="left" label="取消" (click)="deleteCancel()"></button>
+                </p-footer>
+              </p-dialog>
+
+            </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+   

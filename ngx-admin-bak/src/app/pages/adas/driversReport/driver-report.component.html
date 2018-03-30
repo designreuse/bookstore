@@ -1,0 +1,34 @@
+<nb-card>
+  <nb-card-header>
+    <div class="input-group input-group-sm">
+      <span style="font-size:17px;">驾驶报警表</span>
+      <input type="text" style=" 
+      height:41px;width:100px;margin-left:8%;" [(ngModel)]="searchName" pInputText placeholder="姓名">&nbsp;
+      <input type="text" style=" 
+        height:41px;width:100px;margin-left:5%;" [(ngModel)]="searchCarNo" pInputText placeholder="车牌号">
+      <span style="margin-left:5%;"></span>  
+      <p-dropdown [options]="alarmList" [(ngModel)]="selectedAlarm" placeholder="报警类型" optionField="alarmType"></p-dropdown>
+      <button pButton style="height: 41px;width:100px;font-size:15px;margin-left:4%;" type="button" (click)="searchAlarm()" label="查询" class="ui-button-success"></button>
+      &emsp;
+    </div>
+    <div class="input-group input-group-sm" style="margin-top:0.5%;">
+      <span class="input-group-sm" style="width:40px;font-size:15px;margin-top:0.5%;margin-left:18%;">开始时间</span>
+      <p-calendar showTime="true" [(ngModel)]="begindate" hourFormat="24" [locale]="cn" dateFormat="yy-mm-dd"></p-calendar>
+      &nbsp;
+      <span class="input-group-sm" style="width:40px;font-size:15px;margin-top:0.5%;margin-left:5%;">结束时间</span>
+      <p-calendar showTime="true" [(ngModel)]="enddate" hourFormat="24" [locale]="cn" dateFormat="yy-mm-dd"></p-calendar>
+      &emsp;
+    </div>
+  </nb-card-header>
+
+  <nb-card-body>
+    <div style="height: calc(100vh - 300px);">
+        <p-dataTable [value]="alarmData" [rows]="7" [paginator]="true" [rowsPerPageOptions]="[5,7,10,20]">
+            <p-column field="CAR_DRIVER_PHONE" header="手机号"></p-column>
+            <p-column field="CAR_NO" header="车牌号"></p-column>
+            <p-column field="alarmName" header="报警类型"></p-column>
+            <p-column field="NUM" header="报警数量"></p-column>
+        </p-dataTable>
+  </div>
+  </nb-card-body>
+</nb-card>

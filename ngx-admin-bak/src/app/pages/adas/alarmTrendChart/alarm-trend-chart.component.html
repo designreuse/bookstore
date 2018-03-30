@@ -1,0 +1,106 @@
+<div class="row">
+  <toaster-container [toasterconfig]="config"></toaster-container>
+  <div class="col-12">
+    <nb-card>
+      <nb-card-header>
+        <div class="loaction">
+          <div class="loaction_box">
+            <img src="../../../../assets/images/location.png">
+            <p>统计报表
+              <b></b>
+              <span>报警统计</span>
+            </p>
+          </div>
+          <div class="myclear"></div>
+        </div>
+        <!-- 切换TAB -->
+        <div>
+          <div class="tabmenu">
+            <ul>
+              <li>
+                <a (click)="showTrend()" id="trendId">报警趋势统计</a>
+              </li>
+              <li>
+                <a (click)="showPie()" id="pieId">报警分类统计</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!--  -->
+        <!-- 趋势图的查询条件 -->
+        <div class="cen_condition" id="trendSearch">
+          <div class="input-group">
+            <div class="searchCondition">
+              <p-dropdown [options]="choseList" (onChange)="changeType(selectedChoice)" [(ngModel)]="selectedChoice" placeholder={{defaultChoice}}
+                optionField="choseType" styleClass="input_dropdown"></p-dropdown>
+            </div>
+            <div class="searchCondition">
+              <p-dropdown [options]="yearList" (onChange)="changeYear(selectedYear)" [(ngModel)]="selectedYear" placeholder={{defaultYear}}
+                optionField="yearType" styleClass="input_dropdown"></p-dropdown>
+            </div>
+            <div class="searchCondition" *ngIf="isShowMonth == 0 && isShowWeek != 0">
+              <p-dropdown [style]="{'width':'80px'}" [options]="monthList" id="searchByMonth_pie" [(ngModel)]="selectedMonth" placeholder={{defaultMonth}}
+                optionField="monthType" styleClass="input_dropdown"></p-dropdown>
+            </div>
+            <div class="searchCondition" *ngIf="isShowMonth != 0 && isShowWeek == 0">
+              <p-dropdown [style]="{'width':'90px'}" [options]="weekList" [(ngModel)]="selectedWeek" placeholder={{defaultWeek}} optionField="weekType"
+                styleClass="input_dropdown"></p-dropdown>
+            </div>
+            <div class="searchCondition">
+              <input type="text" [(ngModel)]="searchdriverName" pInputText placeholder="驾驶员" class="input_textarea">
+            </div>
+            <div class="searchCondition">
+              <p-dropdown [options]="alarmList" [(ngModel)]="selectedAlarm" placeholder='全部报警' [style]="{'width':'12rem'}" styleClass="input_dropdown"></p-dropdown>
+            </div>
+            <div class="btn_02">
+              <a (click)="searchAlarmData()">查询</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 饼状图的查询条件 -->
+        <div class="cen_condition" id="pieSearch">
+          <div class="input-group">
+            <div class="searchCondition">
+              <p-dropdown [options]="choseList" (onChange)="changeType(selectedChoice)" [(ngModel)]="selectedChoice" placeholder={{defaultChoice}}
+                optionField="choseType" styleClass="input_dropdown"></p-dropdown>
+            </div>
+            <div class="searchCondition">
+              <p-dropdown [options]="yearList" (onChange)="changeYear(selectedYear)" [(ngModel)]="selectedYear" placeholder={{defaultYear}}
+                optionField="yearType" styleClass="input_dropdown"></p-dropdown>
+            </div>
+            <div class="searchCondition" *ngIf="isShowMonth == 0 && isShowWeek != 0">
+              <p-dropdown [style]="{'width':'80px'}" [options]="monthList" id="searchByMonth" [(ngModel)]="selectedMonth" placeholder={{defaultMonth}}
+                optionField="monthType" styleClass="input_dropdown"></p-dropdown>
+            </div>
+            <!-- 按周查询 -->
+            <div class="searchCondition" *ngIf="isShowMonth != 0 && isShowWeek == 0">
+              <p-dropdown [style]="{'width':'90px'}" [options]="weekList" [(ngModel)]="selectedWeek" placeholder={{defaultWeek}} optionField="weekType"
+                styleClass="input_dropdown"></p-dropdown>
+            </div>
+            <div class="searchCondition">
+              <input type="text" class="input_textarea" [(ngModel)]="searchdriverName" pInputText placeholder="驾驶员">
+            </div>
+            <div class="btn_02">
+              <a (click)="searchPie()">查询</a>
+            </div>
+          </div>
+        </div>
+        <div>
+          <!-- <button pButton id="minusMonth" style="margin-left:30%;height:40px;" (click)="minusMonth()" type="button" label="上一月"></button> -->
+          <!-- <button pButton style="margin-left:3%;height:40px;" (click)="searchAlarmData()" type="button" label="查询" class="ui-button-success"></button> -->
+          <!-- <button pButton id="addMonth" style="margin-left:3%;height:40px;" (click)="addMonth()" type="button" label="下一月"></button> -->
+        </div>
+      </nb-card-header>
+      <nb-card-body>
+        <div echarts [options]="options" class="echart" style="height: calc(100vh - 360px);" id="trend"></div>
+        <div echarts [options]="options_pie" class="echart" style="height: calc(100vh - 360px);" id="pie"></div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <button pButton type="button" (click)="visibleSidebar2 = true" icon="fa-arrow-left" class="ui-button-info show_side_btn"></button>
+  <p-sidebar [(visible)]="visibleSidebar2" position="right" [baseZIndex]="10000" [style]="{'width':'25rem'}" styleClass="alarm_sidebar">
+    <button pButton type="button" (click)="visibleSidebar2 = false" icon="fa-arrow-right" class="ui-button-info hide_side_btn"></button>
+    <lbstree #lbstree></lbstree>
+  </p-sidebar>
+</div>

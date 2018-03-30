@@ -1,0 +1,140 @@
+<div class="loginbody">
+    <div class="login">
+
+        <div class="myheader">
+            <div class="logo">
+                <a href="#">
+                    <img src="../../assets/images/login_logo.png">
+                </a>
+            </div>
+            <div class="top_menu">
+                <ul>
+                    <li>
+                        <a href="#">热门活动</a>
+                    </li>
+                    <li>
+                        <a href="#">系统公告</a>
+                    </li>
+                    <li>
+                        <a href="#">系统帮助</a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="../../assets/images/login_phone.png">手机版</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="myclear"></div>
+        </div>
+
+        <!--图片轮播-->
+        <div class="carousel">
+            <div class="slide">
+                <input type="radio" name="sildeInput" value="0" id="sildeInput1" checked hidden/>
+                <label for="sildeInput1">1</label>
+                <input type="radio" name="sildeInput" value="1" id="sildeInput2" hidden/>
+                <label for="sildeInput2">2</label>
+                <ul>
+                    <li>
+                        <a href="#">
+                            <img src="../../assets/images/banner.png">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="../../assets/images/banner_2.png">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+        <!--图片轮播-->
+
+        <!--登录框内容-->
+        <form (ngSubmit)="login()" #form="ngForm" autocomplete="nope">
+
+            <div class="login_input">
+
+                <div class="login_area">
+
+                    <h1>登录</h1>
+                    <ul>
+                        <li [ngStyle]="{'border-color':email.invalid && email.touched && email.errors?.required ? 'red' : '#e7e7e7' }">
+                            <div class="user">
+                                <img src="../assets/images/login_user.png">
+                            </div>
+                            <div class="inputarea">
+                                <input name="email" [(ngModel)]="user.email" id="input-email" type="text" placeholder="用户名@公司名" #email="ngModel" autofocus
+                                    [required]="getConfigValue('forms.validation.email.required')">
+                            </div>
+                        </li>
+                        <div *ngIf="email.invalid && email.touched && email.errors?.required">
+                            <div class="showmsg">请输入用户名和公司名，格式为用户名@公司名</div>
+                            <br/>
+                        </div>
+                        <li [ngStyle]="{'border-color':password.invalid && password.touched && password.errors?.required ||password.errors?.minlength || password.errors?.maxlength ? 'red' : '#e7e7e7' }">
+                            <div class="user">
+                                <img src="../assets/images/login_paw.png">
+                            </div>
+                            <div class="inputarea">
+                                <input name="password" [(ngModel)]="user.password" type="password" id="input-password" placeholder="密码" #password="ngModel"
+                                    [class.form-control-danger]="password.invalid && password.touched" [required]="getConfigValue('forms.validation.password.required')"
+                                    [minlength]="getConfigValue('forms.validation.password.minLength')" [maxlength]="getConfigValue('forms.validation.password.maxLength')">
+                            </div>
+                        </li>
+                        <div *ngIf="password.invalid && password.touched && password.errors?.required">
+                            <div class="showmsg">密码必填！</div>
+                            <br/>
+                        </div>
+                        <div *ngIf="password.invalid && password.touched && (password.errors?.minlength || password.errors?.maxlength)">
+                            <div class="showmsg">密码长度至少8个字符,至少包含1个字母,1个数字和1个特殊字符</div>
+                            <br/>
+                        </div>
+                    </ul>
+
+                    <div class="checkarea">
+                        <input type="checkbox">记住密码</div>
+                    <div class="login_btn">
+                        <button [disabled]="submitted || !form.valid" [class.btn-pulse]="submitted">
+                            登 录
+                        </button>
+                    </div>
+
+                    <div *ngIf="showMessages.error && errors && errors.length > 0 && !submitted">
+                        <!--<div><strong>Oh snap!</strong></div>-->
+                        <div *ngFor="let error of errors" class="errmsg">{{ error }}</div>
+                    </div>
+
+                    <div *ngIf="showMessages.success && messages && messages.length > 0 && !submitted">
+                        <!--<div><strong>Hooray!</strong></div>-->
+                        <div class="sucmsg">{{ message }}</div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </form>
+
+        <!--登录框内容-->
+
+
+        <div class="bottom">
+            <div class="bottom_title">
+                <p>Copyright © 2017&nbsp;&nbsp;江苏鸿信系统集成有限公司&nbsp;&nbsp;版权所有</p>
+            </div>
+
+            <div class="conect">
+                <div class="service">
+                    <img src="../../assets/images/login_telephone.png">400-8288-298</div>
+                <div class="bottom_btn">
+                    <a>
+                        <img src="../../assets/images/login_telephone.png">在线客服</a>
+                </div>
+            </div>
+            <div class="myclear"></div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,286 @@
+@import '../../../@theme/styles/themes';
+@include nb-install-component() {
+  * {
+    font-size: 0.8rem;
+    font-family: 微软雅黑, tahoma;
+    color: #333;
+  }
+  .row {
+    padding-right: 0.5rem;
+    padding-left: 0;
+  }
+  .col-12 {
+    padding-right: 0;
+    padding-left: 0;
+  }
+  nb-card {
+    height: 100%;
+    font-size: 0.64rem;
+  }
+  nb-card-header {
+    padding: 0;
+  }
+  nb-card-body {
+    height: calc(100vh - 16.3rem);
+    padding: 1rem;
+  }
+  /* input 在IE下去掉X 去掉密码输入的眼睛图标 */
+  input::-ms-clear {
+    display: none;
+  }
+  input::-ms-reveal {
+    display: none;
+  }
+  /* 导航 */
+  .loaction {
+    height: 3.2rem;
+    border-bottom: 1px solid #eceef2;
+    font-weight: 100;
+  }
+  .loaction_box {
+    float: left;
+    margin-left: 0.8rem;
+  }
+  .loaction_box img {
+    float: left;
+    display: inline-block;
+    margin-top: 0.72rem;
+    margin-right: 0.8rem
+  }
+  .loaction_box p {
+    font-size: 0.64rem;
+    line-height: 3.2rem;
+    color: #999;
+    float: left;
+    font-weight: 100;
+  }
+  .loaction_box p b {
+    display: inline-block;
+    background: url(../../../../assets/images/rrrow-right.png) no-repeat;
+    width: 0.72rem;
+    height: 1.04rem;
+    margin-left: 0.48rem;
+    margin-right: 0.48rem;
+    vertical-align: middle;
+  }
+  .loaction_box p span {
+    display: inline-block;
+    color: #333;
+    font-size: 0.96rem;
+    font-weight: 100;
+  }
+  /* 筛选条件 */
+  .cen_condition {
+    height: 4rem;
+    padding: 0.4rem 0.16rem 0.4rem 1.2rem;
+  }
+  .searchCondition {
+    height: 2.4rem;
+    float: left;
+    margin: 0 0.16rem;
+  }
+  /* 时间选择 */
+  .input_desc {
+    border: 1px solid #ACACAC;
+    border-radius: 0.4rem 0 0 0.4rem;
+    width: 4.4rem;
+    text-align: center;
+    display: inline-block;
+    line-height: 2.24rem;
+    font-weight: 100;
+    font-size: 0.96rem;
+    background-color: #efefef;
+  }
+  .input_timearea {
+    width: 16rem;
+    height: 2.4rem;
+    border: 1px solid #ACACAC;
+    border-left: 0px !important;
+    border-radius: 0 0.4rem 0.4rem 0;
+    padding: 0 0.4rem;
+    font-size: 0.8rem;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+  }
+  /* 下拉列表 */
+  /deep/ .input_dropdown {
+    height: 2.4rem;
+    border: 1px solid #ACACAC;
+    border-radius: 0.4rem;
+  }
+  /deep/ .input_dropdown .ui-dropdown-label {
+    height: 100%;
+    border-radius: 0.4rem;
+    font-size: 0.96rem;
+  }
+  /deep/ .input_dropdown .ui-dropdown-item {
+    font-size: 0.96rem;
+  }
+  /deep/ .input_dropdown .ui-dropdown-trigger {
+    border-radius: 0.4rem;
+  }
+  /deep/ .input_dropdown .fa {
+    margin-top: 0.8rem;
+  }
+  /* 查询按钮 */
+  .btn_02 {
+    display: inline-block;
+    height: 2.4rem;
+    margin: 0 0.16rem;
+  }
+  .btn_02 a {
+    display: block;
+    width: 6.4rem;
+    height: 2.4rem;
+    line-height: 2.4rem;
+    text-align: center;
+    background: #49a0d2;
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 100;
+    border-radius: .5em;
+    -webkit-border-radius: 0.4rem;
+  }
+  .btn_02 a:hover {
+    background: #50abe0;
+    cursor: pointer;
+  }
+  .btn_02 a:active {
+    background: #49a0d2;
+  }
+  /* 表格 */
+  /deep/ .ui-datatable-header {
+    padding: 0.35em 0.25em;
+  }
+  .template_operation {
+    margin-bottom: 0;
+  }
+  /* 照片 */
+  .photo {
+    display: block;
+    width: 80px;
+    height: 60px;
+    text-align: center;
+    display: table-cell;
+    cursor: pointer;
+  }
+  .photo img {
+    height: 60px;
+    width: 80px;
+    vertical-align: middle; // display: inline;
+  }
+  /* 操作链接 */
+  .btn_07 {
+    font-size: 0.8rem;
+    color: #59a6d5;
+    padding: 0 0 0 0
+  }
+  .btn_07:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .tablebox table,
+  .tablebox td .btn_07:active {
+    text-decoration: none;
+    color: #19b6f0
+  }
+  .btn_08 {
+    font-size: 0.8rem;
+    color: #fd0909;
+  }
+  .btn_08:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .btn_08:active {
+    text-decoration: none;
+    color: #d81515
+  }
+  /* dialog样式 */
+  /deep/ .ui-dialog-titlebar {
+    padding: 0.2em;
+  }
+  /deep/ .ui-dialog-footer {
+    padding: 0.3em;
+    border-radius: 0 0 15px 15px;
+  }
+  .ui-md-6 {
+    padding: 0.5em;
+  }
+  .ui-md-12 {
+    padding: 0.5em;
+  }
+  .dialogForms {
+    min-width: 5.5em;
+    line-height: 2.26;
+    padding: 0 5px;
+    border-style: none;
+  }
+  /deep/ .ui-inputgroup .ui-inputtext:not(:first-child) {
+    border-top-left-radius: 0.25em;
+    border-bottom-left-radius: 0.25em;
+    border-left: 1px solid rgba(0, 0, 0, 0.15);
+    padding-left: 0.4rem;
+  }
+  /deep/ .ui-inputgroup .ui-inputtext:not(:first-child):focus {
+    border: 1px solid #66afe9;
+  }
+  /* 处理和详情照片 */
+  .dialog_photo {
+    display: block;
+    width: 120px;
+    height: 80px;
+    text-align: center;
+    display: table-cell;
+    cursor: pointer;
+  }
+  .dialog_photo img {
+    height: 100%;
+    width: 100%;
+    vertical-align: middle;
+    display: inline;
+  }
+  .btn_10 {
+    width: 4.8rem;
+    height: 2rem;
+    color: #ffffff;
+  }
+  /* 处理结果radio */
+  .result {
+    position: relative;
+    text-align: center;
+  }
+  input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    opacity: 0;
+  }
+  label {
+    position: absolute;
+    text-align: center;
+    left: 5px;
+    top: 6px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #999;
+  }
+  /*设置选中的input的样式*/
+  /* + 是兄弟选择器,获取选中后的label元素*/
+  input:checked+label {
+    background-color: #70d887;
+    border: 1px solid #70d887;
+  }
+  input:checked+label::after {
+    position: absolute;
+    content: "";
+    width: 5px;
+    height: 10px;
+    top: 3px;
+    left: 6px;
+    border: 2px solid #fff;
+    border-top: none;
+    border-left: none;
+    transform: rotate(45deg)
+  }
+}

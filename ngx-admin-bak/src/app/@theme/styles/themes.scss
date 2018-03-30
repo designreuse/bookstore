@@ -1,0 +1,43 @@
+// @nebular theming framework
+@import '~@nebular/theme/styles/theming';
+// @nebular out of the box themes
+@import '~@nebular/theme/styles/themes';
+// @import 'dark.scss';
+// which themes you what to enable (empty to enable all)
+$nb-enabled-themes: (default, cosmic);
+
+$nb-themes: nb-register-theme((
+ // app wise variables for each theme
+  sidebar-header-gap: 0.25rem,
+  sidebar-header-height: initial,
+  layout-content-width: 1400px,
+
+  font-main: Roboto,
+  font-secondary: Exo,
+  hisColor: #40dc7e,
+  positionOp: rgba(255,255,255,0.6),//车辆树背景透明度
+  positionFontColor:#4b4b4b,
+), default, default);
+
+$nb-themes: nb-register-theme((
+  // app wise variables for each theme
+  sidebar-header-gap: 0.25rem,
+  sidebar-header-height: initial,
+  layout-content-width: 1400px,
+
+  font-main: Roboto,
+  font-secondary: Exo,
+  hisColor: #7659ff,
+  positionOp: rgba(61, 55, 128, 0.6),//车辆树背景透明度
+  positionFontColor:#ffffff,
+), cosmic, cosmic);
+
+// $nb-themes: nb-register-theme((
+//   // app wise variables for each theme
+//   sidebar-header-gap: 0.25rem,
+//   sidebar-header-height: initial,
+//   layout-content-width: 1400px,
+
+//   font-main: Roboto,
+//   font-secondary: Exo,
+// ), dark, default);

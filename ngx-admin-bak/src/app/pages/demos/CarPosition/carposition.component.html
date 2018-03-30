@@ -1,0 +1,25 @@
+
+<div class="row">
+  <toaster-container [toasterconfig]="config"></toaster-container>
+
+  <div class="col-12 col-lg-12">
+    <nb-card>
+      <nb-card-body>
+        <!-- <div id="leaf">
+        </div> -->
+        <div class="divBottom" >
+          <ngx-basemap #map ></ngx-basemap>
+        </div>
+        <div class="divUp" >
+          <lbstree #lbstree (onCheck)="onCheck($event)" (sendToasterMsg)="sendToasterMsg($event)"></lbstree>
+        </div>
+      </nb-card-body>
+    </nb-card>
+   
+
+  </div>
+  
+      <!-- </nb-card-body>
+    </nb-card> -->
+
+</div>

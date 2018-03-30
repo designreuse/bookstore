@@ -1,0 +1,151 @@
+<div class="row-fluid">
+  <toaster-container [toasterconfig]="config"></toaster-container>
+  <div class="col-12 col-lg-12 ">
+    <nb-card>
+      <nb-card-body>
+        <!-- <div id="leaf">
+        </div> -->
+        <ngx-basemap #map [carstatDisplay]="false" [minimapDisplay]="false" [mousePositionDisplay]="false" [fullscreenDisplay]="false"
+          [drawcontrolDisplay]="false" [measureDisplay]="false"></ngx-basemap>
+
+        <div class="middle-bottom-panel">
+          <div class="left-bottom-arrow">
+            <a class="fa fa-chevron-down" [title]="arrowtitle" (click)="showhide($event)"></a>
+          </div>
+          <div class="tabview-show">
+            <p-tabView>
+              <p-tabPanel header="速度（km/h）">
+                <div echarts [options]="speedoptions" [merge]="speedChart" class="echart"></div>
+              </p-tabPanel>
+              <p-tabPanel header="里程（km）">
+                <div echarts [options]="milesoptions" [merge]="milesChart" class="echart"></div>
+              </p-tabPanel>
+            </p-tabView>
+          </div>
+        </div>
+
+        <div>
+          <p-dialog [(visible)]="display" [showHeader]="false" width="450" height="500" [responsive]="true" [closable]="false" >
+            
+                <car-tree #carTree ></car-tree>
+              
+                <div style="margin-left:27.5%;margin-top:1%;">
+                  <button type="button" pButton icon="fa-check" (click)="confirm()" label="确定"></button>
+                  <button type="button" pButton icon="fa-close" (click)="reset2()" label="取消"></button>
+                </div>
+               
+          </p-dialog>
+        </div>
+        
+        
+
+        <div class="div-bar">
+          <div class="div-bar-header" id='draggable'>
+            <img src="../../../../assets/images/location.png"> 轨迹查询
+          </div>
+          <div class="inputbox">
+            <ul>
+              <li>
+                <div class="left">车牌号码:</div>
+                <div class="right">
+                  <input [(ngModel)]="car.carno" #carno="ngModel" type="text" class="ui-inputtext" placeholder="请输入车牌" (click)="showQuery()"
+                    maxlength="20">
+                </div>
+              </li>
+              <li>
+                <div class="left">开始时间:</div>
+                <div class="right">
+                  <p-calendar [(ngModel)]="begindate" showTime="true" hourFormat="24" [locale]="cn" dateFormat="yy-mm-dd"></p-calendar>
+                </div>
+              </li>
+              <li>
+                <div class="left">结束时间:</div>
+                <div class="right">
+                  <p-calendar [(ngModel)]="enddate" showTime="true" hourFormat="24" [locale]="cn" dateFormat="yy-mm-dd"></p-calendar>
+                </div>
+              </li>
+            </ul>
+
+
+
+            <!-- <div class="control-panel">
+              <div class="input-group input-group-sm">
+                <span class="input-group-btn">
+                  <button class="btn btn-success" style="height: 42px;width:85px;" id="btn-paly" (click)="onhisplay($event)">
+                    <span class="fa fa-play"></span> 播放
+                  </button>
+                </span>
+                <span class="input-group-btn">
+                  <button class="btn btn-success" style="height: 42px;width:85px;" id="btn-stop" (click)="onhisstop($event)">
+                    <span class="fa fa-stop"></span> 停止
+                  </button>
+                </span>
+              </div>
+
+
+            </div>
+            <div class="control-panel">
+              <div class="input-group input-group-sm">
+                <span class="input-group-btn">
+                  <button class="btn btn-success" style="height: 42px;width:85px;" id="btn-sub-speed" disabled="disabled" (click)="onsubspeed($event)">
+                    <span class="fa fa-fast-backward"></span>减速
+                  </button>
+                </span>
+                <span class="input-group-btn">
+                  <button class="btn btn-success" style="height: 42px;width:85px;" id="btn-add-speed" disabled="disabled" (click)="onaddspeed($event)">
+                    <span class="fa fa-fast-forward"></span>加速
+                  </button>
+                </span>
+              </div>
+
+
+            </div>
+            <div class="speed-panel">
+              速度：
+              <span id='play_speed'>{{speed}}x</span>
+            </div> -->
+          </div>
+
+          <div>
+            <button class="btn btn-success btn-block btn-sm" type="button" (click)="doSearch()">查询</button>
+          </div>
+
+          <div class="playarea">
+            <div class="playbtn">
+              <ul>
+                <li>
+                  <a id="playbtn" #playbtn (click)="onhisplay($event)" >
+                    <img src="../../../../assets/images/location_play.png" >播放
+                  </a>
+                </li>
+                <li>
+                  <a id="stopbtn"  (click)="onhisstop($event)">
+                    <img src="../../../../assets/images/location_stop.png">停止
+                  </a>
+                </li>
+                <li>
+                  <a id="addbtn" (click)="onaddspeed($event)" disabled="disabled">
+                    <img src="../../../../assets/images/location_fast.png">加速
+                  </a>
+                </li>
+                <li>
+                  <a id="subbtn" (click)="onsubspeed($event)" disabled="disabled">
+                    <img src="../../../../assets/images/location_slow.png">减速
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="speed">
+              <p>速度：
+                <span>{{speed}}x</span>
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+
+</div>

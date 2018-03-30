@@ -1,0 +1,74 @@
+<div class="row">
+  <div class="col-12 col-lg-9">
+    <nb-card>
+      <nb-card-body>
+        <div class="ui-g">
+          <p-growl [(value)]="msgs"></p-growl>
+
+          <div class="ui-g-12 ui-md-4">4</div>
+
+          <div class="ui-g-12 ui-md-8" style="font-size:0%;">
+              <div #videoDiv></div>
+          </div>
+
+          <div class="ui-g-12 ui-md-12">
+              <div class="title"><img src="" align="absmiddle"/>视频搜索</div>
+              <!-- <div class="searchls">
+                <table style="width: 100%;height: 100%">
+                  <tr>
+                    <th id="carNo">车牌号：</th>
+                    <th>开始时间:</th>
+                    <td>
+                    <input name="calendar" id="calendar" onchange="initSlider()"  value="${startDate }" type="text" style="width:130px;" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"/>
+                    </td>
+                    <th id="endTimeTh" >结束时间:</th>
+                    <td id="endTimeValueTd">
+                    <input name="calendar2" id="calendar2" onchange="initSlider()" value="${endDate }" style="width:130px;"  type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
+                    </td>
+                    <c:forEach var="num" begin="1" end="${videoNum }">
+                      <td><input type="checkbox" id="channel${num }" checked="checked" style="border:none;"/></td>
+                      <td onclick="chooseChannel('channel${num }')">通道${num }</td>
+                    </c:forEach>
+                  </tr>
+                </table>
+              </div> -->
+              <div class="ui-g-2 ui-md-2">车牌号：</div>
+              <div class="ui-g-3 ui-md-3">
+                <p-calendar placeholder="开始时间" showTime="true" [(ngModel)]="beginDate" hourFormat="24" dateFormat="yy-mm-dd"></p-calendar>
+              </div>
+              <div class="ui-g-3 ui-md-3">
+                  <p-calendar placeholder="结束时间" showTime="true" [(ngModel)]="endDate" hourFormat="24" dateFormat="yy-mm-dd"></p-calendar>
+              </div>
+              <div class="ui-g-4 ui-md-4 ui-g-nopad">
+                  <div class="ui-g-3"><p-checkbox name="group2" value="channel1" label="通道1" [(ngModel)]="channels"></p-checkbox></div>
+                  <div class="ui-g-3"><p-checkbox name="group2" value="channel2" label="通道2" [(ngModel)]="channels"></p-checkbox></div>
+                  <div class="ui-g-3"><p-checkbox name="group2" value="channel3" label="通道3" [(ngModel)]="channels"></p-checkbox></div>
+                  <div class="ui-g-3"><p-checkbox name="group2" value="channel4" label="通道4" [(ngModel)]="channels"></p-checkbox></div>
+              </div>
+          </div>
+          
+          <div class="ui-g-12 ui-md-12">
+            <p-slider [(ngModel)]="val3" [style]="{'width':'200px'}" [animate]="true"></p-slider>
+          </div>
+          
+          <div class="ui-g-12 ui-md-12">
+            <div class="bfkj" style="padding-left: 20px;">
+              <a id="start"   href="#" class="tb1" onclick="startVideo()"></a>
+              <a id="end" style="display: none" href="#" class="tb3" onclick="pauseVideo()"></a>
+              <a href="#" style="display: none" class="tb9" onclick="endRemoteRecVideo()"></a>
+              <a href="#" id="speedDown" class="tb2" onclick="speedUpVideo(4)"></a>
+              <a id="pause" href="#" class="tb3" onclick="pauseVideo()"></a>
+              <a href="#" id="speedUp" class="tb4" onclick="speedUpVideo(3)"></a>
+              <a href="#" id="takePic" class="tb5" onclick="takePic()"></a>
+              <a href="#" id="takeVideo" class="tb6" onclick="takeVideo()"></a>
+              </div>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  
+  <div class="col-12 col-lg-3"  style="height: calc(100vh - 128px);">
+    <lbstree id="lbstree" #lbstree (ondblClick)="ondblClick($event)" (onrightClick)="onrightClick($event)"></lbstree>
+  </div>
+</div>

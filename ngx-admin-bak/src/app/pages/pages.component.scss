@@ -1,0 +1,53 @@
+@import '../@theme/styles/themes';
+@include nb-install-component() {
+
+
+    /deep/.ui-sidebar-mask {
+        position: unset;
+        width: 100%;
+        height: 100%;
+    }
+    /deep/.ui-sidebar-bottom {
+        bottom: 0;
+        left: 80%;
+        width: 20%;
+        height: 5em;
+    }
+    
+    /deep/.ui-sidebar-bottom.ui-sidebar-active {
+        -webkit-transform: translateY(0);
+        transform: translateY(0)
+    }
+
+    // /deep/.ui-widget-content {
+    //     border: 1px solid #f1b275;
+    //     background: #e6e6e6;
+    //     color: #222222;
+    // }
+    /deep/.ui-growl {
+        position: fixed;
+        top: 88%;
+        right: 0%;
+        left:80%;
+        width: 20em;
+    }
+    /deep/.ui-growl-item-container {
+        position: absolute;
+        margin: 0 0 10px 0;
+        opacity: .95;
+    }
+    /deep/.ui-growl-item {
+        position: initial;
+        display: block;
+        padding: .5em 2em;
+        width: 238px;
+    }
+    .ui-growl-message-warn {
+        background-color: #e2ebd3;
+        color: #c7d3d8;
+    }
+
+    /deep/ :after, :before {
+        box-sizing: border-box;
+    }
+}

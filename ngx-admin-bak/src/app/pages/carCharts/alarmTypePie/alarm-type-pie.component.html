@@ -1,0 +1,60 @@
+<div class="row">
+  <toaster-container [toasterconfig]="config"></toaster-container>
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>
+        <div style="height:40px" id="trendId">
+          <div style="height:40px;float:left;margin-top:1%;">
+            <span style="width:80px;">统计类型&emsp;</span>
+          </div>
+          <div style="height:40px;float:left">
+            <p-dropdown (onChange)="changeType(selectedChoice)" [options]="choseList" [(ngModel)]="selectedChoice" optionField="choseType"
+              placeholder={{defaultChoice}}></p-dropdown>
+          </div>
+          <div style="height:40px;float:left">
+            <p-dropdown [options]="yearList" [(ngModel)]="selectedYear" optionField="yearType" placeholder={{defaultYear}}></p-dropdown>
+          </div>
+          <div style="height:40px;float:left">
+            <p-dropdown id="searchByMonth" [options]="monthList" [(ngModel)]="selectedMonth" optionField="monthType" placeholder={{defaultMonth}}></p-dropdown>
+          </div>
+          <div style="height:40px;float:left">
+            <input type="text" style="height:41px;width:120px;" [(ngModel)]="choseGroupName" (click)="showDepartment()" pInputText
+              placeholder="部门">
+          </div>
+          <div style="height:40px;float:left">
+            <input type="text" style="height:41px;width:120px;" [(ngModel)]="choseCarNo" (click)="showCars()" pInputText placeholder="车辆">
+          </div>
+          <div style="height:40px;float:left">
+            <input type="text" style=" 
+            height:41px;width:150px;" [(ngModel)]="searchdriverName" pInputText placeholder="驾驶员">
+          </div>
+          <div style="height:40px;">
+            <button pButton style="margin-left:3%;height:40px;" (click)="searchPie()" type="button" label="查询" class="ui-button-success"></button>
+          </div>
+        </div>
+      </nb-card-header>
+      <nb-card-body>
+        <span class="input-group-lg" style="width:40px;">报警统计报表饼状图</span>
+        <div echarts [options]="options" class="echart" style="height: calc(100vh - 280px);"></div>
+        <div>
+          <p-dialog [(visible)]="carTreeDisplay" [showHeader]="false" width="450" height="600" [responsive]="true" [closable]="false">
+            <car-tree #carTree></car-tree>
+            <div style="margin-left:27.5%;margin-top:1%;">
+              <button type="button" pButton icon="fa-check" (click)="confirm()" label="确定"></button>
+              <button type="button" pButton icon="fa-close" (click)="reset2()" label="取消"></button>
+            </div>
+          </p-dialog>
+        </div>
+        <div>
+          <p-dialog [(visible)]="groupTreeDisplay" [showHeader]="false" width="450" height="600" [responsive]="true" [closable]="false">
+            <group-tree #groupTree></group-tree>
+            <div style="margin-left:27.5%;margin-top:1%;">
+              <button type="button" pButton icon="fa-check" (click)="confirmGroup()" label="确定"></button>
+              <button type="button" pButton icon="fa-close" (click)="resetGroup()" label="取消"></button>
+            </div>
+          </p-dialog>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

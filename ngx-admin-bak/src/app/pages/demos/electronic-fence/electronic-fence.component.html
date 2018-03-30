@@ -1,0 +1,264 @@
+
+<div class="row">
+  <toaster-container [toasterconfig]="config"></toaster-container>
+
+  <div class="col-9 col-lg-9">
+    <nb-card>
+      <nb-card-body>
+        <!-- <div id="leaf">
+        </div> -->
+        <ngx-basemap #map (onDrawStop)="showDialog($event)" (onDrawed)="setLayer($event)"></ngx-basemap>
+
+        <div >
+          <p-dialog [(visible)]="dialogDisplay" [showHeader]="false" width="500" [responsive]="true" [closable]="false">
+            
+            <!-- <table >
+              <tr>
+                <td>车牌号:<input  [(ngModel)]="car.plateNo" #carno="ngModel" type="text" class="form-control" placeholder="请输入车牌" maxlength="25" ></td>
+                <td>分组名:<input [(ngModel)]="car.groupName" #carno="ngModel" type="text" class="form-control" placeholder="请输入分组名" maxlength="25" ></td>
+              </tr>
+    
+            </table> -->
+            <div>
+              <h5>电子围栏</h5>
+            </div>
+            <div class="ui-g">
+                <p-checkbox class="ui-g-3" [(ngModel)]="elecFence.open" binary="true" label="是否开启" ></p-checkbox>
+                <p-checkbox class="ui-g-3" [(ngModel)]="elecFence.show" binary="true" label="是否显示" ></p-checkbox>
+                <p-checkbox class="ui-g-3" [(ngModel)]="elecFence.allday" binary="true" label="启用全天" ></p-checkbox>
+            </div> 
+            <div class="ui-g">
+              <div class="ui-g-3">开始时间：</div>
+              <p-dropdown class="ui-g-9" [options]="times" [(ngModel)]="elecFence.startTime" [style]="{'width':'250px'}" editable="true" placeholder="00:00:00"></p-dropdown>
+              <div class="ui-g-3">结束时间：</div>
+              <p-dropdown class="ui-g-9" [options]="times" [(ngModel)]="elecFence.endTime" [style]="{'width':'250px'}" editable="true" placeholder="23:59:59"></p-dropdown>
+              <div class="ui-g-3">围栏名称：</div>
+              <div class="ui-g-9">
+                <input type="text" pInputText [(ngModel)]="elecFence.fenceName">
+              </div>
+              <div class="ui-g-3">告警类型：</div>
+              <p-dropdown class="ui-g-9" [options]="alarmTypes" [(ngModel)]="elecFence.alarmType" [style]="{'width':'250px'}" editable="true" placeholder=""></p-dropdown>
+              <div class="ui-g-3">区域范围：</div>
+              <div class="ui-g-9">
+                <input type="text" pInputText [(ngModel)]="elecFence.areaRange"><span >&nbsp;m</span>
+              </div>
+              <div class="ui-g-3">速度区间：</div>
+              <div class="ui-g-9">
+                <input type="text" pInputText [(ngModel)]="elecFence.speedRange"><span >&nbsp;(示例:10-20)</span>
+              </div>
+              <div class="ui-g-3">时长限制：</div>
+              <div class="ui-g-9">
+                <input type="text" pInputText [(ngModel)]="elecFence.timeLimit"><span >&nbsp;分钟</span>
+              </div>
+            </div>
+          
+            <div style="margin-left:31.5%;">
+                <button pButton type="button" (click)="doSetElecFence()" label="确定" class="ui-button-info"></button> 
+                <button pButton type="button" (click)="reset()" label="取消" class="ui-button-info"></button>             
+            </div>
+        </p-dialog>
+        </div>
+
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-3 col-lg-3">
+      <lbstree #lbstree (onCheck)="onCheck($event)"></lbstree>
+    <!-- <nb-card>
+      <nb-card-body>
+        <div class="ui-lg ui-fluid div-right">
+          <div class="ui-lg-12 ui-md-6">
+           <div class="input-group">
+            <input type="text" class="form-control" (keyup.enter)="searchCar()"  (keyup.backspace)="resetTree()" placeholder="输入车牌号" [(ngModel)]="searchCarNo" 
+            (click)="showTab()">
+            <span class="input-group-btn">
+              <button class="btn btn-primary" (click)="searchCar()" >
+                查询
+              </button>
+            </span>
+          </div>
+          </div>
+          <div class="ui-lg-12 ui-md-6">
+              <div class="tree-content" id='treeContainer'>
+                  <div id="menu" class="skin">
+                      <div class="menuitems">
+                          <div (click)="followCar()">车辆追踪</div>
+                      </div>
+                  </div> -->
+
+                  <!-- <button class="btn btn-primary" (click)="openMQ()">
+                      连接MQ
+                    </button>
+                    <button class="btn btn-primary" (click)="closeMQ()">
+                        断开MQ
+                      </button>
+                      <button class="btn btn-primary" (click)="subMQ()">
+                      订阅
+                    </button>
+                    <button class="btn btn-primary" (click)="unSubMQ()">
+                        退订
+                      </button> -->
+
+                <!-- <tree-root #tree [nodes]="nodes" [options]="options"  >    
+                    <template #treeNodeTemplate let-node="node" let-index="index" >
+                        <input (change)="check(node, !node.data.checked)" type="checkbox" id="check-{{node.data.id}}" 
+                        [indeterminate]="node.data.indeterminate" [checked]="node.data.checked">
+                        <img style="margin-top:-5px" src="./assets/images/{{node.data.iconSkin}}.png" alt="#"/>{{ node.data.name }}
+                        </template>               
+                </tree-root>
+              </div>   
+          </div>
+
+          <div style="overflow:hidden;">
+            <p-dialog  header="车辆信息" [(visible)]="display" [resizable]="false" 
+            [showHeader]="true" [responsive]="true" [width]="600" [minWidth]="500" [height]="450">
+            
+                <p-tabView style="">
+                    <p-tabPanel header="基础信息">
+                        <ul style="list-style-type: none;height:260px;">
+                            <li><span>&emsp;&emsp;&emsp;&emsp;&ensp;车 辆 号: {{ this.test1 }}</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;&ensp;自 编 号:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;司机姓名:</span></li>
+                            <li><span>司机从业资格证号:</span></li>
+                            <li><span>&emsp;&emsp;司机手机号码:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;所属公司:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;所属车队:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;核载人数:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;&ensp;出 厂 号:</span></li>
+                            <li><span>&emsp;&emsp;油量换算公式:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&nbsp;vin号:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;购车日期:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;理论油耗率:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;初始里程:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;里程系数:</span></li>
+                            <li><span>&emsp;&emsp;车辆运营班线:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&nbsp;经 度:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&nbsp;纬 度:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&nbsp;备 注:</span></li>
+                          </ul>
+                    </p-tabPanel>
+                    <p-tabPanel header="基础信息 I">
+                        <ul style="list-style-type: none;height:260px;">
+                            <li><span>&emsp;&emsp;&emsp;&emsp;车辆类型:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&nbsp;车 型:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;车牌颜色:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;&ensp;车 籍 地:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;燃油类型:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;运输行业:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;&emsp;业主ID:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;业户原ID:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;车辆原编号:</span></li>
+                            <li><span>&emsp;&emsp;经营许可证号:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;押运员姓名:</span></li>
+                            <li><span>押运员从业资格号:</span></li>
+                            <li><span>&emsp;押运员手机号码:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;车辆编号:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;车辆号类型:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;&ensp;底 牌 号:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;出租车号:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;大巴编号:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;流量基准:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;生产信息:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;接线方式:</span></li>
+                          </ul>
+                    </p-tabPanel>
+                    <p-tabPanel header="设备信息">
+                      
+                        <ul style="list-style-type: none;height:260px;">
+                            <li><span>&emsp;&emsp;&emsp;&emsp;&ensp;终 端 号:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;CDMA 卡号:</span></li>
+                            <li><span>最后一次上报时间:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;设备版本号:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;设备端口:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;摄像头数目:</span></li>
+                            <li><span>&emsp;&emsp;每日拍照限额:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;当日已拍照:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;购买日期:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;生产日期:</span></li>
+                            <li><span>&emsp;&emsp;保修起始日期:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;登记编号:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;用户密码:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;安装单位:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;&ensp;安 装 人:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;安装地点:</span></li>
+                            <li><span>&emsp;&emsp;保修截止日期:</span></li>
+                            <li><span>&emsp;&emsp;终端安装日期:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;开通日期:</span></li>
+                            <li><span>&emsp;&emsp;&emsp;&emsp;开通日期:</span></li>
+                          </ul>
+      
+                    </p-tabPanel>
+                </p-tabView>
+                    <p-footer>
+                       <button type="button" pButton (click)="display=false" label="关闭"></button>
+                   </p-footer> 
+            </p-dialog>
+          </div> -->
+
+        </div>
+      <!-- </nb-card-body>
+    </nb-card> -->
+
+</div>
+
+<!-- 查询电子围栏列表对话框 -->
+<p-dialog header="围栏维护" [(visible)]="dialogDisplay2" width="600">
+  <p-dataTable [value]="elecFences" selectionMode="single" [(selection)]="selectedEleFence" dataKey="fenceName" 
+    (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="[5]" [loading]="loading">
+    <!-- <p-column [style]="{'width':'38px'}" selectionMode="multiple"></p-column> -->
+    <p-column *ngFor="let col of cols" [field]="col.field" [header]="col.header" [sortable]="col.sort"></p-column>
+  </p-dataTable>
+  <div>
+      <button pButton type="button" (click)="doSearchElecFence()" label="刷新" ></button> 
+      <button pButton type="button" (click)="doEditElecFence()" label="修改" ></button>
+      <button pButton type="button" label="删除" ></button>
+      <button pButton type="button" label="选择车辆" ></button>
+      <button pButton type="button" label="终端下发指令" ></button>           
+  </div>
+</p-dialog>
+
+<button type="text" (click)="doSearchElecFence()" pButton icon="fa-external-link-square" label="围栏维护"></button>
+
+<!-- 修改电子围栏对话框 -->
+<p-dialog header="修改" [(visible)]="dialogDisplay3" width="600">
+  <p-tabView>
+    <!-- 基础属性修改 -->
+    <p-tabPanel header="基础信息" rightIcon="fa-bookmark-o">
+      <div >
+          <div class="ui-g">
+              <p-checkbox class="ui-g-3" [(ngModel)]="selectedEleFence.open" binary="true" label="是否开启" ></p-checkbox>
+              <p-checkbox class="ui-g-3" [(ngModel)]="selectedEleFence.show" binary="true" label="是否显示" ></p-checkbox>
+              <p-checkbox class="ui-g-3" [(ngModel)]="selectedEleFence.allday" binary="true" label="启用全天" ></p-checkbox>
+          </div> 
+          <div class="ui-g">
+            <div class="ui-g-3">开始时间：</div>
+            <p-dropdown class="ui-g-9" [options]="times" [(ngModel)]="selectedEleFence.startTime" [style]="{'width':'250px'}" editable="true" placeholder="00:00:00"></p-dropdown>
+            <div class="ui-g-3">结束时间：</div>
+            <p-dropdown class="ui-g-9" [options]="times" [(ngModel)]="selectedEleFence.endTime" [style]="{'width':'250px'}" editable="true" placeholder="23:59:59"></p-dropdown>
+            <div class="ui-g-3">围栏名称：</div>
+            <div class="ui-g-9">
+              <input type="text" pInputText [(ngModel)]="selectedEleFence.fenceName">
+            </div>
+            <div class="ui-g-3">告警类型：</div>
+            <p-dropdown class="ui-g-9" [options]="alarmTypes" [(ngModel)]="selectedEleFence.alarmType" [style]="{'width':'250px'}" editable="true" placeholder=""></p-dropdown>
+            <div class="ui-g-3">区域范围：</div>
+            <div class="ui-g-9">
+              <input type="text" pInputText [(ngModel)]="selectedEleFence.areaRange"><span >&nbsp;m</span>
+            </div>
+            <div class="ui-g-3">速度区间：</div>
+            <div class="ui-g-9">
+              <input type="text" pInputText [(ngModel)]="selectedEleFence.speedRange"><span >&nbsp;(示例:10-20)</span>
+            </div>
+            <div class="ui-g-3">时长限制：</div>
+            <div class="ui-g-9">
+              <input type="text" pInputText [(ngModel)]="selectedEleFence.timeLimit"><span >&nbsp;分钟</span>
+            </div>
+          </div>
+      </div>
+    </p-tabPanel>
+    <!-- 区域属性修改 -->
+    <p-tabPanel header="区域属性" rightIcon="fa-bookmark-o">
+        
+    </p-tabPanel>
+</p-tabView>
+</p-dialog>

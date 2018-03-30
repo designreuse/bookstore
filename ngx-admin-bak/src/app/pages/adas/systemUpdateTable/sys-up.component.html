@@ -1,0 +1,428 @@
+<div class="row">
+  <div class="col-12">
+    <nb-card id="showOrHideTable">
+      <nb-card-header>
+        <div class="loaction">
+          <div class="loaction_box">
+            <img src="../../../../assets/images/location.png">
+            <p>系统维护
+              <b></b>
+              <span>终端在线升级</span>
+            </p>
+          </div>
+          <div class="btn_01">
+            <a class="addPointer" (click)="dt.exportCSV()">导出报表</a>
+          </div>
+        </div>
+
+        <div class="cen_condition">
+          <div class="input-group">
+            <div class="searchCondition">
+              <div class="ui-inputgroup">
+                <span class="input_desc">升级时间</span>
+                <input type="text" id="startEndTime" name="startEndTime" pInputText placeholder="开始-结束时间" class="input_timearea">
+              </div>
+            </div>
+            <div class="searchCondition">
+              <div class="ui-inputgroup" (click)="op1.toggle($event)">
+                <input type="text" pInputText placeholder="车辆选择" class="carSearchInput">
+                <button pButton type="button" icon="ion-arrow-down-b" class="btn-arrow-down"></button>
+              </div>
+            </div>
+            <div class="searchCondition">
+              <p-dropdown [options]="productList" [(ngModel)]="selectedProduct" placeholder="" styleClass="input_dropdown"></p-dropdown>
+            </div>
+            <div class="searchCondition">
+              <input type="text" [(ngModel)]="terminalInput" pInputText placeholder="版本号" class="input_textarea">
+            </div>
+            <div class="btn_02">
+              <a (click)="searchTerminal()">查询</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="cen_condition">
+          <div class="input-group">
+            <div class="searchCondition" style="width:100%;">
+              <button pButton class="rightNow" type="button" (click)="showDialog()" label="立即升级"></button>
+              <button pButton class="strategyUpdate" type="button" (click)="showInfoDialog()" label="策略升级"></button>
+              <button pButton class="strategyTask" (click)="change()" type="button" label="策略升级任务"></button>
+            </div>
+          </div>
+        </div>
+      </nb-card-header>
+
+      <nb-card-body>
+        <div class="tablebox1">
+          <p-dataTable #dt exportFilename="终端升级信息报表" [value]="searchTerminalData" [rows]="5" [paginator]="true" [rowsPerPageOptions]="[5,10,15,20]"
+            [loading]="loading" emptyMessage="未查到满足查询条件的数据!">
+            <p-column field="CARNO_AND_COLOR" header="车牌号(颜色)"></p-column>
+            <p-column field="COMPANYNAME" header="厂家名称"></p-column>
+            <p-column field="DEVICE_ID_STR" header="设备类型"></p-column>
+            <p-column field="PRODUCT_TYPE" header="设备型号"></p-column>
+            <p-column field="SOFT_VESION" header="设备版本号"></p-column>
+            <p-column field="CREATON" header="最后一次升级时间"></p-column>
+            <p-column field="UPDATE_RESULT" header="升级结果"></p-column>
+          </p-dataTable>
+        </div>
+
+        <!-- 弹窗1 立即升级-->
+        <p-dialog [positionTop]="100" [(visible)]="display" [showHeader]="true" modal="modal" width="800" height='460' [closable]="true"
+          (onHide)="close()">
+          <p-header>
+            <span> 立即升级</span>
+          </p-header>
+          <div class="row">
+            <div>
+              <div class="strategyCondition">
+                <span>升级地址</span>
+                <input type="text" class="input_textarea3" [(ngModel)]="updateUrlForNow" pInputText placeholder=""> &nbsp;&nbsp;
+                <button pButton type="button" class="rightNowBtn" (click)="updateRightNow()" label="确认升级"></button>
+              </div>
+              <div class="dialogTable">
+                <p-dataTable [style]="{'height':'19rem'}" [value]="searchTerminalData2" [rows]="5" [paginator]="true" [rowsPerPageOptions]="[5,10,15,20]"
+                  emptyMessage="无数据!">
+                  <p-column field="CARNO_AND_COLOR" header="车牌号(颜色)"></p-column>
+                  <p-column field="COMPANYNAME" header="厂家名称"></p-column>
+                  <p-column field="DEVICE_ID_STR" header="设备类型"></p-column>
+                  <p-column field="PRODUCT_TYPE" header="设备型号"></p-column>
+                  <p-column field="SOFT_VESION" header="设备版本号"></p-column>
+                </p-dataTable>
+              </div>
+            </div>
+          </div>
+          <!-- </div> -->
+        </p-dialog>
+        <!-- </div> -->
+        <!--  -->
+        <!-- 弹窗  策略升级 -->
+        <div>
+          <p-dialog [positionTop]="100" [(visible)]="strategyDisplay" [showHeader]="true" modal="modal" width="800" height='495' [closable]="true"
+            (onHide)="close()">
+            <p-header>
+              <span> 策略升级</span>
+            </p-header>
+            <div class="row">
+              <div class="col-10 col-lg-10">
+                <div class="strategyCondition">
+                  <span>策略名称</span>
+                  <input type="text" class="input_textarea2" [(ngModel)]="updateName" pInputText placeholder="">&nbsp;&nbsp;&nbsp;&nbsp;
+                  <span>升级地址</span>
+                  <input type="text" class="input_textarea2" [(ngModel)]="updateUrlForSta" pInputText placeholder="">
+                </div>
+                <div class="strategyCondition">
+                  <span>升级时间</span>
+                  <p-calendar styleClass="timeInput" placeholder="升级时间" showTime="true" [(ngModel)]="updateDate" hourFormat="24" [locale]="cn"
+                    dateFormat="yy-mm-dd"></p-calendar>
+                </div>
+              </div>
+              <div class="col-2 col-lg-2">
+                <button pButton type="button" (click)="updateInTime()" class="saveButton" label="保存"></button>
+              </div>
+              <div class="dialogTable">
+                <p-dataTable [style]="{'height':'19rem'}" [value]="searchTerminalData3" [rows]="5" [paginator]="true" [rowsPerPageOptions]="[5,10,15,20]"
+                  emptyMessage="无数据!">
+                  <p-column field="CARNO_AND_COLOR" header="车牌号(颜色)"></p-column>
+                  <p-column field="COMPANYNAME" header="厂家名称"></p-column>
+                  <p-column field="DEVICE_ID_STR" header="设备类型"></p-column>
+                  <p-column field="PRODUCT_TYPE" header="设备型号"></p-column>
+                  <p-column field="SOFT_VESION" header="设备版本号"></p-column>
+                </p-dataTable>
+              </div>
+            </div>
+          </p-dialog>
+        </div>
+        <!--  -->
+
+        <p-growl [(value)]="msgs" [life]="2000"></p-growl>
+        <p-confirmDialog></p-confirmDialog>
+
+      </nb-card-body>
+    </nb-card>
+    <!-- 策略任务页 -->
+    <nb-card id="another" style="display: none;">
+      <nb-card-header>
+        <div class="loaction">
+          <div class="loaction_box">
+            <img src="../../../../assets/images/location.png">
+            <p>终端在线升级
+              <b></b>
+              <span>策略升级任务</span>
+            </p>
+          </div>
+          <div class="back-btn">
+            <button pButton class="backButton" (click)="change()" type="button" label="返回"></button>
+          </div>
+        </div>
+        <div class="strategySearch">
+          <div class="searchCondition">
+            <div class="ui-inputgroup">
+              <span class="input_desc">升级时间</span>
+              <input type="text" id="startEndTime2" name="startEndTime2" pInputText placeholder="开始-结束时间" class="input_timearea">
+            </div>
+          </div>
+          <div class="btn_02">
+            <a (click)="searchStrategy()">查询</a>
+          </div>
+
+          <div class="list_pop_search_right">
+            <div class="ui-inputgroup">
+              <input type="text" placeholder="策略名称" [(ngModel)]="strategyName" class="input_text">
+              <a>
+                <img src="assets/images/icon_search.png" (click)="searchStrategy()">
+              </a>
+            </div>
+          </div>
+        </div>
+      </nb-card-header>
+      <nb-card-body style="height: calc(100vh - 18.6rem);width: 100%;overflow-y:auto;">
+        <div>
+          <!-- 表格 -->
+          <div class="tablebox">
+            <p-dataTable [value]="searchPlanData" [rows]="5" [paginator]="true" [rowsPerPageOptions]="[5,10,15,20]" (onRowSelect)="onRowSelect($event)"
+              (onRowUnselect)="onRowUnselect($event)" [loading]="loading1" emptyMessage="未查到满足查询条件的数据!">
+              <p-column field="PLAN_NAME" header="策略名称"></p-column>
+              <p-column field="PLAN_TIME" header="升级时间"></p-column>
+              <p-column field="COMMAND_PARA" header="升级地址"></p-column>
+              <p-column field="CREATEDBY" header="创建人"></p-column>
+              <p-column field="CREATEDON" header="创建时间"></p-column>
+              <p-column field="MODIFIEDBY" header="修改人"></p-column>
+              <p-column field="MODIFIEDON" header="修改时间"></p-column>
+              <p-column [style]="{'width':'11rem'}">
+                  <ng-template pTemplate="header">
+                      <label class="template_operation">操作</label>
+                    </ng-template>
+                <ng-template let-decision="rowData" pTemplate="body">
+                  <div class="actions">
+                    <a class="modefyA" (click)="viewDetial(decision)">查看详情</a>
+                    <a class="modefyA" (click)="newModifyDisplay(decision)">修改</a>
+                    <a class="deleteA" (click)="deletAction(decision)">删除</a>
+                  </div>
+                </ng-template>
+              </p-column>
+            </p-dataTable>
+          </div>
+          <!-- 查看详情 -->
+          <div>
+            <p-dialog [positionTop]="150" [(visible)]="detailDisplay" [showHeader]="true" modal="modal" width="700" height='350' [closable]="true">
+              <p-header>
+                <span> 查看详情</span>
+              </p-header>
+              <div class="row" style="height:60rem;">
+                <div>
+                  <div class="viewdetail-div">
+                    <span>策略名称</span>
+                    <input type="text" readonly class="input_textarea2" [(ngModel)]="updateStrategyName1" pInputText placeholder=""> &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span style="margin-left:1rem;"> 升级时间</span>
+                    <input type="text" readonly class="input_textarea2" [(ngModel)]="updateStrategyDate1" pInputText placeholder=""> &nbsp;&nbsp;&nbsp;&nbsp;
+                  </div>
+                  <div class="viewdetail-div">
+                    <span>升级地址</span>
+                    <input type="text" readonly class="input_textarea2" [(ngModel)]="updateUrl1" pInputText placeholder=""> &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span style="margin-left:1.95rem;">创建人</span>
+                    <input type="text" readonly class="input_textarea2" [(ngModel)]="createUser1" pInputText placeholder=""> &nbsp;&nbsp;&nbsp;&nbsp;
+                  </div>
+                  <div class="viewdetail-div">
+                    <span>创建时间</span>
+                    <input type="text" readonly class="input_textarea2" [(ngModel)]="createTime1" pInputText placeholder=""> &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span style="margin-left:1.95rem;">修改人</span>
+                    <input type="text" class="input_textarea2" [(ngModel)]="modifyBy1" pInputText placeholder=""> &nbsp;&nbsp;&nbsp;&nbsp;
+                  </div>
+                  <div class="viewdetail-div2">
+                    <span>修改时间</span>
+                    <input type="text" readonly class="input_textarea2" [(ngModel)]="modifyOn1" pInputText placeholder=""> &nbsp;&nbsp;&nbsp;&nbsp;
+                  </div>
+                  <div style="float:left;margin-top:.7rem;margin-left:3rem;">
+                    <span> 明细</span>
+                  </div>
+                  <div style="float:left;margin-top:0rem;margin-left:.2rem;">
+                    <button pButton type="button" (click)="viewDetials()" icon="ion-ios-arrow-forward" iconPos="right" label=" " class="detailBut"></button>
+                  </div>
+                </div>
+              </div>
+
+            </p-dialog>
+          </div>
+          <!-- 查看详情 -->
+          <!-- 查看详情明细 -->
+          <div style="margin-bottom:1%;">
+            <p-dialog [positionTop]="150" [(visible)]="detailsDisplay" [showHeader]="true" modal="modal" width="950" height="450" [closable]="true">
+              <p-header>
+                <span> 查看详情明细</span>
+              </p-header>
+              <div class="row">
+                <div style="margin-left:1%;margin-bottom:1%;width:100%;float:left;">
+                  <div>
+                    <span>车牌号码</span>
+                    <input type="text" class="input_textarea2" [(ngModel)]="selfQueryCar" pInputText placeholder=""> &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span>版本号</span>
+                    <input type="text" class="input_textarea2" [(ngModel)]="selfQueryEdition" pInputText placeholder=""> &nbsp;&nbsp;&nbsp;&nbsp;
+                    <button pButton class="detailedQuery" (click)="selfQuery()" type="button" label="查询"></button>
+                  </div>
+                </div>
+                <!-- 表格 -->
+                <div class="dialogTable" style="margin-top:2rem;">
+                  <p-dataTable [style]="{'height':'18rem'}" [value]="terminalDataForUpdate" [rows]="5" [paginator]="true" [rowsPerPageOptions]="[5,10,15,20]"
+                    emptyMessage="无数据!">
+                    <p-column field="CARNO_AND_COLOR" header="车牌号(颜色)"></p-column>
+                    <p-column field="COMPANYNAME" header="厂家名称"></p-column>
+                    <p-column field="DEVICE_ID_STR" header="设备类型"></p-column>
+                    <p-column field="PRODUCT_TYPE" header="设备型号"></p-column>
+                    <p-column field="SOFT_VESION" header="设备版本号"></p-column>
+                    <p-column field="CREATON" header="最后一次升级时间"></p-column>
+                  </p-dataTable>
+                </div>
+              </div>
+            </p-dialog>
+          </div>
+          <!-- 查看详情明细 -->
+
+          <!-- 修改策略弹窗 -->
+          <div>
+            <p-dialog [positionTop]="150" [(visible)]="modify_Display" [showHeader]="true" modal="modal" width="700" height='420' [closable]="true"
+              (onHide)="closeModify()">
+              <p-header>
+                <span> 策略升级任务修改</span>
+              </p-header>
+              <div class="row" style="height:70rem;">
+                <div>
+                  <div class="viewdetail-div">
+                    <span>策略名称</span>
+                    <input type="text" class="input_textarea2" [(ngModel)]="updateStrategyName" pInputText placeholder=""> &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span style="margin-left:1rem;"> 升级时间</span>
+                    <p-calendar placeholder={{updateShowTime}} showTime="true" [(ngModel)]="updateStrategyDate" hourFormat="24" [locale]="cn"
+                      dateFormat="yy-mm-dd" styleClass="different"></p-calendar> &nbsp;&nbsp;
+                  </div>
+                  <div class="viewdetail-div">
+                    <span>升级地址</span>
+                    <input type="text" class="input_textarea2" [(ngModel)]="modifyUrl" pInputText placeholder=""> &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span style="margin-left:1.95rem;">创建人</span>
+                    <input type="text" readonly class="input_textarea2" [(ngModel)]="createUser1" pInputText placeholder=""> &nbsp;&nbsp;&nbsp;&nbsp;
+                  </div>
+                  <div class="viewdetail-div">
+                    <span>创建时间</span>
+                    <input type="text" readonly class="input_textarea2" [(ngModel)]="createTime1" pInputText placeholder=""> &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span style="margin-left:1.95rem;">修改人</span>
+                    <input type="text" readonly class="input_textarea2" [(ngModel)]="modifyBy1" pInputText placeholder=""> &nbsp;&nbsp;&nbsp;&nbsp;
+                  </div>
+                  <div class="viewdetail-div2">
+                    <span>修改时间</span>
+                    <input type="text" readonly class="input_textarea2" [(ngModel)]="modifyOn1" pInputText placeholder=""> &nbsp;&nbsp;&nbsp;&nbsp;
+                  </div>
+                  <div style="float:left;margin-top:.7rem;margin-left:3rem;">
+                    <span> 明细</span>
+                  </div>
+                  <div style="float:left;margin-top:0rem;margin-left:.2rem;">
+                    <button pButton type="button" (click)="newDetailedDisplay()" icon="ion-ios-arrow-forward" iconPos="right" label=" " class="detailBut"></button>
+                  </div>
+                  <div style="margin-top: 6rem;margin-left:16rem;">
+                    <button pButton class="modifySave" (click)="modifySave()" type="button" label="保存"></button>
+                  </div>
+                </div>
+              </div>
+
+            </p-dialog>
+          </div>
+          <!-- 修改策略弹窗 -->
+
+          <!-- 修改策略明细 -->
+          <div style="margin-bottom:1%;">
+            <p-dialog [positionTop]="150" [(visible)]="detailed_Display" [showHeader]="true" modal="modal" width="950" height="500" [closable]="true">
+              <p-header>
+                <span> 策略信息修改明细</span>
+              </p-header>
+              <div class="row">
+                <div style="margin-left:1%;margin-bottom:1%;width:100%;float:left;">
+                  <div>
+                    <span>车牌号码</span>
+                    <input type="text" class="input_textarea2" [(ngModel)]="selfQueryCar" pInputText placeholder=""> &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span>版本号</span>
+                    <input type="text" class="input_textarea2" [(ngModel)]="selfQueryEdition" pInputText placeholder=""> &nbsp;&nbsp;&nbsp;&nbsp;
+                    <button pButton class="detailedQuery" (click)="selfQuery()" type="button" label="查询"></button>
+                  </div>
+                </div>
+                <!-- 表格 -->
+                <div class="dialogTable" style="margin-top:1rem;">
+                  <p-dataTable [style]="{'height':'18rem'}" [value]="terminalDataForUpdate" [(selection)]="checkerData" dataKey="KEYID" [rows]="5"
+                    [paginator]="true" [rowsPerPageOptions]="[5,10,15,20]" [headerCheckboxToggleAllPages]="true" emptyMessage="无数据!" styleClass="selectDataTable">
+                    <p-column [style]="{'width':'34px'}" selectionMode="multiple"></p-column>
+                    <p-column field="CARNO_AND_COLOR" header="车牌号(颜色)"></p-column>
+                    <p-column field="COMPANYNAME" header="厂家名称"></p-column>
+                    <p-column field="DEVICE_ID_STR" header="设备类型"></p-column>
+                    <p-column field="PRODUCT_TYPE" header="设备型号"></p-column>
+                    <p-column field="SOFT_VESION" header="设备版本号"></p-column>
+                    <p-column field="CREATON" header="最后一次升级时间"></p-column>
+                  </p-dataTable>
+                </div>
+                <div style="margin-top:1rem;">
+                  <button pButton class="detailedConfirm" type="button" (click)="newDetailedConfirm()" label="确认"></button>
+                </div>
+              </div>
+
+            </p-dialog>
+          </div>
+          <!-- 修改策略明细 -->
+
+          <!-- 修改策略明细确认 -->
+          <div style="margin-bottom:1%;">
+            <p-dialog [positionTop]="150" [(visible)]="detailedConfirm_Display" [showHeader]="true" modal="modal" width="950" height="475"
+              [closable]="true">
+              <p-header>
+                <span> 策略信息修改明细确认</span>
+              </p-header>
+              <div class="row">
+                <div style="margin-left:1rem;width:100%;">
+                  <p>您要升级的终端信息如下</p>
+                </div>
+                <!-- 表格 -->
+                <div class="dialogTable" style="margin-top:.5rem;">
+                  <p-dataTable [style]="{'height':'18rem'}" [value]="checkedRowsData" [rows]="5" [paginator]="true" [rowsPerPageOptions]="[5,10,15,20]"
+                    emptyMessage="无数据!">
+                    <p-column field="CARNO_AND_COLOR" header="车牌号(颜色)"></p-column>
+                    <p-column field="COMPANYNAME" header="厂家名称"></p-column>
+                    <p-column field="DEVICE_ID_STR" header="设备类型"></p-column>
+                    <p-column field="PRODUCT_TYPE" header="设备型号"></p-column>
+                    <p-column field="SOFT_VESION" header="设备版本号"></p-column>
+                    <p-column field="CREATON" header="最后一次升级时间"></p-column>
+                  </p-dataTable>
+                </div>
+                <div style="margin-top:1rem;">
+                  <button pButton class="detailedConfirm" type="button" (click)="newCloseConfirm()" label="确认"></button>
+                </div>
+              </div>
+
+            </p-dialog>
+          </div>
+          <!-- 修改策略明细确认 -->
+
+          <!-- 弹窗3  确认删除? -->
+          <div>
+            <p-dialog [(visible)]="deleteDisplay" [showHeader]="false" modal="modal" width="300" height="180" [closable]="true">
+
+              <div class="row">
+                <div style="margin-top:3%;margin-left:30%;">
+                  <span style="font-size:1.3rem;">确认删除？</span>
+                </div>
+                <div style="margin-top:18%;margin-left:17%;">
+                  <button pButton class="confirmDeleteBtn" type="button" (click)="confirmDelete()" label="确认"></button>
+                  &ensp;&ensp;&ensp;&nbsp;
+                  <button pButton type="button" class="deleteCancelBtn" label="取消" (click)="Undelete()"></button>
+                </div>
+              </div>
+
+            </p-dialog>
+          </div>
+          <!--  -->
+        </div>
+        <p-growl [(value)]="msgs" [life]="2000"></p-growl>
+      </nb-card-body>
+    </nb-card>
+    <!-- 策略任务页 -->
+  </div>
+
+  <p-overlayPanel #op1 [style]="{'width':'18rem','height':'18.5rem'}">
+    <div style="height: 18rem;font-size:.8rem">
+      <lbstree #lbstree1></lbstree>
+    </div>
+  </p-overlayPanel>
+</div>

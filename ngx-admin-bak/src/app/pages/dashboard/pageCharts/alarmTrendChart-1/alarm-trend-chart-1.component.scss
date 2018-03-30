@@ -1,0 +1,10 @@
+@import '../../../../@theme/styles/themes';
+@include nb-install-component() {
+    nb-card {
+        height: 100%;
+    }
+    nb-card-body {
+        height: calc(100vh - 152px);
+    }
+
+}

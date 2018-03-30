@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="col-12">
+    <nb-card>
+      <nb-card-header>
+        <div class="loaction">
+          <div class="loaction_box">
+            <img src="../../../../assets/images/location.png">
+            <p>统计报表
+              <b></b>
+              <span>报警查询日志</span>
+            </p>
+          </div>
+          <div class="btn_01">
+            <a (click)="dt.exportCSV()">导出报表</a>
+          </div>
+          <div class="myclear"></div>
+        </div>
+
+        <div class="cen_condition">
+          <div class="input-group">
+            <div class="searchCondition">
+              <div class="ui-inputgroup">
+                <span class="input_desc">操作时间</span>
+                <input type="text" id="startEndTime" name="startEndTime" pInputText class="input_timearea">
+              </div>
+            </div>
+            <div class="searchCondition">
+              <input type="text" pInputText [(ngModel)]="searchName" placeholder="查询人" class="input_textarea">
+            </div>
+            <!-- <p-calendar placeholder="开始时间" showTime="true" [(ngModel)]="beginDate" hourFormat="24" [locale]="cn" dateFormat="yy-mm-dd"></p-calendar>&nbsp;-&nbsp;&nbsp;
+              <p-calendar placeholder="结束时间" showTime="true" [(ngModel)]="endDate" hourFormat="24" [locale]="cn" dateFormat="yy-mm-dd"></p-calendar> -->
+            <div class="btn_02">
+              <a (click)="searchAlarm()">查询</a>
+            </div>
+          </div>
+        </div>
+      </nb-card-header>
+
+      <nb-card-body>
+        <p-dataTable #dt [value]="alarmData" exportFilename="报警查询日志" [rows]="5" [pageLinks]="5" [paginator]="true" [rowsPerPageOptions]="[5,10,20]"
+          [loading]="loading">
+          <p-column field="USERNAME" header="查询人" [style]="{'width':'10%','text-align':'center'}"></p-column>
+          <p-column field="CREATETIME" header="操作时间" [style]="{'width':'10%','text-align':'center'}"></p-column>
+          <p-column field="STARTTIME" header="开始时间" [style]="{'width':'10%','text-align':'center'}"></p-column>
+          <p-column field="ENDTIME" header="结束时间" [style]="{'width':'10%','text-align':'center'}"></p-column>
+          <p-column field="LOGCONTENT" header="查询内容" [style]="{'width':'55%','text-align':'center'}"></p-column>
+          <p-column field="IP" header="IP地址" [style]="{'width':'10%','text-align':'center'}"></p-column>
+          <ng-template pTemplate="emptymessage">
+            没有获取到数据
+          </ng-template>
+        </p-dataTable>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

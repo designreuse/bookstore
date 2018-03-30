@@ -1,0 +1,210 @@
+@import '../../../@theme/styles/themes';
+@include nb-install-component() {
+  * {
+    font-size: 0.8rem;
+    font-family: 微软雅黑, tahoma;
+    color: #333;
+  }
+  .row {
+    padding-right: 0;
+    padding-left: 0;
+  }
+  .col-12 {
+    padding-right: 0;
+    padding-left: 0;
+  }
+  nb-card {
+    height: 100%;
+    font-size: 0.64rem;
+  }
+  nb-card-header {
+    padding: 0;
+  }
+  nb-card-body {
+    height: calc(100vh - 19.4rem);
+    padding: 1rem;
+  }
+  /* input 在IE下去掉X 去掉密码输入的眼睛图标 */
+  input::-ms-clear {
+    display: none;
+  }
+  input::-ms-reveal {
+    display: none;
+  }
+  /* 导航 */
+  .loaction {
+    height: 3.2rem;
+    border-bottom: 1px solid #eceef2;
+    font-weight: 100;
+  }
+  .loaction_box {
+    float: left;
+    margin-left: 0.8rem;
+  }
+  .loaction_box img {
+    float: left;
+    display: inline-block;
+    margin-top: 0.72rem;
+    margin-right: 0.8rem
+  }
+  .loaction_box p {
+    font-size: .64rem;
+    line-height: 3.2rem;
+    color: #999;
+    float: left;
+    font-weight: 100;
+  }
+  .loaction_box p b {
+    display: inline-block;
+    background: url(../../../../assets/images/rrrow-right.png) no-repeat;
+    width: .72rem;
+    height: 1.04rem;
+    margin-left: .48rem;
+    margin-right: .48rem;
+    vertical-align: middle;
+  }
+  .loaction_box p span {
+    display: inline-block;
+    color: #333;
+    font-size: 0.96rem;
+    font-weight: 100;
+  }
+  /* 筛选条件 */
+  .cen_condition {
+    height: 4rem;
+    padding: 0.4rem 0.16rem 0.4rem 1.2rem;
+  }
+  .searchCondition {
+    height: 2.4rem;
+    float: left;
+    margin: 0 0.16rem;
+  }
+  /* 下拉列表 */
+  /deep/ .input_dropdown {
+    height: 2.4rem;
+    border: 1px solid #ACACAC;
+    border-radius: 0.4rem;
+  }
+  /deep/ .input_dropdown .ui-dropdown-label {
+    height: 100%;
+    border-radius: 0.4rem;
+    font-size: 0.96rem;
+  }
+  /deep/ .input_dropdown .ui-dropdown-item {
+    font-size: 0.96rem;
+  }
+  /deep/ .input_dropdown .ui-dropdown-trigger {
+    border-radius: 0.4rem;
+  }
+  /deep/ .input_dropdown .fa {
+    margin-top: 0.8rem;
+  }
+  /* 查询输入框 */
+  .input_textarea {
+    text-align: left;
+    width: 8rem;
+    background: #fff;
+    height: 2.4rem;
+    line-height: 2rem;
+    border-radius: .4rem;
+    -webkit-border-radius: .4rem;
+    border: 1px solid #ACACAC;
+    padding: 0 0 0 0.4rem;
+    font-size: 0.96rem;
+  }
+  /* 查询按钮 */
+  .btn_02 {
+    display: inline-block;
+    height: 2.4rem;
+    margin: 0 0.16rem;
+  }
+  .btn_02 a {
+    display: block;
+    width: 6.4rem;
+    height: 2.4rem;
+    line-height: 2.4rem;
+    text-align: center;
+    background: #49a0d2;
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 100;
+    border-radius: .5em;
+    -webkit-border-radius: .4rem;
+  }
+  .btn_02 a:hover {
+    background: #50abe0;
+    cursor: pointer;
+  }
+  .btn_02 a:active {
+    background: #49a0d2;
+  }
+  /* 侧边树显隐按钮 */
+  .show_side_btn {
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    top: 40%;
+    width: 12px;
+    height: 100px;
+    border-radius: 20px 0 0 20px;
+  }
+  /* 树弹出框 */
+  /deep/ .alarm_sidebar .ui-sidebar-close {
+    display: none;
+  }
+  .hide_side_btn {
+    position: absolute;
+    left: 0;
+    top: 40%;
+    width: 12px;
+    height: 100px;
+    border-radius: 0 20px 20px 0;
+  }
+  .search_tips {
+    // position: absolute;
+    margin-top: 20px; // right: 35px;
+  }
+  .tabmenu {
+    width: 98%;
+    margin: 0 auto;
+    padding-top: 10px;
+    height: 50px;
+  }
+  .tabmenu ul {
+    width: 35%;
+    margin: 0 auto;
+  }
+  .tabmenu ul li {
+    display: inline-block;
+    width: 49.9%;
+    float: left;
+  }
+  .tabmenu ul li a {
+    display: block;
+    font-size: 16px;
+    background: #fff;
+    line-height: 40px;
+    height: 40px;
+    border: 1px solid #11bfff;
+    text-align: center;
+  }
+  #trendId {
+    border-top-left-radius: 0.24rem;
+    border-bottom-left-radius: 0.24rem;
+  }
+  #pieId {
+    border-top-right-radius: 0.24rem;
+    border-bottom-right-radius: 0.24rem;
+  }
+  .tabmenu ul li a:hover {
+    background: #11bfff;
+    cursor: pointer;
+  }
+  .tabmenu ul li a:active {
+    background: #11bfff;
+    color: #fff;
+  }
+  .search_tips {
+    padding: 20px;
+  }
+}

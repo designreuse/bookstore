@@ -1,0 +1,141 @@
+<div class="row">
+  <div class="col-12 col-lg-9">
+    <nb-card>
+
+    <nb-card-body>
+      <p-growl [(value)]="msgs"></p-growl>
+
+      <!-- <button pButton type="button" style="margin-left:10px;" (click)="initVideoDiv(2,1)" label="4" class="ui-button-success" style="font-size:0.66em"></button>
+      <button pButton type="button" style="margin-left:10px;" (click)="initVideoDiv(3,2)" label="6" class="ui-button-success" style="font-size:0.66em"></button>
+      <button pButton type="button" style="margin-left:10px;" (click)="initVideoDiv(4,3)" label="8" class="ui-button-success" style="font-size:0.66em"></button>
+      <button pButton type="button" style="margin-left:10px;" (click)="initVideoDiv(3,1)" label="9" class="ui-button-success" style="font-size:0.66em"></button>
+      <button pButton type="button" style="margin-left:10px;" (click)="initVideoDiv(5,4)" label="10" class="ui-button-success" style="font-size:0.66em"></button> -->
+
+      <!-- <ul>
+                <li><button pButton type="button" style="margin-left:10px;" (click)="initVideoDiv(2,1)" label="4" class="ui-button-success" style="font-size:0.66em"></button>
+                </li>
+                <li><button pButton type="button" style="margin-left:10px;" (click)="initVideoDiv(3,2)" label="6" class="ui-button-success" style="font-size:0.66em"></button>
+                </li>
+                <li><button pButton type="button" style="margin-left:10px;" (click)="initVideoDiv(4,3)" label="8" class="ui-button-success" style="font-size:0.66em"></button>
+                </li>
+                <li><button pButton type="button" style="margin-left:10px;" (click)="initVideoDiv(3,1)" label="9" class="ui-button-success" style="font-size:0.66em"></button>
+                </li>
+                <li><button pButton type="button" style="margin-left:10px;" (click)="initVideoDiv(5,4)" label="10" class="ui-button-success" style="font-size:0.66em"></button>
+                </li>
+                <li><button pButton type="button" style="margin-left:10px;" (click)="initVideoDiv(4,1)" label="16" class="ui-button-success" style="font-size:0.66em"></button>
+                </li>
+                <li><button pButton type="button" style="margin-left:10px;" (click)="initVideoDiv(5,1)" label="25" class="ui-button-success" style="font-size:0.66em"></button>
+                </li>
+                <li><button pButton type="button" style="margin-left:10px;" (click)="initVideoDiv(6,1)" label="36" class="ui-button-success" style="font-size:0.66em"></button>
+                </li>
+              </ul> -->
+
+      <!-- <div class="mainbody">
+        <div class="mainbody_left2">
+          <div class="sp">
+            <div class="sp_nub">
+              
+              <ul>
+                  <li><a href="#" class="click" onclick="initVideoDiv(this,2)">4</a>
+                  </li>
+                  <li><a href="#" onclick="initVideoDiv(this,3,2)">6</a>
+                  </li>
+                  <li><a href="#" onclick="initVideoDiv(this,4,3)">8</a>
+                  </li>
+                  <li><a href="#" onclick="initVideoDiv(this,3)">9</a>
+                  </li>
+                  <li><a href="#" onclick="initVideoDiv(this,5,4)">10</a>
+                  </li>
+                  <li><a href="#" onclick="initVideoDiv(this,4)">16</a>
+                  </li>
+                  <li><a href="#" onclick="initVideoDiv(this,5)">25</a>
+                  </li>
+                  <li><a href="#" onclick="initVideoDiv(this,6)">36</a>
+                  </li>
+              </ul>
+            </div>
+            <div class="nubbox" #videoDiv></div>
+          </div>
+        </div>
+      </div> -->
+
+      <div class="ui-g">
+          <div class="ui-g-12 ui-md-1">
+            <div class="ui-g-12 ui-md-12"><button pButton type="button" (click)="initVideoDiv(2,1)" label="4" class="ui-button-success" style="font-size:0.66em;width:100%;"></button></div>
+            <div class="ui-g-12 ui-md-12"><button pButton type="button" (click)="initVideoDiv(3,2)" label="6" class="ui-button-success" style="font-size:0.66em;width:100%;"></button></div>
+            <div class="ui-g-12 ui-md-12"><button pButton type="button" (click)="initVideoDiv(4,3)" label="8" class="ui-button-success" style="font-size:0.66em;width:100%;"></button></div>
+            <div class="ui-g-12 ui-md-12"><button pButton type="button" (click)="initVideoDiv(3,1)" label="9" class="ui-button-success" style="font-size:0.66em;width:100%;"></button></div>
+            <div class="ui-g-12 ui-md-12"><button pButton type="button" (click)="initVideoDiv(5,4)" label="10" class="ui-button-success" style="font-size:0.66em;width:100%;"></button></div>
+            <div class="ui-g-12 ui-md-12"><button pButton type="button" (click)="initVideoDiv(4,1)" label="16" class="ui-button-success" style="font-size:0.66em;width:100%;"></button></div>
+            <div class="ui-g-12 ui-md-12"><button pButton type="button" (click)="initVideoDiv(5,1)" label="25" class="ui-button-success" style="font-size:0.66em;width:100%;"></button></div>
+            <div class="ui-g-12 ui-md-12"><button pButton type="button" (click)="initVideoDiv(6,1)" label="36" class="ui-button-success" style="font-size:0.66em;width:100%;"></button></div>
+          </div>
+          <div class="ui-g-12 ui-md-11 ui-g-nopad" style="font-size:0%;">
+            <!-- <div style="position:absolute;width: 88%; height:85%;z-index:999999">
+              <iframe id="iframe1" allowTransparency="true" frameBorder="0" marginHeight="0" marginWidth="0" style="position:absolute;visibility:inherit;width:100%; height:100%;z-index:-1; filter:alpha(opacity=0);"></iframe>
+            </div> -->
+            <div #videoDiv></div>
+          </div>
+          <div class="ui-g-12">
+            
+          </div>
+      </div>
+<!--       
+      <div style="height: calc(100vh - 239px);">
+        <object id="myActiveX1" #myActiveX width=352 height=200
+          codebase="./assets/LVP_JT_HXSDK.cab#version=1,0,0,1126"
+          classid="CLSID:AA165CB1-28FD-4368-8758-31BA53AAF377" style="background-color: powderblue" standby="使用object控件" >
+           <param name="_Version" value="65536">
+           <param name="_ExtentX" value="2646">
+           <param name="_ExtentY" value="1323">
+           <param name="_StockProps" value="0">
+        </object>
+        <object id="myActiveX2" #myActiveX width=352 height=200
+          codebase="./assets/LVP_JT_HXSDK.cab#version=1,0,0,1126"
+          classid="CLSID:AA165CB1-28FD-4368-8758-31BA53AAF377" style="background-color: powderblue" standby="使用object控件" >
+           <param name="_Version" value="65536">
+           <param name="_ExtentX" value="2646">
+           <param name="_ExtentY" value="1323">
+           <param name="_StockProps" value="0">
+        </object>
+        <object id="myActiveX3" #myActiveX width=352 height=200
+          codebase="./assets/LVP_JT_HXSDK.cab#version=1,0,0,1126"
+          classid="CLSID:AA165CB1-28FD-4368-8758-31BA53AAF377" style="background-color: powderblue" standby="使用object控件" >
+           <param name="_Version" value="65536">
+           <param name="_ExtentX" value="2646">
+           <param name="_ExtentY" value="1323">
+           <param name="_StockProps" value="0">
+        </object>
+        <object id="myActiveX4" #myActiveX width=352 height=200
+          codebase="./assets/LVP_JT_HXSDK.cab#version=1,0,0,1126"
+          classid="CLSID:AA165CB1-28FD-4368-8758-31BA53AAF377" style="background-color: powderblue" standby="使用object控件" >
+           <param name="_Version" value="65536">
+           <param name="_ExtentX" value="2646">
+           <param name="_ExtentY" value="1323">
+           <param name="_StockProps" value="0">
+        </object>
+      </div> -->
+  </nb-card-body>
+  </nb-card>
+</div>
+  
+  <div class="col-12 col-lg-3"  style="height: calc(100vh - 128px);">
+    <!-- <input type="text" style="width: 150px;" [(ngModel)]="serverIp" pInputText placeholder="服务器地址">
+    <input type="text" style="width: 80px;margin-left: 10px;" [(ngModel)]="serverPort" pInputText placeholder="端口">
+    <button pButton type="button" style="margin-left:10px;" (click)="onConnect()" label="连接" class="ui-button-success" style="font-size:0.66em"></button>
+    <button pButton type="button" style="margin-left:10px;" (click)="onDisConnect()" label="断开连接" class="ui-button-success" style="font-size:0.66em"></button> -->
+    <div>
+      <input type="text" style="width: 170px;" [(ngModel)]="phone" (ngModelChange)="phoneChange($event)" pInputText placeholder="手机号">
+    </div>
+    <div>
+      <button pButton type="button" (click)="onBeginVideo()" label="视频播放" class="ui-button-success" style="font-size:0.66em"></button>
+      <button pButton type="button" (click)="onEndVideo()" label="视频停止" class="ui-button-success" style="font-size:0.66em"></button>
+    </div>
+
+    <lbstree id="lbstree" #lbstree (ondblClick)="ondblClick($event)" (onrightClick)="onrightClick($event)"></lbstree>
+    
+  </div>
+</div>
+<div>
+    <p-contextMenu #menu [model]="menuItems"></p-contextMenu>
+</div> 

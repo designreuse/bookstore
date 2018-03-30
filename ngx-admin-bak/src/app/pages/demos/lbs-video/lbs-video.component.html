@@ -1,0 +1,69 @@
+<div class="row">
+  <div class="col-12 col-lg-9">
+    <nb-card>
+      <!-- <nb-card-header>
+        <div class="ui-g" style="width:500px">
+            <div class="ui-g-3"><p-checkbox name="camera" value="camera1" label="摄像头1" [(ngModel)]="selectedCameras" inputId="camera1"></p-checkbox></div>
+            <div class="ui-g-3"><p-checkbox name="camera" value="camera2" label="摄像头2" [(ngModel)]="selectedCameras" inputId="camera2"></p-checkbox></div>
+            <div class="ui-g-3"><p-checkbox name="camera" value="camera3" label="摄像头3" [(ngModel)]="selectedCameras" inputId="camera3"></p-checkbox></div>
+            <div class="ui-g-3"><p-checkbox name="camera" value="camera4" label="摄像头4" [(ngModel)]="selectedCameras" inputId="camera4"></p-checkbox></div>
+        </div>
+  </nb-card-header> -->
+  <nb-card-body>
+      <p-growl [(value)]="msgs"></p-growl>
+     
+      <div style="height: calc(100vh - 239px);">
+        <object id="myActiveX1" #myActiveX width=352 height=200
+          codebase="./assets/LVP_JT_HXSDK.cab#version=1,0,0,1126"
+          classid="CLSID:AA165CB1-28FD-4368-8758-31BA53AAF377" style="background-color: powderblue" standby="使用object控件" >
+           <param name="_Version" value="65536">
+           <param name="_ExtentX" value="2646">
+           <param name="_ExtentY" value="1323">
+           <param name="_StockProps" value="0">
+        </object>
+        <object id="myActiveX2" #myActiveX width=352 height=200
+          codebase="./assets/LVP_JT_HXSDK.cab#version=1,0,0,1126"
+          classid="CLSID:AA165CB1-28FD-4368-8758-31BA53AAF377" style="background-color: powderblue" standby="使用object控件" >
+           <param name="_Version" value="65536">
+           <param name="_ExtentX" value="2646">
+           <param name="_ExtentY" value="1323">
+           <param name="_StockProps" value="0">
+        </object>
+        <object id="myActiveX3" #myActiveX width=352 height=200
+          codebase="./assets/LVP_JT_HXSDK.cab#version=1,0,0,1126"
+          classid="CLSID:AA165CB1-28FD-4368-8758-31BA53AAF377" style="background-color: powderblue" standby="使用object控件" >
+           <param name="_Version" value="65536">
+           <param name="_ExtentX" value="2646">
+           <param name="_ExtentY" value="1323">
+           <param name="_StockProps" value="0">
+        </object>
+        <object id="myActiveX4" #myActiveX width=352 height=200
+          codebase="./assets/LVP_JT_HXSDK.cab#version=1,0,0,1126"
+          classid="CLSID:AA165CB1-28FD-4368-8758-31BA53AAF377" style="background-color: powderblue" standby="使用object控件" >
+           <param name="_Version" value="65536">
+           <param name="_ExtentX" value="2646">
+           <param name="_ExtentY" value="1323">
+           <param name="_StockProps" value="0">
+        </object>
+      </div>
+  </nb-card-body>
+  </nb-card>
+</div>
+
+  <div class="col-12 col-lg-3"  style="height: calc(100vh - 128px);">
+    <div><input type="text" style="width: 150px;" [(ngModel)]="serverIp" pInputText placeholder="服务器地址"></div>
+    <div><input type="text" style="width: 150px;" [(ngModel)]="serverPort" pInputText placeholder="端口"></div>
+    <div>
+        <button pButton type="button" style="margin-left:10px;" (click)="onConnect()" label="连接" class="ui-button-success" style="font-size:0.66em"></button>
+        <button pButton type="button" style="margin-left:10px;" (click)="onDisConnect()" label="断开" class="ui-button-success" style="font-size:0.66em"></button>
+    </div>
+    
+    <div>
+      <input type="text" style="width: 150px;" [(ngModel)]="phone" pInputText placeholder="手机号">
+    </div>
+    <div>
+      <button pButton type="button" (click)="onBeginVideo()" label="播放" class="ui-button-success" style="font-size:0.66em"></button>
+      <button pButton type="button" (click)="onEndVideo()" label="停止" class="ui-button-success" style="font-size:0.66em"></button>
+    </div>
+  </div>
+</div>

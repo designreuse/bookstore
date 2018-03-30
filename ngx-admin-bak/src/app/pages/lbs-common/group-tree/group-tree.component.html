@@ -1,0 +1,26 @@
+<nb-card>
+  <nb-card-body  style="height:400px">
+    <div class="ui-lg ui-fluid">
+      <div class="ui-lg-12 ui-md-6">
+        <div class="input-group">
+          <input type="text" class="form-control" (keyup.enter)="searchGroup()" (keyup.backspace)="resetTree()" placeholder="输入组名称" [(ngModel)]="searchGroupName">
+          <span class="input-group-btn">
+            <button class="btn btn-primary" (click)="searchGroup()">
+              查询
+            </button>
+          </span>
+        </div>
+      </div>
+
+      <div class="ui-lg-12 ui-md-6" >
+        <div class="tree-content" id='treeContainer'>
+          <tree-root #tree [nodes]="nodes" [options]="options">
+            <ng-template #treeNodeTemplate let-node="node" let-index="index">
+              <img style="margin-top:-5px" src="./assets/images/{{node.data.iconSkin}}.png" alt="#" />{{ node.data.name }}
+            </ng-template>
+          </tree-root>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

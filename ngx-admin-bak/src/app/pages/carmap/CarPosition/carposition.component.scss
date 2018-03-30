@@ -1,0 +1,188 @@
+@import '../../../@theme/styles/themes';
+@include nb-install-component() {
+  /deep/ nb-card {
+    padding: 0;
+    height: 100%;
+    background: nb-theme(positionOp); //车辆树背景透明度
+    color: nb-theme(positionFontColor);
+  }
+  nb-card-body {
+    padding: 0;
+    height: 100%;
+  }
+  /deep/ .row {
+    width: 100%;
+    height: calc(100vh - 130px);
+    bottom: 0rem;
+  }
+  /deep/ .positionSidebar .main-container {
+    .scrollable {
+      padding: 0.25rem; //车辆树内边距
+    }
+  }
+  .divBottom {
+    width: 100%;
+    height: 100%;
+    float: left;
+  }
+  .divUp {
+    width: 17rem;
+    height: calc(100vh - 154px);
+    right: 0rem;
+    z-index: 500;
+    float: right;
+    position: absolute;
+  }
+  /deep/ .leaflet-container {
+    width: 100%;
+    height: calc(100vh - 158px);
+    bottom: 0rem;
+  }
+  .leaflet-container.leaflet-touch-drag.leaflet-touch-zoom {
+    bottom: 0rem;
+    height: 100%;
+  }
+  /deep/ .leaflet-bottom,
+  .leaflet-right {
+    position: absolute;
+    z-index: 400;
+    pointer-events: none;
+  }
+  /deep/ .leaflet-bottom,
+  .leaflet-left {
+    position: absolute;
+    z-index: 400;
+    pointer-events: none;
+  }
+  /deep/ .leaflet-top,
+  .leaflet-right {
+    position: absolute;
+    z-index: 400;
+    pointer-events: none;
+  }
+  /deep/ .leaflet-top,
+  .leaflet-left {
+    position: absolute;
+    z-index: 400;
+    pointer-events: none;
+  }
+  .div-left {
+    float: left;
+    width: 17%;
+    height: nb-theme(card-height-large);
+  }
+  .div-right {
+    height: calc(100vh - 158px);
+  }
+  [class*="col-"] {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  myDialog {
+    margin-top: 500px;
+  }
+  /deep/.map_pop a {
+    text-decoration: none;
+    color: #fff;
+    margin-left: 1rem;
+  }
+  /deep/.map_pop {
+    border-radius: 20px;
+    left: 35%;
+    top: 20%
+  }
+  /deep/.map_popbox {
+    height: 2rem;
+    line-height: 3rem
+  }
+  /deep/.map_popbox img {
+    float: left;
+    vertical-align: middle;
+    width: 2rem;
+    margin-right: 1rem
+  }
+  /deep/.map_popbox p {
+    line-height: 2rem;
+    color: #333;
+    font-size: 0.3rem;
+    font-weight: bold;
+  }
+  /deep/.map_popbox b {
+    display: inline-block;
+    color: #F7AE02;
+    width: 1rem;
+    height: 1rem;
+    float: left;
+  }
+  /deep/.map_coninfo p {
+    font-size: .1rem;
+    color: #666;
+    display: inline-block;
+    line-height: 1px;
+    line-height: 1px;
+    margin-bottom: 0px;
+    margin-top: 18px;
+    margin-left: 1rem;
+    width: 39.5%;
+  }
+  /deep/.map_coninfo p b {
+    font-size: .1rem;
+    color: #333;
+    padding-left: .2rem
+  }
+  /deep/.date1 {
+    font-size: .1rem;
+    color: #666;
+    display: inline-block;
+    line-height: 1px;
+    line-height: 1px;
+    margin-bottom: 0px;
+    margin-top: 18px;
+    margin-left: 1rem;
+    width: 100%;
+  }
+  /deep/.map_btn {
+    width: 100%;
+    bottom: 4.5rem;
+    margin-top: 1rem;
+  }
+  /deep/.map_btn ul {
+    margin: 0 auto;
+    width: 98%
+  }
+  /deep/.map_btn ul li {
+    display: inline-block;
+    width: 33%;
+    text-align: center
+  }
+  /deep/.map_btn ul li a {
+    display: block;
+    line-height: 2rem;
+    font-size: 0.8rem;
+    color: #3abc75
+  }
+  /deep/.map_btn ul li a:active {
+    color: #0C83D4;
+    text-decoration: none
+  }
+  /deep/.skin {
+    width: 100px;
+    border: 1px solid gray;
+    padding: 2px;
+    visibility: hidden;
+    position: absolute;
+  }
+  /deep/div.menuitems {
+    margin: 1px 0;
+  }
+  /deep/div.menuitems:hover {
+    background-color: #c0c0c0;
+  }
+  /* input 在IE下去掉X 去掉密码输入的眼睛图标 */
+  input::-ms-clear {
+    display: none;
+  }
+  input::-ms-reveal {
+    display: none;
+  }
+}

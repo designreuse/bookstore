@@ -1,0 +1,27 @@
+@import '../../../@theme/styles/themes';
+@include nb-install-component() {
+    /deep/th {
+        text-align: center;
+    }
+    /deep/td {
+        text-align: center;
+    }
+    /deep/.ui-table .ui-table-thead > tr > th, .ui-table .ui-table-tfoot > tr > td {
+        background: #f6f7f9;
+        border: 1px solid #d9d9d9;
+        color: #1b1d1f;
+    }
+    /deep/.ui-table .ui-table-tbody > tr > td {
+        border: 1px solid #D5D5D5;
+    }
+    /deep/.ui-widget-header {
+        background: #ffffff;
+        color: #2d353c;
+        border: 0px solid #423939;
+    }
+    /deep/.ui-paginator {
+        margin: 2.5%;
+        text-align: center;
+        padding: .125em;
+    }
+}

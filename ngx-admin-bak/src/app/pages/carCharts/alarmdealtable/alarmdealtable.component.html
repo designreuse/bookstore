@@ -1,0 +1,286 @@
+<div class="row">
+  <toaster-container [toasterconfig]="config"></toaster-container>
+  <div class="col-12">
+    <nb-card>
+      <nb-card-header>
+        <div class="loaction">
+          <div class="loaction_box">
+            <img src="../../../../assets/images/location.png">
+            <p>统计报表
+              <b></b>
+              <span>报警处理</span>
+            </p>
+          </div>
+          <div class="btn_01">
+            <a (click)="exportCSV()">导出报表</a>
+          </div>
+          <div class="myclear"></div>
+        </div>
+
+        <div class="cen_condition">
+          <div class="input-group">
+            <div class="searchCondition">
+              <div class="ui-inputgroup">
+                <span class="input_desc">报警时间</span>
+                <input type="text" id="startEndTime" name="startEndTime" pInputText class="input_timearea">
+              </div>
+            </div>
+            <div class="searchCondition">
+              <input type="text" [(ngModel)]="searchdriverName" pInputText placeholder="驾驶员" class="input_textarea">
+            </div>
+            <div class="searchCondition">
+              <p-dropdown [options]="alarmList" [(ngModel)]="selectedAlarm" placeholder="报警类型" (onChange)="showLevel()" styleClass="input_dropdown"
+                [style]="{'width':'12rem'}"></p-dropdown>
+            </div>
+            <div class="searchCondition" *ngIf="isShowLevel">
+              <p-dropdown [options]="leveloptions" [(ngModel)]="selectedLevel" placeholder="报警等级" optionLabel="levelName" styleClass="input_dropdown"></p-dropdown>
+            </div>
+            <div class="searchCondition">
+              <p-dropdown [options]="dealState" [(ngModel)]="selectedstate" placeholder="处理状态" optionLabel="stateName" styleClass="input_dropdown"></p-dropdown>
+            </div>
+            <div class="btn_02">
+              <a (click)="searchAlarm()">查询</a>
+            </div>
+          </div>
+        </div>
+      </nb-card-header>
+      <nb-card-body>
+        <p-dataTable #dt [value]="alarmdata" exportFilename="报警处理" [rows]="rows" [paginator]="true" [rowsPerPageOptions]="[5,10,20]"
+          [totalRecords]="totalRecords" [loading]="loading">
+          <p-column *ngFor="let col of cols" [field]="col.field" [header]="col.header" [sortable]="col.sort" [style]="col.style"></p-column>
+          <p-column [style]="{'width':'15%','text-align':'center'}">
+            <ng-template pTemplate="header">
+              <label class="template_operation">操作</label>
+            </ng-template>
+            <ng-template let-alarminfo="rowData" pTemplate="body">
+              <a (click)="dealalarmshow(alarminfo)" *ngIf="alarminfo.ALARM_TREAT != 1" class="btn_07">报警处理</a>
+              <a (click)="alarmdetailshow(alarminfo)" *ngIf="alarminfo.ALARM_TREAT == 1" class="btn_07">处理详情</a>
+              <!-- <a (click)="download(alarminfo)" class="btn_07">下载图片</a>
+            <a (click)="download(alarminfo)" class="btn_07">下载视频</a> -->
+            </ng-template>
+          </p-column>
+          <ng-template pTemplate="emptymessage">
+            没有获取到数据
+          </ng-template>
+        </p-dataTable>
+
+
+
+        <p-dialog [(visible)]="dealdisplay" [width]="600" [minHeight]="500" modal="modal" [contentStyle]="{'overflow':'visible'}"
+          [positionTop]="120" [style]="{'border':'none'}" [resizable]="false">
+          <p-header>
+            <span> 报警处理</span>
+          </p-header>
+          <div class="ui-g ui-fluid">
+            <div class="ui-g-12 ui-md-6">
+              <div class="ui-inputgroup">
+                <span class="dialogForms">车牌号码</span>
+                <input type="text" pInputText readonly [value]="alarminfo.CAR_NO">
+              </div>
+            </div>
+            <div class="ui-g-12 ui-md-6">
+              <div class="ui-inputgroup">
+                <span class="dialogForms">车牌颜色</span>
+                <input type="text" pInputText readonly [value]="platecolor">
+              </div>
+            </div>
+            <div class="ui-g-12 ui-md-6">
+              <div class="ui-inputgroup">
+                <span class="dialogForms">报警类型</span>
+                <input type="text" pInputText readonly [value]="alarminfo.alarmName">
+              </div>
+            </div>
+            <div class="ui-g-12 ui-md-6">
+              <div class="ui-inputgroup">
+                <span class="dialogForms">报警等级</span>
+                <input type="text" pInputText readonly [value]="alarminfo.ALARM_LEVEL_STR">
+              </div>
+            </div>
+
+            <div class="ui-g-12 ui-md-6">
+              <div class="ui-inputgroup">
+                <span class="dialogForms">开始时间</span>
+                <input type="text" pInputText readonly [value]="alarminfo.ALARMDATE">
+              </div>
+            </div>
+            <div class="ui-g-12 ui-md-6">
+              <div class="ui-inputgroup">
+                <span class="dialogForms">结束时间</span>
+                <input type="text" pInputText readonly [value]="alarminfo.ALARM_ENDDATE">
+              </div>
+            </div>
+            <div class="ui-g-12 ui-md-6">
+              <div class="ui-inputgroup">
+                <span class="dialogForms">驾驶员</span>
+                <input type="text" pInputText readonly [value]="alarminfo.CAR_DRIVER_NAME">
+              </div>
+            </div>
+            <div class="ui-g-12 ui-md-10">
+              <div class="ui-inputgroup">
+                <span class="dialogForms">报警内容</span>
+                <input type="text" pInputText readonly [value]="alarminfo.ALARM_DESC">
+              </div>
+            </div>
+            <div class="ui-g-12 ui-md-2">
+              <a (click)="watchVideo()" class="btn_09">观看</a>
+            </div>
+            <div class="ui-g-12 ui-md-12">
+              <div class="ui-inputgroup">
+                <span class="dialogForms">报警地点</span>
+                <input type="text" pInputText readonly [value]="location">
+              </div>
+            </div>
+            <div class="ui-g-12 ui-md-6">
+              <div class="ui-inputgroup">
+                <span class="dialogForms">处理人
+                  <span style="color:red">*</span>
+                </span>
+                <input type="text" pInputText [(ngModel)]="dealPerson">
+              </div>
+            </div>
+            <!-- <div class="ui-g-12 ui-md-6">
+                <div class="ui-inputgroup">
+                  <span class="dialogForms">处理状态</span>
+                  <p-dropdown [options]="dealResult" [(ngModel)]="selectedDealResult" placeholder="处理状态" optionLabel="stateName" required [style]="{'width': '120px'}"></p-dropdown>
+                </div>
+              </div> -->
+            <div class="ui-g-12 ui-md-12">
+              <div class="ui-inputgroup">
+                <span class="dialogForms">处理意见
+                  <span style="color:red">*</span>
+                </span>
+                <textarea pInputTextarea [(ngModel)]="dealComment" [rows]="3" [cols]="70" autoResize="true" required></textarea>
+              </div>
+            </div>
+          </div>
+
+          <p-footer>
+            <button type="button" pButton icon="fa-check" iconPos="left" label="处理" (click)="saveDealResult()" class="btn_10"></button>
+            <button type="button" pButton icon="fa-times" iconPos="left" label="取消" (click)="cancel()" class="btn_10"></button>
+          </p-footer>
+        </p-dialog>
+
+        <!-- 处理结果提示框 -->
+        <p-dialog [(visible)]="showMessage" [width]="300" [minHeight]="300" [contentStyle]="{'overflow':'visible'}" modal="modal"
+          [showHeader]="false">
+          <div *ngIf="messageConfirm==true">
+            <div class="deal_dialog_content">处理成功！</div>
+            <div class="deal_dialog_btn">
+              <button type="button" pButton icon="fa-check" label="确定" (click)="confirm()" class="ui-button-success btn_10"></button>
+            </div>
+          </div>
+
+          <div *ngIf="messageConfirm==false">
+            <div class="deal_dialog_content">{{messageContent}}</div>
+            <div class="deal_dialog_btn">
+              <button type="button" pButton icon="fa-info-circle" label="确定" (click)="confirm()" class="ui-button-info btn_10"></button>
+            </div>
+          </div>
+        </p-dialog>
+
+        <!-- 视频播放 -->
+        <p-dialog [(visible)]="videoShow" [width]="834" [minHeight]="720" modal="modal" [contentStyle]="{'overflow':'visible'}" header=""
+          [positionTop]="150">
+          <video src="http://oos-js.ctyunapi.cn/testadas/test/2.mp4?Signature=0SjhfIUjpB8%2BUYfKd7PAE9IM6u0%3D&AWSAccessKeyId=08b05ce376681d108fb2&Expires=1536564559"
+            width="800" height="450" controls="controls"></video>
+        </p-dialog>
+
+        <p-dialog [(visible)]="showdetail" [width]="600" [minWidth]="510" [contentStyle]="{'overflow':'visible'}" modal="modal" [positionTop]="120"
+          [style]="{'border':'none'}" [resizable]="false">
+          <p-header>
+            <span> 报警处理详情</span>
+          </p-header>
+          <div class="ui-g ui-fluid">
+            <div class="ui-g-12 ui-md-6">
+              <div class="ui-inputgroup">
+                <span class="dialogForms">车牌号码</span>
+                <input type="text" pInputText readonly [value]="alarminfo.CAR_NO">
+              </div>
+            </div>
+            <div class="ui-g-12 ui-md-6">
+              <div class="ui-inputgroup">
+                <span class="dialogForms">车牌颜色</span>
+                <input type="text" pInputText readonly [value]="platecolor">
+              </div>
+            </div>
+            <div class="ui-g-12 ui-md-6">
+              <div class="ui-inputgroup">
+                <span class="dialogForms">报警类型</span>
+                <input type="text" pInputText readonly [value]="alarminfo.alarmName">
+              </div>
+            </div>
+            <div class="ui-g-12 ui-md-6">
+              <div class="ui-inputgroup">
+                <span class="dialogForms">报警等级</span>
+                <input type="text" pInputText readonly [value]="alarminfo.ALARM_LEVEL_STR">
+              </div>
+            </div>
+
+            <div class="ui-g-12 ui-md-6">
+              <div class="ui-inputgroup">
+                <span class="dialogForms">开始时间</span>
+                <input type="text" pInputText readonly [value]="alarminfo.ALARMDATE">
+              </div>
+            </div>
+            <div class="ui-g-12 ui-md-6">
+              <div class="ui-inputgroup">
+                <span class="dialogForms">结束时间</span>
+                <input type="text" pInputText readonly [value]="alarminfo.ALARM_ENDDATE">
+              </div>
+            </div>
+            <div class="ui-g-12 ui-md-6">
+              <div class="ui-inputgroup">
+                <span class="dialogForms">驾驶员</span>
+                <input type="text" pInputText readonly [value]="alarminfo.CAR_DRIVER_NAME">
+              </div>
+            </div>
+            <div class="ui-g-12 ui-md-12">
+              <div class="ui-inputgroup">
+                <span class="dialogForms">报警内容</span>
+                <input type="text" pInputText readonly [value]="alarminfo.ALARM_DESC">
+              </div>
+            </div>
+            <div class="ui-g-12 ui-md-12">
+              <div class="ui-inputgroup">
+                <span class="dialogForms">报警地点</span>
+                <input type="text" pInputText readonly [value]="location">
+              </div>
+            </div>
+            <div class="ui-g-12 ui-md-6">
+              <div class="ui-inputgroup">
+                <span class="dialogForms">处理人</span>
+                <input type="text" pInputText readonly [value]="alarminfo.TREAT_PERSON">
+              </div>
+            </div>
+            <div class="ui-g-12 ui-md-6">
+              <div class="ui-inputgroup">
+                <span class="dialogForms">处理结果</span>
+                <input type="text" pInputText readonly [value]="alarminfo.ALARM_TREAT_STR">
+              </div>
+            </div>
+            <div class="ui-g-12 ui-md-6">
+              <div class="ui-inputgroup">
+                <span class="dialogForms">处理时间</span>
+                <input type="text" pInputText readonly [value]="alarminfo.ALARM_TREATTIME">
+              </div>
+            </div>
+            <div class="ui-g-12 ui-md-12">
+              <div class="ui-inputgroup">
+                <span class="dialogForms">处理意见</span>
+                <textarea pInputTextarea [(ngModel)]="dealComment" [rows]="3" [cols]="70" autoResize="true" readonly [value]="alarminfo.ALARM_TREATCONTENT"></textarea>
+              </div>
+            </div>
+          </div>
+          <p-footer>
+            <button type="button" pButton icon="fa-times" iconPos="left" label="关闭" (click)="showdetail=false" class="btn_10"></button>
+          </p-footer>
+        </p-dialog>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <button pButton type="button" (click)="visibleSidebar2 = true" icon="fa-arrow-left" class="ui-button-info show_side_btn"></button>
+  <p-sidebar [(visible)]="visibleSidebar2" position="right" [baseZIndex]="10000" [style]="{'width':'25rem'}" styleClass="alarm_sidebar">
+    <button pButton type="button" (click)="visibleSidebar2 = false" icon="fa-arrow-right" class="ui-button-info hide_side_btn"></button>
+    <lbstree #lbstree (sendToasterMsg)="sendToasterMsg($event)"></lbstree>
+  </p-sidebar>
+</div>
