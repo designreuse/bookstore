@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.jshx.lbs.service.mapper.MsgSendMapper">
+
+    <select id="getDicSubmit"  parameterType="map"  resultType="map">
+        select * from dictionary t where t.dictid='A4' and t.flag='1'
+        and REGEXP_LIKE(t.standbyvarchar,
+        <foreach item="item" index="index" collection="termTypeList"
+                 open="'" separator="|" close="'">
+            #{item}
+        </foreach>
+         )
+    </select>
+
+    <select id="getSingleDic"  parameterType="map"  resultType="map">
+        select * from dictionary t where t.dictid='A4' and t.flag='1'
+        and t.dictvalue =#{dictvalue}
+    </select>
+
+
+    <select id="getCarTerm"  parameterType="map"  resultType="map">
+        select * from lbs.t_pmt_register_term t where t.keyid in
+        <foreach item="item" index="index" collection="keyids"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+
+    <select id="getLockCar"  parameterType="map"  resultType="map">
+        select * from lbsbus.t_car t where t.status=1
+        and t.CAR_ID in
+        <foreach item="item" index="index" collection="caridList"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="getSendCar"  parameterType="map"  resultType="map">
+        select * from lbsbus.t_car t  where t.key_id=#{key_id}
+        and t.company_id=#{company_id}
+    </select>
+
+    <insert id="saveMsgSendDetail"  parameterType="map" >
+        insert into lbsbus.T_Msg_Send_Detail (IDX, CARID,CREATEDON,CREATEDBY,D_ID,COMMAND_ID,COMMAND_IDX,COMMAND_PARA,CHANNEL_ID)
+        values
+            (#{idx}, #{CAR_ID},#{createdon},#{userId2},#{guid},#{commandId},#{commandIdX},#{commandPara},#{CHANNEL_ID})
+     </insert>
+
+    <insert id="saveTMsgSendHis"  parameterType="map" >
+        insert into lbsbus.t_msg_send_his (IDX, USERID,SEND_TIME,C_DESCRIPTION,CREATEDON,CREATEDBY,IP)
+        values
+            (#{idx}, #{userId2},#{createdon},#{description},#{createdon},#{userId2},#{ip})
+    </insert>
+
+    <insert id="saveTMsgSubmit"  parameterType="map" >
+        insert into lbs.T_Msg_Submit (COMMAND_IDX,COMMAND_ID,
+        COMMAND_PARA,KEYID,TERMID,CHANNEL_ID,SOCKET_IDX,COMPANYID,USERID,COMMAND_TIME,PLAN_TIME,GUID)
+        values
+        (#{commandIdx},#{commandId},
+        <choose>
+            <when test="commandPara == null">
+                '',
+            </when>
+            <otherwise>
+                #{commandPara},
+            </otherwise>
+        </choose>
+        #{KEY_ID},#{TERMID},#{CHANNEL_ID},#{SOCKET_IDX},#{COMPANYID},#{USERID},#{createdon}
+        ,#{createdon} ,#{guid})
+    </insert>
+
+
+
+</mapper>

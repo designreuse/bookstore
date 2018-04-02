@@ -1,0 +1,41 @@
+
+<div *ngIf="sysPrivilege">
+    <h2><span jhiTranslate="lbsApp.sysPrivilege.detail.title">Sys Privilege</span> {{sysPrivilege.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="lbsApp.sysPrivilege.privilegePid">Privilege Pid</span></dt>
+        <dd>
+            <span>{{sysPrivilege.privilegePid}}</span>
+        </dd>
+        <dt><span jhiTranslate="lbsApp.sysPrivilege.privilegeName">Privilege Name</span></dt>
+        <dd>
+            <span>{{sysPrivilege.privilegeName}}</span>
+        </dd>
+        <dt><span jhiTranslate="lbsApp.sysPrivilege.companyid">Companyid</span></dt>
+        <dd>
+            <span>{{sysPrivilege.companyid}}</span>
+        </dd>
+        <dt><span jhiTranslate="lbsApp.sysPrivilege.priviligeDesc">Privilige Desc</span></dt>
+        <dd>
+            <span>{{sysPrivilege.priviligeDesc}}</span>
+        </dd>
+        <dt><span jhiTranslate="lbsApp.sysPrivilege.isflag">Isflag</span></dt>
+        <dd>
+            <span>{{sysPrivilege.isflag}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'sys-privilege/'+ sysPrivilege.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

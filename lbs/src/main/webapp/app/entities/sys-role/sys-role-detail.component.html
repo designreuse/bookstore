@@ -1,0 +1,49 @@
+
+<div *ngIf="sysRole">
+    <h2><span jhiTranslate="lbsApp.sysRole.detail.title">Sys Role</span> {{sysRole.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="lbsApp.sysRole.roleName">Role Name</span></dt>
+        <dd>
+            <span>{{sysRole.roleName}}</span>
+        </dd>
+        <dt><span jhiTranslate="lbsApp.sysRole.rolePid">Role Pid</span></dt>
+        <dd>
+            <span>{{sysRole.rolePid}}</span>
+        </dd>
+        <dt><span jhiTranslate="lbsApp.sysRole.companyId">Company Id</span></dt>
+        <dd>
+            <span>{{sysRole.companyId}}</span>
+        </dd>
+        <dt><span jhiTranslate="lbsApp.sysRole.roleDesc">Role Desc</span></dt>
+        <dd>
+            <span>{{sysRole.roleDesc}}</span>
+        </dd>
+        <dt><span jhiTranslate="lbsApp.sysRole.issys">Issys</span></dt>
+        <dd>
+            <span>{{sysRole.issys}}</span>
+        </dd>
+        <dt><span jhiTranslate="lbsApp.sysRole.roleCode">Role Code</span></dt>
+        <dd>
+            <span>{{sysRole.roleCode}}</span>
+        </dd>
+        <dt><span jhiTranslate="lbsApp.sysRole.roleDeep">Role Deep</span></dt>
+        <dd>
+            <span>{{sysRole.roleDeep}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'sys-role/'+ sysRole.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

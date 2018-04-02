@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jshx.lbs.service.mapper.UsersMapper">
+
+    <select id="CheckSuperMan" parameterType="String" resultType="String">
+            select USER_ID from lbsbus.t_sys_superadmin t where USER_ID = #{userId}
+    </select>
+
+    <select id="getUserInfo" parameterType="String" resultType="map">
+       select * from lbsbus.t_sys_user where USER_ID = #{userId}
+    </select>
+
+    <select id="getCompanyInfoByUser" parameterType="String" resultType="map">
+        select * from lbsbus.t_sys_company where company_id = #{companyId}
+    </select>
+
+</mapper>

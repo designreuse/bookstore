@@ -1,0 +1,74 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="mySysPrivilegeLabel" jhiTranslate="lbsApp.sysPrivilege.home.createOrEditLabel">Create or edit a Sys Privilege</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!sysPrivilege.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="sysPrivilege.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="lbsApp.sysPrivilege.privilegePid" for="field_privilegePid">Privilege Pid</label>
+            <input type="text" class="form-control" name="privilegePid" id="field_privilegePid"
+                [(ngModel)]="sysPrivilege.privilegePid" maxlength="40" />
+            <div [hidden]="!(editForm.controls.privilegePid?.dirty && editForm.controls.privilegePid?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.privilegePid?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
+                   This field cannot be longer than 40 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="lbsApp.sysPrivilege.privilegeName" for="field_privilegeName">Privilege Name</label>
+            <input type="text" class="form-control" name="privilegeName" id="field_privilegeName"
+                [(ngModel)]="sysPrivilege.privilegeName" maxlength="200" />
+            <div [hidden]="!(editForm.controls.privilegeName?.dirty && editForm.controls.privilegeName?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.privilegeName?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 200 }">
+                   This field cannot be longer than 200 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="lbsApp.sysPrivilege.companyid" for="field_companyid">Companyid</label>
+            <input type="text" class="form-control" name="companyid" id="field_companyid"
+                [(ngModel)]="sysPrivilege.companyid" maxlength="40" />
+            <div [hidden]="!(editForm.controls.companyid?.dirty && editForm.controls.companyid?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.companyid?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
+                   This field cannot be longer than 40 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="lbsApp.sysPrivilege.priviligeDesc" for="field_priviligeDesc">Privilige Desc</label>
+            <input type="text" class="form-control" name="priviligeDesc" id="field_priviligeDesc"
+                [(ngModel)]="sysPrivilege.priviligeDesc" maxlength="200" />
+            <div [hidden]="!(editForm.controls.priviligeDesc?.dirty && editForm.controls.priviligeDesc?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.priviligeDesc?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 200 }">
+                   This field cannot be longer than 200 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="lbsApp.sysPrivilege.isflag" for="field_isflag">Isflag</label>
+            <input type="number" class="form-control" name="isflag" id="field_isflag"
+                [(ngModel)]="sysPrivilege.isflag"  />
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jshx.lbs.service.mapper.TimingMapper">
+    <select id="getTimingInfo" parameterType="map"  resultType="map">
+        select SERVICE_ID,SERVICE_NAME,START_TIME,TIME_SPAN,PHOTO_NUM,CHANNEL_IDS,COMPANYID,IMGTYPE,IMGSIZE from lbsbus.t_dspz where COMPANYID = #{companyId}
+        <if test="serviceName !=null and serviceName!=''">
+                <bind name="serviceName2" value="'%'+serviceName+'%'"/>
+                 and  SERVICE_NAME like  #{serviceName2}
+        </if>
+        <if test="startTime !=null and startTime!=''">
+            <bind name="startTime2" value="'%'+startTime+'%'"/>
+             and  START_TIME like  #{startTime2}
+        </if>
+    </select>
+
+    <insert id="saveTimingInfo" parameterType="map"  >
+        insert into lbsbus.t_dspz(SERVICE_ID,SERVICE_NAME,START_TIME,TIME_SPAN,PHOTO_NUM,CHANNEL_IDS,COMPANYID,IMGTYPE,IMGSIZE) values(
+        #{serviceId},#{serviceName},#{startTime},#{timeSpan},#{photoNum},#{channelIds},#{companyId},#{imgType},#{imgSize}
+        )
+    </insert>
+
+    <update id="updateTimingInfo" parameterType="map" >
+        update  lbsbus.t_dspz  set SERVICE_NAME=#{serviceName},START_TIME=#{startTime},TIME_SPAN=#{timeSpan},PHOTO_NUM=#{photoNum},
+        CHANNEL_IDS=#{channelIds},COMPANYID=#{companyId} where SERVICE_ID = #{serviceId}
+    </update>
+
+
+
+    <delete id="deleteTimingInfo" parameterType="String"  >
+        delete from lbsbus.t_dspz where SERVICE_ID = #{serviceId}
+    </delete>
+
+    <insert  id="saveCarIdForServieId" parameterType="map">
+        INSERT INTO T_CARSERVICE (ID,CARID,SERVICEID)
+        VALUES
+            ( sys_guid(),  #{carId},#{serviceId})
+    </insert>
+
+    <select id="getCarIdListByServiceId" parameterType="String" resultType="String">
+        select CARID from T_CARSERVICE where SERVICEID = #{serviceId}
+    </select>
+
+    <select id="deleteByServiceId" parameterType="String">
+        delete from T_CARSERVICE where SERVICEID = #{serviceId}
+    </select>
+
+</mapper>

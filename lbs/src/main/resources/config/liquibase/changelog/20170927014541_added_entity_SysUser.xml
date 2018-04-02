@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <property name="now" value="now()" dbms="h2"/>
+
+    <property name="now" value="sysdate" dbms="oracle"/>
+
+    <property name="floatType" value="float4" dbms="postgresql, h2"/>
+    <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
+
+    <!--
+        Added the entity SysUser.
+    -->
+    <changeSet id="20170927014541-1" author="jhipster">
+        <createTable tableName="t_sys_user">
+            <column name="user_id" type="varchar(40)" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="company_id" type="varchar(40)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="user_name" type="varchar(100)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="user_pwd" type="varchar(100)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="user_desc" type="varchar(200)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="lastlogindate" type="date">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="createdby" type="varchar(40)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="createdon" type="date">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="modifedby" type="varchar(40)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="modifedon" type="date">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="modifiedby" type="varchar(40)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="modifiedon" type="date">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="userphone" type="varchar(40)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="email" type="varchar(100)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="lastlogingroup" type="varchar(50)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="groupid" type="varchar(40)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="realname" type="varchar(150)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="status" type="number">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="user_carid" type="varchar(40)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="headicon" type="varchar(200)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="positions" type="varchar(10)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="departmentauthor" type="varchar(10)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="user_sex" type="varchar(10)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="lejia_num" type="varchar(100)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="hasupdated" type="number">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="user_sort" type="number">
+                <constraints nullable="true" />
+            </column>
+
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
+        </createTable>
+
+        <createTable tableName="t_sys_userrole">
+            <column name="user_id" type="varchar(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" type="varchar(40)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="user_id, role_id" tableName="t_sys_userrole"/>
+
+        <addForeignKeyConstraint baseColumnNames="role_id"
+                                 baseTableName="t_sys_userrole"
+                                 constraintName="fk_sys_role_id"
+                                 referencedColumnNames="role_id"
+                                 referencedTableName="t_sys_role"/>
+
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="t_sys_userrole"
+                                 constraintName="fk_sys_user_id"
+                                 referencedColumnNames="user_id"
+                                 referencedTableName="t_sys_user"/>
+    </changeSet>
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
+</databaseChangeLog>

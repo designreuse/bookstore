@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jshx.lbs.service.mapper.SysUserMapper">
+    <select id="queryUserCars" parameterType="String" resultType="map">
+        select * from t_sys_car_user t where t.userid =#{userid}
+    </select>
+
+    <delete id="delUserCars"  parameterType="String" >
+        delete from t_sys_car_user t where t.userid =#{userid}
+    </delete>
+
+    <insert id="setUserCar"  parameterType="map" >
+        insert into t_sys_car_user (userid, carid)
+        values (#{userid}, #{carid})
+    </insert>
+
+    <update id="setUserLevel" parameterType="map" >
+        update t_sys_user t
+        set t.user_level= #{user_level}
+        where t.user_id =#{userid}
+    </update>
+
+
+    <select id="getUserInfo" parameterType="String" resultType="map">
+        select * from t_sys_user t where t.company_id = #{companyid}
+        and t.createdby=#{userid}
+        or (t.user_id=#{userid})
+    </select>
+
+    <select id="queryUserInfo" parameterType="String" resultType="map">
+        select * from t_sys_user t where t.company_id = #{companyid} and t.createdby=#{userid}
+        <if test="username != null and username!=''">
+            <bind name="username2" value="'%'+username+'%'"/>
+            and t.user_name like #{username2}
+        </if>
+        or (t.user_id=#{user_id}
+        <if test="username != null and username!=''">
+            <bind name="username2" value="'%'+username+'%'"/>
+            and t.user_name like #{username2}
+        </if>
+        )
+    </select>
+
+
+    <select id="queryRepeatUserInfo" parameterType="String" resultType="map">
+        select * from t_sys_user t where t.company_id = #{companyid}
+        and t.user_name = #{username}
+    </select>
+
+    <select id="queryRepeatUpdUserInfo" parameterType="String" resultType="map">
+        select * from t_sys_user t where t.company_id = #{companyid}
+        and t.user_name = #{username} t.user_id!=#{userid}
+    </select>
+
+    <select id="getUserCars" parameterType="String" resultType="map">
+        select t.CAR_NO,t.platecolor,t.groupname,t.cdma_signal,t.net_type,t.storage,t.record_flag
+        from v_pmt_vcar t where t.COMPANY_ID=#{companyid}
+    </select>
+
+
+    <select id="getUserRoles" parameterType="String" resultType="map">
+        select * from t_sys_userrole t where t.user_id=#{userid}
+    </select>
+
+    <delete id="delUserRole"  parameterType="String" >
+        delete  from t_sys_userrole t  where t.user_id=#{userid}
+    </delete>
+
+    <insert id="saveUser"  parameterType="map" >
+        insert into t_sys_user (USER_ID, COMPANY_ID, USER_NAME, USER_PWD, USER_DESC, LASTLOGINDATE, CREATEDBY, CREATEDON, MODIFEDBY, MODIFEDON, MODIFIEDBY, MODIFIEDON, USERPHONE, EMAIL, LASTLOGINGROUP, GROUPID, REALNAME, STATUS, USER_CARID, HEADICON, POSITIONS, DEPARTMENTAUTHOR, USER_SEX, LEJIA_NUM, HASUPDATED, CERTIFITYPE, CERTIFINO, BESTPAYNO, DATEOFCERTIFICATION, BIRTHDAY, EMPLOYMENTNATURE, USER_SORT, USER_LEVEL)
+        values (#{userid}, #{companyid}, #{username}, #{userpass}, #{userdesc},#{lastlogindate} , '', #{createdate}, '', null, '', #{modifydate}, #{userphone}, #{email}, '', #{groupid}, #{realname}, null, '', '', '', '', '', '', null, null, '', '', null, null, '', null, #{userlevel})
+    </insert>
+
+    <insert id="setUserRole"  parameterType="map" >
+        insert into t_sys_userrole (USER_ID, ROLE_ID)
+        values (#{userid}, #{roleId})
+    </insert>
+
+    <delete id="delUserInfo"  parameterType="String" >
+        delete  from t_sys_user t where t.user_id=#{userid}
+    </delete>
+
+    <select id="getSingleUser" parameterType="String" resultType="map">
+        select * from t_sys_user t where t.company_id = #{companyid}
+        and t.user_id=#{userid}
+    </select>
+
+    <update id="updUserInfo" parameterType="map" >
+        update t_sys_user t
+        set t.user_name= #{username},t.user_desc = #{userdesc},
+        <choose>
+            <when test="userphone == null">
+                t.userphone = '',
+            </when>
+            <otherwise>
+                t.userphone = #{userphone},
+            </otherwise>
+        </choose>
+
+        <choose>
+            <when test="email == null">
+                t.email = '',
+            </when>
+            <otherwise>
+                t.email = #{email},
+            </otherwise>
+        </choose>
+
+        <choose>
+            <when test="groupid == null">
+                t.groupid = '',
+            </when>
+            <otherwise>
+                t.groupid = #{groupid},
+            </otherwise>
+        </choose>
+
+        <choose>
+            <when test="realname == null">
+                t.realname = '',
+            </when>
+            <otherwise>
+                t.realname = #{realname},
+            </otherwise>
+        </choose>
+
+        <choose>
+            <when test="userlevel == null">
+                t.user_level = '',
+            </when>
+            <otherwise>
+                t.user_level = #{userlevel},
+            </otherwise>
+        </choose>
+        where t.user_id =#{userid}
+    </update>
+
+
+    <update id="updUserPass" parameterType="map" >
+        update t_sys_user t
+        set t.user_pwd= #{userpass}
+        where t.user_id =#{userid}
+    </update>
+
+    <select id="CheckSuperMan" parameterType="String" resultType="String">
+        select USER_ID from lbsbus.t_sys_superadmin t where USER_ID = #{userid}
+    </select>
+
+    <update id="setUserLock" parameterType="map" >
+        update t_sys_user t
+        set t.status= #{userstatus}
+        where t.user_id =#{userid}
+    </update>
+
+</mapper>

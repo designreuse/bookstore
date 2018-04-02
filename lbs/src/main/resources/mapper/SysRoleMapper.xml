@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jshx.lbs.service.mapper.SysRoleMapper">
+
+    <select id="getRoleInfo" parameterType="String" resultType="map">
+        select * from t_sys_role t where t.issys=1 or t.comapany_id = #{companyid}
+    </select>
+
+    <select id="queryRolePri" parameterType="String" resultType="map">
+        select * from V_ROLE_PRIVILEGE t where t.role_id = #{roleId}
+    </select>
+
+    <select id="queryAllCompanyPri" parameterType="String" resultType="map">
+        select * from t_sys_privilege t1 where t1.isflag=0
+        and t1.privilege_id in (select t.M_ID from v_settings t where t.S_NAME='系统权限'
+        and t.ST_ID =#{companyid}
+        and t.S_VALUE='true')
+    </select>
+
+    <select id="queryRepeatRoleInfo" parameterType="String" resultType="map">
+        select * from t_sys_role t where t.comapany_id = #{companyid}
+        and t.role_name = #{rolename}
+    </select>
+
+    <select id="queryRepeatUpdRoleInfo" parameterType="String" resultType="map">
+        select * from t_sys_role t where t.comapany_id = #{companyid}
+        and t.role_name = #{rolename}  and t.role_id !=#{roleId}
+    </select>
+
+    <delete id="delRolePri"  parameterType="String" >
+          delete from t_sys_roleprivilege t where t.role_id=#{roleId}
+    </delete>
+
+    <insert id="saveRole"  parameterType="map" >
+    insert into t_sys_role (ROLE_ID, ROLE_NAME, ROLE_PID, COMAPANY_ID, ROLE_DESC, ROLE_DEEP, ISSYS, ROLE_CODE, ROLE_TYPE)
+    values (#{roleId}, #{rolename}, '',#{companyId},#{roledesc}, null, null, '', '')
+    </insert>
+
+    <insert id="setRolePri"  parameterType="map" >
+        insert into t_sys_roleprivilege (ROLE_ID, PRIVILEGE_ID)
+        values (#{roleId}, #{priId})
+    </insert>
+
+
+    <delete id="delRoleInfo"  parameterType="String" >
+        delete from t_sys_role t where t.role_id =#{roleId}
+    </delete>
+
+    <update id="updRoleInfo" parameterType="map" >
+        update t_sys_role t
+        set t.role_name= #{rolename},t.role_desc = #{roledesc}
+        where t.role_id =#{roleId}
+    </update>
+
+</mapper>

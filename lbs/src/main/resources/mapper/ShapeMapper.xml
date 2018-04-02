@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jshx.lbs.service.mapper.ShapeMapper">
+
+    <select id="getShapeInfo"  resultType="map">
+        select * from t_shape t where t.company_id=#{companyid}
+    </select>
+
+    <insert id="saveShape"  parameterType="map" >
+    insert into t_shape (SHAPE_ID, SHAPE_NAME, SHAPE_MEMO, SHAPE_IMG, COMPANY_ID, CREATEDON, CREATEDBY, MODIFIEDON, MODIFIEDBY, SHAPE_LOG, SHAPE_LAT, ISIMPORT, SHAPE_LEVEL, SHAPE_SCALE, ISREALCOORD)
+    values (#{shape_id}, #{shape_name}, #{shape_memo}, #{shape_img}, #{companyid}, #{createdon},#{createdby}, #{modifiedon},#{modifiedby}, #{shape_log}, #{shape_lat}, null, null, #{shape_scale}, 1)
+    </insert>
+
+    <delete id="delShapeInfo"  parameterType="String" >
+        delete from t_shape t where t.shape_id =#{shape_id}
+    </delete>
+
+    <select id="getSingleShape" parameterType="String" resultType="map">
+        select * from t_shape t where t.company_id=#{companyid}
+        and t.shape_id =#{shape_id}
+    </select>
+
+    <select id="queryShapeInfo" parameterType="String" resultType="map">
+        select * from t_shape t where t.company_id = #{companyid}
+        <if test="shape_name != null and shape_name!=''">
+            <bind name="shape_name2" value="'%'+shape_name+'%'"/>
+            and t.shape_name like #{shape_name2}
+        </if>
+    </select>
+
+    <update id="updShapeInfo" parameterType="map" >
+        update t_shape t
+        set t.shape_name= #{shape_name},
+        <choose>
+            <when test="shape_memo == null">
+                t.shape_memo = '',
+            </when>
+            <otherwise>
+                t.shape_memo = #{shape_memo},
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="shape_img == null">
+                t.shape_img = '',
+            </when>
+            <otherwise>
+                t.shape_img = #{shape_img},
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="shape_scale == null">
+                t.shape_scale = '',
+            </when>
+            <otherwise>
+                t.shape_scale = #{shape_scale},
+            </otherwise>
+        </choose>
+        t.modifiedon = #{modifiedon},t.modifiedby = #{modifiedby}
+        where t.shape_id =#{shape_id}
+    </update>
+
+</mapper>

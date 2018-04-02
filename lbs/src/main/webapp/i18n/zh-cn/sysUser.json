@@ -1,0 +1,45 @@
+{
+    "lbsApp": {
+        "sysUser" : {
+            "home": {
+                "title": "Sys Users",
+                "createLabel": "Create a new Sys User",
+                "createOrEditLabel": "Create or edit a Sys User"
+            },
+            "created": "A new Sys User is created with identifier {{ param }}",
+            "updated": "A Sys User is updated with identifier {{ param }}",
+            "deleted": "A Sys User is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Sys User {{ id }}?"
+            },
+            "detail": {
+                "title": "Sys User"
+            },
+            "companyId": "Company Id",
+            "userName": "User Name",
+            "userPwd": "User Pwd",
+            "userDesc": "User Desc",
+            "lastlogindate": "Lastlogindate",
+            "createdby": "Createdby",
+            "createdon": "Createdon",
+            "modifedby": "Modifedby",
+            "modifedon": "Modifedon",
+            "modifiedby": "Modifiedby",
+            "modifiedon": "Modifiedon",
+            "userphone": "Userphone",
+            "email": "Email",
+            "lastlogingroup": "Lastlogingroup",
+            "groupid": "Groupid",
+            "realname": "Realname",
+            "status": "Status",
+            "userCarid": "User Carid",
+            "headicon": "Headicon",
+            "positions": "Positions",
+            "departmentauthor": "Departmentauthor",
+            "userSex": "User Sex",
+            "lejiaNum": "Lejia Num",
+            "hasupdated": "Hasupdated",
+            "userSort": "User Sort"
+        }
+    }
+}

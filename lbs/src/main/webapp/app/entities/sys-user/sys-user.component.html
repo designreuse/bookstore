@@ -1,0 +1,119 @@
+<div>
+    <h2>
+        <span jhiTranslate="lbsApp.sysUser.home.title">Sys Users</span>
+        <button class="btn btn-primary float-right jh-create-entity create-sys-user" [routerLink]="['/', { outlets: { popup: ['sys-user-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="lbsApp.sysUser.home.createLabel">
+            Create new Sys User
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="sysUsers">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="companyId"><span jhiTranslate="lbsApp.sysUser.companyId">Company Id</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="userName"><span jhiTranslate="lbsApp.sysUser.userName">User Name</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="userPwd"><span jhiTranslate="lbsApp.sysUser.userPwd">User Pwd</span> <span class="fa fa-sort"></span></th>
+            <!--<th jhiSortBy="userDesc"><span jhiTranslate="lbsApp.sysUser.userDesc">User Desc</span> <span class="fa fa-sort"></span></th>-->
+            <!--<th jhiSortBy="lastlogindate"><span jhiTranslate="lbsApp.sysUser.lastlogindate">Lastlogindate</span> <span class="fa fa-sort"></span></th>-->
+            <!--<th jhiSortBy="createdby"><span jhiTranslate="lbsApp.sysUser.createdby">Createdby</span> <span class="fa fa-sort"></span></th>-->
+            <!--<th jhiSortBy="createdon"><span jhiTranslate="lbsApp.sysUser.createdon">Createdon</span> <span class="fa fa-sort"></span></th>-->
+            <!--<th jhiSortBy="modifedby"><span jhiTranslate="lbsApp.sysUser.modifedby">Modifedby</span> <span class="fa fa-sort"></span></th>-->
+            <!--<th jhiSortBy="modifedon"><span jhiTranslate="lbsApp.sysUser.modifedon">Modifedon</span> <span class="fa fa-sort"></span></th>-->
+            <!--<th jhiSortBy="modifiedby"><span jhiTranslate="lbsApp.sysUser.modifiedby">Modifiedby</span> <span class="fa fa-sort"></span></th>-->
+            <!--<th jhiSortBy="modifiedon"><span jhiTranslate="lbsApp.sysUser.modifiedon">Modifiedon</span> <span class="fa fa-sort"></span></th>-->
+            <!--<th jhiSortBy="userphone"><span jhiTranslate="lbsApp.sysUser.userphone">Userphone</span> <span class="fa fa-sort"></span></th>-->
+            <!--<th jhiSortBy="email"><span jhiTranslate="lbsApp.sysUser.email">Email</span> <span class="fa fa-sort"></span></th>-->
+            <!--<th jhiSortBy="lastlogingroup"><span jhiTranslate="lbsApp.sysUser.lastlogingroup">Lastlogingroup</span> <span class="fa fa-sort"></span></th>-->
+            <!--<th jhiSortBy="groupid"><span jhiTranslate="lbsApp.sysUser.groupid">Groupid</span> <span class="fa fa-sort"></span></th>-->
+            <!--<th jhiSortBy="realname"><span jhiTranslate="lbsApp.sysUser.realname">Realname</span> <span class="fa fa-sort"></span></th>-->
+            <!--<th jhiSortBy="status"><span jhiTranslate="lbsApp.sysUser.status">Status</span> <span class="fa fa-sort"></span></th>-->
+            <!--<th jhiSortBy="userCarid"><span jhiTranslate="lbsApp.sysUser.userCarid">User Carid</span> <span class="fa fa-sort"></span></th>-->
+            <!--<th jhiSortBy="headicon"><span jhiTranslate="lbsApp.sysUser.headicon">Headicon</span> <span class="fa fa-sort"></span></th>-->
+            <!--<th jhiSortBy="positions"><span jhiTranslate="lbsApp.sysUser.positions">Positions</span> <span class="fa fa-sort"></span></th>-->
+            <!--<th jhiSortBy="departmentauthor"><span jhiTranslate="lbsApp.sysUser.departmentauthor">Departmentauthor</span> <span class="fa fa-sort"></span></th>-->
+            <!--<th jhiSortBy="userSex"><span jhiTranslate="lbsApp.sysUser.userSex">User Sex</span> <span class="fa fa-sort"></span></th>-->
+            <!--<th jhiSortBy="lejiaNum"><span jhiTranslate="lbsApp.sysUser.lejiaNum">Lejia Num</span> <span class="fa fa-sort"></span></th>-->
+            <!--<th jhiSortBy="hasupdated"><span jhiTranslate="lbsApp.sysUser.hasupdated">Hasupdated</span> <span class="fa fa-sort"></span></th>-->
+            <!--<th jhiSortBy="userSort"><span jhiTranslate="lbsApp.sysUser.userSort">User Sort</span> <span class="fa fa-sort"></span></th>-->
+            <!--<th></th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let sysUser of sysUsers ;trackBy: trackId">
+                <td><a [routerLink]="['../sys-user', sysUser.id ]">{{sysUser.id}}</a></td>
+                <td>{{sysUser.companyId}}</td>
+                <td>{{sysUser.userName}}</td>
+                <td>{{sysUser.userPwd}}</td>
+                <!--<td>{{sysUser.userDesc}}</td>-->
+                <!--<td>{{sysUser.lastlogindate | date:'mediumDate'}}</td>-->
+                <!--<td>{{sysUser.createdby}}</td>-->
+                <!--<td>{{sysUser.createdon | date:'mediumDate'}}</td>-->
+                <!--<td>{{sysUser.modifedby}}</td>-->
+                <!--<td>{{sysUser.modifedon | date:'mediumDate'}}</td>-->
+                <!--<td>{{sysUser.modifiedby}}</td>-->
+                <!--<td>{{sysUser.modifiedon | date:'mediumDate'}}</td>-->
+                <!--<td>{{sysUser.userphone}}</td>-->
+                <!--<td>{{sysUser.email}}</td>-->
+                <!--<td>{{sysUser.lastlogingroup}}</td>-->
+                <!--<td>{{sysUser.groupid}}</td>-->
+                <!--<td>{{sysUser.realname}}</td>-->
+                <!--<td>{{sysUser.status}}</td>-->
+                <!--<td>{{sysUser.userCarid}}</td>-->
+                <!--<td>{{sysUser.headicon}}</td>-->
+                <!--<td>{{sysUser.positions}}</td>-->
+                <!--<td>{{sysUser.departmentauthor}}</td>-->
+                <!--<td>{{sysUser.userSex}}</td>-->
+                <!--<td>{{sysUser.lejiaNum}}</td>-->
+                <!--<td>{{sysUser.hasupdated}}</td>-->
+                <!--<td>{{sysUser.userSort}}</td>-->
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../sys-user', sysUser.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'sys-user/'+ sysUser.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'sys-user-role/'+ sysUser.id + '/editRole'} }]"
+                                replaceUrl="true"
+                                class="btn btn-success btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="hidden-md-down" >角色</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'sys-user/'+ sysUser.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+        <div *ngIf="sysUsers && sysUsers.length">
+            <div class="row justify-content-center">
+                <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+            </div>
+            <div class="row justify-content-center">
+                <ngb-pagination [collectionSize]="totalItems" [(page)]="page" (pageChange)="loadPage(page)"></ngb-pagination>
+            </div>
+        </div>
+</div>

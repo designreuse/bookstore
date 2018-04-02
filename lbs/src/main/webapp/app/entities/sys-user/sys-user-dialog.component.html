@@ -1,0 +1,278 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="mySysUserLabel" jhiTranslate="lbsApp.sysUser.home.createOrEditLabel">Create or edit a Sys User</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!sysUser.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="sysUser.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="lbsApp.sysUser.companyId" for="field_companyId">Company Id</label>
+            <input type="text" class="form-control" name="companyId" id="field_companyId"
+                [(ngModel)]="sysUser.companyId" maxlength="40" />
+            <div [hidden]="!(editForm.controls.companyId?.dirty && editForm.controls.companyId?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.companyId?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
+                   This field cannot be longer than 40 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="lbsApp.sysUser.userName" for="field_userName">User Name</label>
+            <input type="text" class="form-control" name="userName" id="field_userName"
+                [(ngModel)]="sysUser.userName" maxlength="100" />
+            <div [hidden]="!(editForm.controls.userName?.dirty && editForm.controls.userName?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.userName?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 100 }">
+                   This field cannot be longer than 100 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="lbsApp.sysUser.userPwd" for="field_userPwd">User Pwd</label>
+            <input type="text" class="form-control" name="userPwd" id="field_userPwd"
+                [(ngModel)]="sysUser.userPwd" maxlength="100" />
+            <div [hidden]="!(editForm.controls.userPwd?.dirty && editForm.controls.userPwd?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.userPwd?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 100 }">
+                   This field cannot be longer than 100 characters.
+                </small>
+            </div>
+        </div>
+        <!--<div class="form-group">-->
+            <!--<label class="form-control-label" jhiTranslate="lbsApp.sysUser.userDesc" for="field_userDesc">User Desc</label>-->
+            <!--<input type="text" class="form-control" name="userDesc" id="field_userDesc"-->
+                <!--[(ngModel)]="sysUser.userDesc" maxlength="200" />-->
+            <!--<div [hidden]="!(editForm.controls.userDesc?.dirty && editForm.controls.userDesc?.invalid)">-->
+                <!--<small class="form-text text-danger"-->
+                   <!--[hidden]="!editForm.controls.userDesc?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 200 }">-->
+                   <!--This field cannot be longer than 200 characters.-->
+                <!--</small>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label class="form-control-label" jhiTranslate="lbsApp.sysUser.lastlogindate" for="field_lastlogindate">Lastlogindate</label>-->
+            <!--<div class="input-group">-->
+                <!--<input id="field_lastlogindate" type="text" class="form-control" name="lastlogindate" ngbDatepicker  #lastlogindateDp="ngbDatepicker" [(ngModel)]="sysUser.lastlogindate"-->
+                <!--/>-->
+                <!--<span class="input-group-btn">-->
+                    <!--<button type="button" class="btn btn-default" (click)="lastlogindateDp.toggle()"><i class="fa fa-calendar"></i></button>-->
+                <!--</span>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label class="form-control-label" jhiTranslate="lbsApp.sysUser.createdby" for="field_createdby">Createdby</label>-->
+            <!--<input type="text" class="form-control" name="createdby" id="field_createdby"-->
+                <!--[(ngModel)]="sysUser.createdby" maxlength="40" />-->
+            <!--<div [hidden]="!(editForm.controls.createdby?.dirty && editForm.controls.createdby?.invalid)">-->
+                <!--<small class="form-text text-danger"-->
+                   <!--[hidden]="!editForm.controls.createdby?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">-->
+                   <!--This field cannot be longer than 40 characters.-->
+                <!--</small>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label class="form-control-label" jhiTranslate="lbsApp.sysUser.createdon" for="field_createdon">Createdon</label>-->
+            <!--<div class="input-group">-->
+                <!--<input id="field_createdon" type="text" class="form-control" name="createdon" ngbDatepicker  #createdonDp="ngbDatepicker" [(ngModel)]="sysUser.createdon"-->
+                <!--/>-->
+                <!--<span class="input-group-btn">-->
+                    <!--<button type="button" class="btn btn-default" (click)="createdonDp.toggle()"><i class="fa fa-calendar"></i></button>-->
+                <!--</span>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label class="form-control-label" jhiTranslate="lbsApp.sysUser.modifedby" for="field_modifedby">Modifedby</label>-->
+            <!--<input type="text" class="form-control" name="modifedby" id="field_modifedby"-->
+                <!--[(ngModel)]="sysUser.modifedby" maxlength="40" />-->
+            <!--<div [hidden]="!(editForm.controls.modifedby?.dirty && editForm.controls.modifedby?.invalid)">-->
+                <!--<small class="form-text text-danger"-->
+                   <!--[hidden]="!editForm.controls.modifedby?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">-->
+                   <!--This field cannot be longer than 40 characters.-->
+                <!--</small>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label class="form-control-label" jhiTranslate="lbsApp.sysUser.modifedon" for="field_modifedon">Modifedon</label>-->
+            <!--<div class="input-group">-->
+                <!--<input id="field_modifedon" type="text" class="form-control" name="modifedon" ngbDatepicker  #modifedonDp="ngbDatepicker" [(ngModel)]="sysUser.modifedon"-->
+                <!--/>-->
+                <!--<span class="input-group-btn">-->
+                    <!--<button type="button" class="btn btn-default" (click)="modifedonDp.toggle()"><i class="fa fa-calendar"></i></button>-->
+                <!--</span>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label class="form-control-label" jhiTranslate="lbsApp.sysUser.modifiedby" for="field_modifiedby">Modifiedby</label>-->
+            <!--<input type="text" class="form-control" name="modifiedby" id="field_modifiedby"-->
+                <!--[(ngModel)]="sysUser.modifiedby" maxlength="40" />-->
+            <!--<div [hidden]="!(editForm.controls.modifiedby?.dirty && editForm.controls.modifiedby?.invalid)">-->
+                <!--<small class="form-text text-danger"-->
+                   <!--[hidden]="!editForm.controls.modifiedby?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">-->
+                   <!--This field cannot be longer than 40 characters.-->
+                <!--</small>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label class="form-control-label" jhiTranslate="lbsApp.sysUser.modifiedon" for="field_modifiedon">Modifiedon</label>-->
+            <!--<div class="input-group">-->
+                <!--<input id="field_modifiedon" type="text" class="form-control" name="modifiedon" ngbDatepicker  #modifiedonDp="ngbDatepicker" [(ngModel)]="sysUser.modifiedon"-->
+                <!--/>-->
+                <!--<span class="input-group-btn">-->
+                    <!--<button type="button" class="btn btn-default" (click)="modifiedonDp.toggle()"><i class="fa fa-calendar"></i></button>-->
+                <!--</span>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label class="form-control-label" jhiTranslate="lbsApp.sysUser.userphone" for="field_userphone">Userphone</label>-->
+            <!--<input type="text" class="form-control" name="userphone" id="field_userphone"-->
+                <!--[(ngModel)]="sysUser.userphone" maxlength="40" />-->
+            <!--<div [hidden]="!(editForm.controls.userphone?.dirty && editForm.controls.userphone?.invalid)">-->
+                <!--<small class="form-text text-danger"-->
+                   <!--[hidden]="!editForm.controls.userphone?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">-->
+                   <!--This field cannot be longer than 40 characters.-->
+                <!--</small>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label class="form-control-label" jhiTranslate="lbsApp.sysUser.email" for="field_email">Email</label>-->
+            <!--<input type="text" class="form-control" name="email" id="field_email"-->
+                <!--[(ngModel)]="sysUser.email" maxlength="100" />-->
+            <!--<div [hidden]="!(editForm.controls.email?.dirty && editForm.controls.email?.invalid)">-->
+                <!--<small class="form-text text-danger"-->
+                   <!--[hidden]="!editForm.controls.email?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 100 }">-->
+                   <!--This field cannot be longer than 100 characters.-->
+                <!--</small>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label class="form-control-label" jhiTranslate="lbsApp.sysUser.lastlogingroup" for="field_lastlogingroup">Lastlogingroup</label>-->
+            <!--<input type="text" class="form-control" name="lastlogingroup" id="field_lastlogingroup"-->
+                <!--[(ngModel)]="sysUser.lastlogingroup" maxlength="50" />-->
+            <!--<div [hidden]="!(editForm.controls.lastlogingroup?.dirty && editForm.controls.lastlogingroup?.invalid)">-->
+                <!--<small class="form-text text-danger"-->
+                   <!--[hidden]="!editForm.controls.lastlogingroup?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 50 }">-->
+                   <!--This field cannot be longer than 50 characters.-->
+                <!--</small>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label class="form-control-label" jhiTranslate="lbsApp.sysUser.groupid" for="field_groupid">Groupid</label>-->
+            <!--<input type="text" class="form-control" name="groupid" id="field_groupid"-->
+                <!--[(ngModel)]="sysUser.groupid" maxlength="40" />-->
+            <!--<div [hidden]="!(editForm.controls.groupid?.dirty && editForm.controls.groupid?.invalid)">-->
+                <!--<small class="form-text text-danger"-->
+                   <!--[hidden]="!editForm.controls.groupid?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">-->
+                   <!--This field cannot be longer than 40 characters.-->
+                <!--</small>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label class="form-control-label" jhiTranslate="lbsApp.sysUser.realname" for="field_realname">Realname</label>-->
+            <!--<input type="text" class="form-control" name="realname" id="field_realname"-->
+                <!--[(ngModel)]="sysUser.realname" maxlength="150" />-->
+            <!--<div [hidden]="!(editForm.controls.realname?.dirty && editForm.controls.realname?.invalid)">-->
+                <!--<small class="form-text text-danger"-->
+                   <!--[hidden]="!editForm.controls.realname?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 150 }">-->
+                   <!--This field cannot be longer than 150 characters.-->
+                <!--</small>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label class="form-control-label" jhiTranslate="lbsApp.sysUser.status" for="field_status">Status</label>-->
+            <!--<input type="number" class="form-control" name="status" id="field_status"-->
+                <!--[(ngModel)]="sysUser.status"  />-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label class="form-control-label" jhiTranslate="lbsApp.sysUser.userCarid" for="field_userCarid">User Carid</label>-->
+            <!--<input type="text" class="form-control" name="userCarid" id="field_userCarid"-->
+                <!--[(ngModel)]="sysUser.userCarid" maxlength="40" />-->
+            <!--<div [hidden]="!(editForm.controls.userCarid?.dirty && editForm.controls.userCarid?.invalid)">-->
+                <!--<small class="form-text text-danger"-->
+                   <!--[hidden]="!editForm.controls.userCarid?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">-->
+                   <!--This field cannot be longer than 40 characters.-->
+                <!--</small>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label class="form-control-label" jhiTranslate="lbsApp.sysUser.headicon" for="field_headicon">Headicon</label>-->
+            <!--<input type="text" class="form-control" name="headicon" id="field_headicon"-->
+                <!--[(ngModel)]="sysUser.headicon" maxlength="200" />-->
+            <!--<div [hidden]="!(editForm.controls.headicon?.dirty && editForm.controls.headicon?.invalid)">-->
+                <!--<small class="form-text text-danger"-->
+                   <!--[hidden]="!editForm.controls.headicon?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 200 }">-->
+                   <!--This field cannot be longer than 200 characters.-->
+                <!--</small>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label class="form-control-label" jhiTranslate="lbsApp.sysUser.positions" for="field_positions">Positions</label>-->
+            <!--<input type="text" class="form-control" name="positions" id="field_positions"-->
+                <!--[(ngModel)]="sysUser.positions" maxlength="10" />-->
+            <!--<div [hidden]="!(editForm.controls.positions?.dirty && editForm.controls.positions?.invalid)">-->
+                <!--<small class="form-text text-danger"-->
+                   <!--[hidden]="!editForm.controls.positions?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 10 }">-->
+                   <!--This field cannot be longer than 10 characters.-->
+                <!--</small>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label class="form-control-label" jhiTranslate="lbsApp.sysUser.departmentauthor" for="field_departmentauthor">Departmentauthor</label>-->
+            <!--<input type="text" class="form-control" name="departmentauthor" id="field_departmentauthor"-->
+                <!--[(ngModel)]="sysUser.departmentauthor" maxlength="10" />-->
+            <!--<div [hidden]="!(editForm.controls.departmentauthor?.dirty && editForm.controls.departmentauthor?.invalid)">-->
+                <!--<small class="form-text text-danger"-->
+                   <!--[hidden]="!editForm.controls.departmentauthor?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 10 }">-->
+                   <!--This field cannot be longer than 10 characters.-->
+                <!--</small>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label class="form-control-label" jhiTranslate="lbsApp.sysUser.userSex" for="field_userSex">User Sex</label>-->
+            <!--<input type="text" class="form-control" name="userSex" id="field_userSex"-->
+                <!--[(ngModel)]="sysUser.userSex" maxlength="10" />-->
+            <!--<div [hidden]="!(editForm.controls.userSex?.dirty && editForm.controls.userSex?.invalid)">-->
+                <!--<small class="form-text text-danger"-->
+                   <!--[hidden]="!editForm.controls.userSex?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 10 }">-->
+                   <!--This field cannot be longer than 10 characters.-->
+                <!--</small>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label class="form-control-label" jhiTranslate="lbsApp.sysUser.lejiaNum" for="field_lejiaNum">Lejia Num</label>-->
+            <!--<input type="text" class="form-control" name="lejiaNum" id="field_lejiaNum"-->
+                <!--[(ngModel)]="sysUser.lejiaNum" maxlength="100" />-->
+            <!--<div [hidden]="!(editForm.controls.lejiaNum?.dirty && editForm.controls.lejiaNum?.invalid)">-->
+                <!--<small class="form-text text-danger"-->
+                   <!--[hidden]="!editForm.controls.lejiaNum?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 100 }">-->
+                   <!--This field cannot be longer than 100 characters.-->
+                <!--</small>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label class="form-control-label" jhiTranslate="lbsApp.sysUser.hasupdated" for="field_hasupdated">Hasupdated</label>-->
+            <!--<input type="number" class="form-control" name="hasupdated" id="field_hasupdated"-->
+                <!--[(ngModel)]="sysUser.hasupdated"  />-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label class="form-control-label" jhiTranslate="lbsApp.sysUser.userSort" for="field_userSort">User Sort</label>-->
+            <!--<input type="number" class="form-control" name="userSort" id="field_userSort"-->
+                <!--[(ngModel)]="sysUser.userSort"  />-->
+        <!--</div>-->
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

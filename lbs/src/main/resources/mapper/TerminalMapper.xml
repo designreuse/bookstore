@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jshx.lbs.service.mapper.TerminalMapper">
+    <select id="getTerminal" parameterType="map"  resultType="map">
+        select c.car_no||'('||d.description||')' carNo_and_color,a.comesolarid,a.keyid,to_char(b.VERSION_TIME,'yyyy-MM-dd hh24:mi:ss') VERSION_TIME,b.SOFT_VERSION,
+        e.description companyName,f.DEVICE_ID,f.PRODUCT_TYPE,f.SOFT_VESION,to_char(f.CREATON,'yyyy-MM-dd hh24:mi:ss') CREATON, update_result
+        from
+        lbs.t_pmt_register_term a left join lbs.t_msg_device_config b on a.keyid = b.keyid left join lbsbus.t_car c
+         on a.keyid = c.key_id left join  dictionary d on c.platecolor = d.dictvalue
+        left join  dictionary e on a.TERMCOMPANY = e.shortdesc left join lbs.T_MSG_OUT_DEVICE f on a.keyid = f.keyid
+        left join (select max(update_time) update_time,keyid from  lbs.t_msg_update_status  group by keyid) g on a.keyid = g.keyid
+        left join lbs.t_msg_update_status h on g.update_time = h.update_time and g.keyid = h.keyid
+        where 1=1 and d.dictid='AP' and e.dictid = 'A7' and c.company_Id = #{companyId}
+        <if test="softVersion != null and softVersion != ''">
+            <bind name="pattern" value="'%'+softVersion+'%'"/>
+            and f.SOFT_VERSION like #{pattern}
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and f.CREATON>=to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss')
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and  <![CDATA[f.CREATON<=to_date(#{endTime},'yyyy-MM-dd hh24:mi:ss')]]>
+        </if>
+        <if test="deviceId != -1">
+            and f.DEVICE_ID = #{deviceId}
+        </if>
+        <if test="softVesion != null and softVesion != ''">
+            <bind name="pattern2" value="'%'+softVesion+'%'"/>
+            and f.SOFT_VESION like #{pattern2}
+        </if>
+        <if test="keyIdList!= null and keyIdList.size() > 0">
+            and c.key_id in
+            <foreach item="item" index="index" collection="keyIdList"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+</mapper>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jshx.lbs.service.mapper.CarReportMapper">
+
+    <select id="getCarReportDay" parameterType="map"  resultType="map">
+        select * from enpi_car_report_day t
+        inner join lbsbus.v_car t2 on t.keyid=t2.KEY_ID
+        where  t.keyid=#{keyid}
+        and (t.createdon>to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss'))
+        <![CDATA[and (t.createdon<to_date(#{endTime},'yyyy-MM-dd hh24:mi:ss'))]]>
+        order by t.createdon
+    </select>
+
+    <select id="getCarHisData" parameterType="map"  resultType="map">
+        select t.keyid,t.MSG_LATITUDE,t.MSG_LONGITUDE,t.MSG_SPEED,t.MSG_DISTANCE,t.MSG_DIRECTION,to_char(t.MSG_TIME_NEW,'yyyy-MM-dd hh24:mi:ss') MSG_TIME_NEW
+        from lbs.t_msg_recv_his t where 1=1 and t.keyid=#{keyid}  and t.MSG_TIME_NEW > to_date(#{startTime},'yyyy-mm-dd hh24:mi:ss')
+        <![CDATA[and (t.MSG_TIME_NEW<to_date(#{endTime},'yyyy-MM-dd hh24:mi:ss'))]]> and t.msg_latitude>0.000001 and
+        t.msg_latitude>0.000001 order by t.MSG_TIME_NEW
+    </select>
+
+    <select id="getCarTripReport" parameterType="map"  resultType="map">
+        select * from lbs.t_msg_obd_tripreport t
+        where t.keyid =#{keyid}
+        and (t.end_time>to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss'))
+        <![CDATA[and (t.end_time<to_date(#{endTime},'yyyy-MM-dd hh24:mi:ss'))]]>
+        order by t.begin_time
+    </select>
+
+    <select id="getCarDriverStatus" parameterType="String"  resultType="map">
+            select * from lbs.t_msg_obd_drivedata_cur t
+            where t.keyid=#{keyid}
+    </select>
+
+    <select id="getCarDriveBehavior" parameterType="map"  resultType="map">
+        select count(1) typecount, t.type_id
+        from t_msg_obd_behavior t
+        where t.keyid =#{keyid}
+        and (t.msg_time>to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss'))
+        <![CDATA[and (t.msg_time<to_date(#{endTime},'yyyy-MM-dd hh24:mi:ss'))]]>
+        group by t.type_id
+    </select>
+
+    <select id="getIsCarObd" parameterType="String"  resultType="map">
+        select t.available from t_msg_obd_drivedata_cur t where t.keyid=#{keyid}
+    </select>
+
+    <select id="getTripReport" parameterType="map"  resultType="map">
+        select sum(t.trip_mileage) TOTAL_MILEAGE,
+        sum(t.trip_oil) TOTAL_OIL,
+        round(sum(t.end_time - t.begin_time) * 24,1) IDLE_TIME
+        from lbs.t_msg_obd_tripreport t
+        where t.keyid =#{keyid}
+        and (t.begin_time>to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss'))
+        <![CDATA[and (t.end_time<to_date(#{endTime},'yyyy-MM-dd hh24:mi:ss'))]]>
+    </select>
+
+
+</mapper>

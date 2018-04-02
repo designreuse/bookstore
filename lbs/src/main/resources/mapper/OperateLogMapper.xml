@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.jshx.lbs.service.mapper.OperateLogMapper">
+
+    <select id="getOperateType"  resultType="map">
+        select t.dictvalue,t.description from dictionary t where t.dictid='AH'
+            and t.dictvalue not in('0','1')
+    </select>
+
+
+    <select id="searchOperateLog" parameterType="map" resultType="map">
+        select t.LOG_ID,t.user_name,t.LOG_TYPE,t.LOG_MSG,t.CREATEDON,t.IP from v_log t
+        where t.COMPANY_ID=#{COMPANY_ID}
+        and t.LOG_TYPE not in ('0','1')
+        <if test="username != null and username!=''">
+            <bind name="username2" value="'%'+username+'%'"/>
+            and t.user_name like #{username2}
+        </if>
+        <if test="logetype != null and logetype!=''">
+            and t.LOG_TYPE= #{logetype}
+        </if>
+        <if test="startTime != null and startTime!=''">
+            <![CDATA[ and to_Date( #{startTime},'yyyy-MM-dd hh24:mi:ss')<=t.CREATEDON]]>
+        </if>
+        <if test="endTime != null and endTime!=''">
+            and to_Date( #{endTime},'yyyy-MM-dd hh24:mi:ss')>=t.CREATEDON
+        </if>
+    </select>
+
+    <select id="searchOperateLogSum" parameterType="map" resultType="map">
+        select t.LOG_TYPE,count(*) typeCount from v_log t
+        where t.COMPANY_ID=#{COMPANY_ID}
+        and t.LOG_TYPE not in ('0','1')
+        <if test="username != null and username!=''">
+            <bind name="username2" value="'%'+username+'%'"/>
+            and t.user_name like #{username2}
+        </if>
+        <if test="logetype != null and logetype!=''">
+            t.LOG_TYPE= #{logetype}
+        </if>
+        <if test="startTime != null and startTime!=''">
+            <![CDATA[ and to_Date( #{startTime},'yyyy-MM-dd hh24:mi:ss')<=t.CREATEDON]]>
+        </if>
+        <if test="endTime != null and endTime!=''">
+            and to_Date( #{endTime},'yyyy-MM-dd hh24:mi:ss')>=t.CREATEDON
+        </if>
+        group by t.LOG_TYPE
+    </select>
+
+
+    <select id="searchLoginLog" parameterType="map" resultType="map">
+        select t.LOG_ID,t.user_name,t.LOG_TYPE,t.LOG_MSG,t.CREATEDON,t.IP from v_log t
+        where t.COMPANY_ID=#{COMPANY_ID}
+        and t.LOG_TYPE  in ('0','1')
+        <if test="username != null and username!=''">
+            <bind name="username2" value="'%'+username+'%'"/>
+            and t.user_name like #{username2}
+        </if>
+        <if test="logetype != null and logetype!=''">
+            and  t.LOG_TYPE= #{logetype}
+        </if>
+        <if test="startTime != null and startTime!=''">
+            <![CDATA[ and to_Date( #{startTime},'yyyy-MM-dd hh24:mi:ss')<=t.CREATEDON]]>
+        </if>
+        <if test="endTime != null and endTime!=''">
+            and to_Date( #{endTime},'yyyy-MM-dd hh24:mi:ss')>=t.CREATEDON
+        </if>
+    </select>
+</mapper>

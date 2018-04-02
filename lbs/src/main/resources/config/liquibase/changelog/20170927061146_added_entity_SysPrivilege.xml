@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <property name="now" value="now()" dbms="h2"/>
+
+    <property name="now" value="sysdate" dbms="oracle"/>
+
+    <property name="floatType" value="float4" dbms="postgresql, h2"/>
+    <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
+
+    <!--
+        Added the entity SysPrivilege.
+    -->
+    <changeSet id="20170927061146-1" author="jhipster">
+        <createTable tableName="t_sys_privilege">
+            <column name="privilege_id" type="varchar(40)" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="privilege_pid" type="varchar(40)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="privilege_name" type="varchar(200)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="companyid" type="varchar(40)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="privilige_desc" type="varchar(200)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="isflag" type="number">
+                <constraints nullable="true" />
+            </column>
+
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
+        </createTable>
+
+        <createTable tableName="t_sys_roleprivilege">
+            <column name="role_id" type="varchar(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="privilege_id" type="varchar(40)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="role_id,privilege_id" tableName="t_sys_roleprivilege"/>
+
+        <addForeignKeyConstraint baseColumnNames="role_id"
+                                 baseTableName="t_sys_roleprivilege"
+                                 constraintName="fk_privi_role_id"
+                                 referencedColumnNames="role_id"
+                                 referencedTableName="t_sys_role"/>
+
+        <addForeignKeyConstraint baseColumnNames="privilege_id"
+                                 baseTableName="t_sys_roleprivilege"
+                                 constraintName="fk_sys_privi_id"
+                                 referencedColumnNames="privilege_id"
+                                 referencedTableName="t_sys_privilege"/>
+    </changeSet>
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
+</databaseChangeLog>

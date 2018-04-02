@@ -1,0 +1,27 @@
+{
+    "lbsApp": {
+        "sysRole" : {
+            "home": {
+                "title": "Sys Roles",
+                "createLabel": "Create a new Sys Role",
+                "createOrEditLabel": "Create or edit a Sys Role"
+            },
+            "created": "A new Sys Role is created with identifier {{ param }}",
+            "updated": "A Sys Role is updated with identifier {{ param }}",
+            "deleted": "A Sys Role is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Sys Role {{ id }}?"
+            },
+            "detail": {
+                "title": "Sys Role"
+            },
+            "roleName": "Role Name",
+            "rolePid": "Role Pid",
+            "companyId": "Company Id",
+            "roleDesc": "Role Desc",
+            "issys": "Issys",
+            "roleCode": "Role Code",
+            "roleDeep": "Role Deep"
+        }
+    }
+}

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jshx.lbs.service.mapper.MessageMapper">
+    <select id="getMsggetParam" resultType="map">
+        select a.car_id,a.key_id,b.channel_id, b.termid, b.socket_idx, b.companyid,b.userid
+        from lbsbus.t_car a
+        left join lbs.t_pmt_register_term b
+        on a.key_id = b.keyid where a.key_id in
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <insert id="saveMsg" parameterType="map">
+        insert into lbs.T_Msg_Submit (COMMAND_ID,
+        COMMAND_PARA,KEYID,TERMID,CHANNEL_ID,SOCKET_IDX,COMPANYID,COMMAND_IDX,USERID,COMMAND_TIME,PLAN_TIME,GUID)
+        values
+        (#{commandId},
+        <choose>
+            <when test="commandPara == null">
+                '',
+            </when>
+            <otherwise>
+                #{commandPara},
+            </otherwise>
+        </choose>
+        #{KEY_ID},#{TERMID},#{CHANNEL_ID},#{SOCKET_IDX},#{COMPANYID},#{commandIdX},#{USERID},#{createdon}
+        ,#{createdon} ,#{guid})
+    </insert>
+
+    <insert id="saveMsgTnterval" parameterType="map">
+        insert into lbsbus.T_Msg_Submit_Interval
+        (COMMAND_ID,COMMAND_PARA,KEYID,TERMID,CHANNEL_ID,SOCKET_IDX,COMPANYID,USERID,COMMAND_TIME,PLAN_TIME,pid,ip)
+        values
+        (#{commandId},
+        <choose>
+            <when test="commandPara == null">
+                '',
+            </when>
+            <otherwise>
+                #{commandPara},
+            </otherwise>
+        </choose>
+        #{KEY_ID},#{TERMID},#{CHANNEL_ID},#{SOCKET_IDX},#{COMPANYID},#{USERID},#{sendTime}
+        ,#{sendTime},#{pid},#{ip})
+    </insert>
+
+    <insert id="saveMsgSendHis" parameterType="map">
+        insert into lbsbus.t_msg_send_his (IDX, USERID,SEND_TIME,C_DESCRIPTION,CREATEDON,CREATEDBY,IP)
+        values
+            (#{idx}, #{userId2},#{createdon},#{description},#{createdon},#{userId2},#{ip})
+    </insert>
+
+    <insert id="saveMsgSendDetail">
+        insert into lbsbus.T_Msg_Send_Detail (IDX, CARID,CREATEDON,CREATEDBY,D_ID,COMMAND_ID,COMMAND_IDX,COMMAND_PARA,CHANNEL_ID)
+        values
+            (#{idx}, #{CAR_ID},#{createdon},#{userId2},#{guid},#{commandId},#{commandIdX},#{commandPara},#{CHANNEL_ID})
+    </insert>
+
+    <!--<update id="delMsg" parameterType="map">-->
+    <!--DELETE  from lbsbus.T_Msg_Submit_Interval where GUID in-->
+    <!--<foreach collection="lsit" index="index" item="item" open="(" close=")" separator=",">-->
+    <!--#{item}-->
+    <!--</foreach>-->
+    <!--</update>-->
+
+    <update id="delMsg" parameterType="string">
+        DELETE  from lbsbus.T_Msg_Submit_Interval where PID = #{pid}
+    </update>
+
+    <select id="getMsgLog" parameterType="map" resultType="map">
+        select g.user_name,
+        to_char(b.createdon, 'yyyy-MM-dd hh24:mi:ss') createdon,
+        b.command_id,
+        a.update_result,
+        d.car_no || '(' || h.description || ')' carNo_and_color,
+        e.comesolarid,
+        a.keyid,
+        to_char(f.VERSION_TIME, 'yyyy-MM-dd hh24:mi:ss') VERSION_TIME,
+        f.soft_version,c.ip,
+        i.device_id,j.description companyName,i.PRODUCT_TYPE,i.SOFT_VESION,
+        to_char(i.CREATON, 'yyyy-MM-dd hh24:mi:ss') CREATON
+        from lbs.t_msg_update_status a
+        left join lbsbus.T_Msg_Send_Detail b
+        on a.guid = b.D_ID
+        left join lbsbus.t_msg_send_his c
+        on b.IDX = c.idx
+        left join t_car d
+        on a.keyid = d.key_id
+        left join lbs.t_pmt_register_term e
+        on a.keyid = e.keyid
+        left join lbs.t_msg_device_config f
+        on a.keyid = f.keyid
+        left join lbsbus.t_sys_user g
+        on b.createdby = g.user_id
+        left join dictionary h
+        on d.platecolor = h.dictvalue and h.dictid = 'AP'
+        left join lbs.T_MSG_OUT_DEVICE i on a.keyid = i.keyid
+        left join dictionary j
+        on e.TERMCOMPANY = j.shortdesc and j.dictid = 'A7'
+        where 1 = 1
+        and d.company_id = #{companyId}
+        <if test="createUser != null and createUser!=''">
+            <bind name="userName" value="'%'+createUser+'%'"/>
+            and g.user_name like #{userName}
+        </if>
+        <if test="startTime != null and startTime!=''">
+            <![CDATA[and  to_date(#{startTime}, 'yyyy-MM-dd hh24:mi:ss')  <= b.createdon]]>
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and to_date(#{endTime}, 'yyyy-MM-dd hh24:mi:ss') >= b.createdon
+        </if>
+        <if test="commandId != null and commandId != ''">
+            and a.command_id = #{commandId}
+        </if>
+        <if test="carNo != null and carNo != ''">
+            <bind name="carNo1" value="'%'+carNo+'%'"/>
+            and d.car_no like #{carNo1}
+        </if>
+        <if test="softVesion != null and softVesion != ''">
+            <bind name="softVesion1" value="'%'+softVesion+'%'"/>
+            and i.SOFT_VESION like #{softVesion1}
+        </if>
+        <if test="productType != null and productType != ''">
+            <bind name="productType1" value="'%'+productType+'%'"/>
+            and i.PRODUCT_TYPE like #{productType1}
+        </if>
+        <if test="deviceId != -1">
+            and i.device_id = #{deviceId}
+        </if>
+        <choose>
+            <when test="dealResult == null or dealResult == '' ">
+            </when>
+            <when test="dealResult==5">
+                and a.deal_result = #{dealResult}
+            </when>
+            <otherwise>
+                and a.deal_result != 5
+            </otherwise>
+        </choose>
+    </select>
+
+
+    <select id="getCommandIdxStr" resultType="String">
+        select wm_concat(distinct(COMMAND_IDX)) from lbs.t_msg_submit
+    </select>
+</mapper>

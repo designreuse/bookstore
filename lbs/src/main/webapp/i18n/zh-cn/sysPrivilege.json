@@ -1,0 +1,25 @@
+{
+    "lbsApp": {
+        "sysPrivilege" : {
+            "home": {
+                "title": "Sys Privileges",
+                "createLabel": "Create a new Sys Privilege",
+                "createOrEditLabel": "Create or edit a Sys Privilege"
+            },
+            "created": "A new Sys Privilege is created with identifier {{ param }}",
+            "updated": "A Sys Privilege is updated with identifier {{ param }}",
+            "deleted": "A Sys Privilege is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Sys Privilege {{ id }}?"
+            },
+            "detail": {
+                "title": "Sys Privilege"
+            },
+            "privilegePid": "Privilege Pid",
+            "privilegeName": "Privilege Name",
+            "companyid": "Companyid",
+            "priviligeDesc": "Privilige Desc",
+            "isflag": "Isflag"
+        }
+    }
+}

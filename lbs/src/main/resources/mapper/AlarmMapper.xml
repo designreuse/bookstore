@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jshx.lbs.service.mapper.AlarmMapper">
+    <cache
+        eviction="FIFO"
+        flushInterval="60000"
+        size="512"
+        readOnly="true"/>
+
+    <select id="getAlarmInfo" parameterType="map" resultType="map">
+        select  a.CAR_ID,a.CAR_NO,f.d_name car_driver_name,a.KEY_ID,a.PLATECOLOR,c.GROUPID,d.GROUPNAME,b.ALARM_TYPE,b.ALARM_DESC,b.alarm_Level,to_char(b.alarm_date,'yyyy-MM-dd hh24:mi:ss') ALARMDATE,
+        round((b.ALARM_ENDDATE-b.ALARM_DATE)*24*60*60) DURATION_SECEND,b.ALARM_SPEED,b.alarminfo_latitude,b.alarminfo_longitude,to_char(b.ALARM_ENDDATE,'yyyy-MM-dd hh24:mi:ss') ALARM_ENDDATE
+        ,to_char(g.ALARM_TREATTIME,'yyyy-MM-dd hh24:mi:ss') ALARM_TREATTIME,g.ALARM_TREAT,g.TREAT_PERSON,b.alarmno id,g.ALARM_TREATCONTENT, h.fileType from lbs.t_msg_alarminfo b left join LBSBUS.T_CAR a on  b.KEYID = a.KEY_ID LEFT JOIN T_CARGROUP_CAR c on a.CAR_ID = c.CARID
+        LEFT JOIN  T_CARGROUP d on c.GROUPID = d.GROUPID LEFT JOIN t_sys_group_user e  on d.GROUPID = e.GROUPID   LEFT JOIN lbsbus.t_driver f on a.car_driver_name = f.d_id LEFT JOIN lbsbus.t_alarminfo_treat g
+        on b.alarmno = g.alarmno left join
+        (select alarmNo, wm_concat(fileType) fileType from (select  distinct alarmNo,fileType  from lbsbus.adas_alarmfile  )  group by alarmNo ) h on b.alarmno = h.alarmNo
+        where 1=1  and e.USERID =#{userId}
+        <if test="carNo != null and carNo != ''">
+            and b.CAR_NO = #{carNo}
+        </if>
+        <if test="alarmType != null and alarmType != -1">
+            and b.ALARM_TYPE = #{alarmType}
+        </if>
+        <if test="groupIdList!= null and groupIdList.size() > 0">
+        and c.groupid in
+            <foreach item="item" index="index" collection="groupIdList"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="keyIdList!= null and keyIdList.size() > 0">
+            and a.key_id in
+            <foreach item="item" index="index" collection="keyIdList"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="driverName!=null and driverName !=''">
+            <bind name="driverName2" value="'%'+driverName+'%'"/>
+            and  f.d_name like  #{driverName2}
+        </if>
+        <if test="alarmLevel != null and alarmLevel != '' and alarmLevel != '-1'">
+            and b.alarm_Level = #{alarmLevel}
+        </if>
+        <choose>
+            <when test="alarmTreat == -1">
+                and 1=1
+            </when>
+            <when test="alarmTreat == 0">
+                and g.ALARM_TREAT is null
+            </when>
+            <when test="alarmTreat == 1">
+                and g.ALARM_TREAT in(0,1,2,3)
+            </when>
+            <otherwise>
+                and 1 = 1
+            </otherwise>
+        </choose>
+
+        <if test="startTime != null and startTime != ''">
+            and (b.ALARM_DATE>to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss'))
+        </if>
+        <if test="endTime != null and endTime != ''">
+            <![CDATA[and (b.ALARM_DATE<to_date(#{endTime},'yyyy-MM-dd hh24:mi:ss'))]]>
+        </if>
+            order by g.ALARM_TREAT desc,b.ALARM_DATE desc
+    </select>
+
+    <select id="getAlarmInfoByPage" parameterType="map" resultType="map">
+        select * from (
+        select  a.CAR_ID,a.CAR_NO,f.d_name car_driver_name,a.KEY_ID,a.PLATECOLOR,c.GROUPID,d.GROUPNAME,b.ALARM_TYPE,b.ALARM_DESC,b.alarm_Level,to_char(b.alarm_date,'yyyy-MM-dd hh24:mi:ss') ALARMDATE,
+        round((b.ALARM_ENDDATE-b.ALARM_DATE)*24*60*60) DURATION_SECEND,b.ALARM_SPEED,b.alarminfo_latitude,b.alarminfo_longitude,to_char(b.ALARM_ENDDATE,'yyyy-MM-dd hh24:mi:ss') ALARM_ENDDATE
+        ,to_char(g.ALARM_TREATTIME,'yyyy-MM-dd hh24:mi:ss') ALARM_TREATTIME,g.ALARM_TREAT,g.TREAT_PERSON,b.alarmno id,g.ALARM_TREATCONTENT from lbs.t_msg_alarminfo b left join LBSBUS.T_CAR a on  b.KEYID = a.KEY_ID LEFT JOIN T_CARGROUP_CAR c on a.CAR_ID = c.CARID
+        LEFT JOIN  T_CARGROUP d on c.GROUPID = d.GROUPID LEFT JOIN t_sys_group_user e  on d.GROUPID = e.GROUPID   LEFT JOIN lbsbus.t_driver f on a.car_driver_name = f.d_id LEFT JOIN lbsbus.t_alarminfo_treat g
+        on b.alarmno = g.alarmno where 1=1  and e.USERID =#{userId}
+        <if test="carNo != null and carNo != ''">
+            and b.CAR_NO = #{carNo}
+        </if>
+        <if test="alarmType != null and alarmType != -1">
+            and b.ALARM_TYPE = #{alarmType}
+        </if>
+        <if test="keyIdList!= null and keyIdList.size() > 0">
+            and a.key_id in
+            <foreach item="item" index="index" collection="keyIdList"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and (b.ALARM_DATE>to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss'))
+        </if>
+        <if test="endTime != null and endTime != ''">
+            <![CDATA[and (b.ALARM_DATE<to_date(#{endTime},'yyyy-MM-dd hh24:mi:ss'))]]>
+        </if>
+        order by g.ALARM_TREAT desc,b.ALARM_DATE desc )  tt
+        where tt.rownumber > #{startNum}
+        <![CDATA[and (tt.rownumber<#{endNum})]]>
+        order by tt.ALARMDATE desc
+    </select>
+
+    <insert flushCache="true" id="dealAlarm" parameterType="map"   >
+        insert into lbsbus.t_alarminfo_treat(ALARM_TYPE,ALARM_DATE,ALARMINFO_LATITUDE,ALARMINFO_LONGITUDE,ALARM_SPEED,ALARM_TYPESTR
+        ,ALARM_TREAT,ALARM_TREATCONTENT,KEYID,ALARMNO,ALARM_DESC,ALARM_ENDDATE,ALARM_TREATTIME,TREAT_PERSON,ID
+    ) values (#{alarmType}, to_date(#{alarmDate},'yyyy-MM-dd hh24:mi:ss'),#{alarminfoLatitude},#{alarminfoLongitude},
+    #{alarmSpeed},#{alarmName},#{alarmTreat},#{alarmTreatContent},#{keyId},#{alarmNo},#{alarmDesc},to_date(#{alarmEndDate},'yyyy-MM-dd hh24:mi:ss'),to_date(#{alarmTreatTime},'yyyy-MM-dd hh24:mi:ss'),
+    #{treatPerson},#{id})
+</insert>
+
+    <update id="updateAlarmTreat" parameterType="map" flushCache="true">
+            update t_alarminfo_treat
+        <set>
+            <if test="alarmTreatTime!=null">
+                 ALARM_TREATTIME =to_date(#{alarmTreatTime},'yyyy-MM-dd hh24:mi:ss'),
+            </if>
+            <if test="alarmTreatContent!=null">
+                ALARM_TREATCONTENT=#{alarmTreatContent},
+            </if>
+            <if test="treatPerson!=null">
+                TREAT_PERSON=#{treatPerson},
+            </if>
+            <if test="alarmTreat!=null">
+                ALARM_TREAT=#{alarmTreat},
+            </if>
+        </set>
+            where ALARMNO = #{alarmNo}
+    </update>
+
+    <select id="getAlarmDataCount" parameterType="map" resultType="map">
+       select sum(ALARMINFO_TOTAL_NO) as total_no, sum(ALARMINFO_501_NO) as NO_501,sum(ALARMINFO_501_NO) as NO_501 ,sum(ALARMINFO_502_NO) as NO_502,sum(ALARMINFO_503_NO) as NO_503,sum(ALARMINFO_504_NO) as NO_504,
+        sum(ALARMINFO_505_NO) as NO_505,sum(ALARMINFO_506_NO)as NO_506,sum(ALARMINFO_507_NO)as NO_507,sum(ALARMINFO_508_NO)as NO_508,
+        sum(ALARMINFO_509_NO) as NO_509 ,
+        <choose>
+            <when test="dateType == 1">
+                to_char(a.CREATEDON, 'yyyy-mm') as forDay
+            </when>
+            <when test="dateType == 2">
+                to_char(a.CREATEDON, 'yyyy-mm-dd') as forDay
+            </when>
+            <when test="dateType == 3">
+                to_char(a.CREATEDON, 'yyyy-mm-dd') as forDay
+            </when>
+            <otherwise>
+                to_char(a.CREATEDON, 'yyyy-mm-dd') as forDay
+            </otherwise>
+        </choose>
+        from lbsbus.T_ALARMINFO_COUNT_FORDAY a
+        left join lbsbus.t_car b
+        on a.key_id = b.key_id
+        left join lbsbus.t_cargroup_car c
+        on b.car_id = c.carid
+        LEFT JOIN lbsbus.t_driver d on b.car_driver_name = d.d_id
+        where 1= 1
+        <if test="companyId != null   and companyId != ''">
+            and b.company_id = #{companyId}
+        </if>
+        <if test="driverName!=null and driverName !=''">
+            <bind name="driverName2" value="'%'+driverName+'%'"/>
+            and  d.d_name like  #{driverName2}
+        </if>
+        <if test="groupIdList!=null and groupIdList.size() != 0">
+            and c.groupid in
+            <foreach item="item" index="index" collection="groupIdList"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="keyIdList!=null and keyIdList.size() != 0">
+            and b.key_id in
+            <foreach item="item" index="index" collection="keyIdList"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <choose>
+            <when test="dateType == 1">
+                and  to_char(a.CREATEDON, 'YYYY') = #{searchTime}
+            </when>
+            <when test="dateType == 2">
+                and  to_char(a.CREATEDON, 'YYYYMM') = #{searchTime}
+            </when>
+            <when test="dateType == 3">
+                and  to_char(a.CREATEDON, 'YYYYMMDD') >= #{weekStartTime}
+                and  <![CDATA[  to_char(a.CREATEDON, 'YYYYMMDD') <= #{weekEndTime}]]>
+            </when>
+            <otherwise>
+                and  to_char(a.CREATEDON, 'YYYYMMDD') = #{searchTime}
+            </otherwise>
+        </choose>
+        group by
+        <choose>
+            <when test="flag == true">
+                to_char(a.CREATEDON, 'yyyy-mm') order by to_char(a.CREATEDON, 'yyyy-mm')
+            </when>
+            <otherwise>
+                to_char(a.CREATEDON, 'yyyy-mm-dd') order by to_char(a.CREATEDON, 'yyyy-mm-dd')
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="getAlarmDataCountPicture" parameterType="map" resultType="map">
+        select sum(ALARMINFO_501_NO) as NO_501,sum(ALARMINFO_501_NO) as NO_501 ,sum(ALARMINFO_502_NO) as NO_502,sum(ALARMINFO_503_NO) as NO_503,sum(ALARMINFO_504_NO) as NO_504,
+        sum(ALARMINFO_505_NO) as NO_505,sum(ALARMINFO_506_NO)as NO_506,sum(ALARMINFO_507_NO)as NO_507,sum(ALARMINFO_508_NO)as NO_508,
+        sum(ALARMINFO_509_NO) as NO_509
+        from lbsbus.T_ALARMINFO_COUNT_FORDAY a
+        left join lbsbus.t_car b
+        on a.key_id = b.key_id
+        left join lbsbus.t_cargroup_car c
+        on b.car_id = c.carid
+        LEFT JOIN lbsbus.t_driver d on b.car_driver_name = d.d_id
+        where 1= 1
+        <if test="companyId != null  and companyId != ''">
+            and b.company_id = #{companyId}
+        </if>
+        <if test="driverName!=null and driverName !=''">
+            <bind name="driverName2" value="'%'+driverName+'%'"/>
+            and  d.d_name like  #{driverName2}
+        </if>
+        <if test="groupIdList!=null and groupIdList.size() != 0">
+            and c.groupid in
+            <foreach item="item" index="index" collection="groupIdList"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="keyIdList!=null and keyIdList.size() != 0">
+            and b.key_id in
+            <foreach item="item" index="index" collection="keyIdList"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <choose>
+            <when test="dateType == 1">
+                and  to_char(a.CREATEDON, 'YYYY') = #{searchTime}
+            </when>
+            <when test="dateType == 2">
+                and  to_char(a.CREATEDON, 'YYYYMM') = #{searchTime}
+            </when>
+            <when test="dateType == 3">
+                and  to_char(a.CREATEDON, 'YYYYMMDD') >= #{weekStartTime}
+                and  <![CDATA[   to_char(a.CREATEDON, 'YYYYMMDD') <= #{weekEndTime}]]>
+            </when>
+            <otherwise>
+                and  to_char(a.CREATEDON, 'YYYYMM') = #{searchTime}
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="getAlarmType" parameterType="map" resultType="map">
+        SELECT ALARMTYPE ,MAX(DECODE(NUM, '01', VAL, NULL)) ISSHOW,MAX(DECODE(NUM, '02', VAL, NULL)) SETNAME,
+        MAX(DECODE(NUM, '02', M_DEFAULTVALUE, NULL)) DEFAULTNAME,
+        MAX(DECODE(NUM, '08', M_DEFAULTVALUE, NULL)) ALARMTYPEID,MAX(DECODE(NUM, '03', VAL, NULL)) DURATION
+        FROM (SELECT SUBSTR(T.M_SORT, 1, LENGTH(T.M_SORT) - 2) ALARMTYPE,SUBSTR(T.M_SORT, -2, 2) NUM,
+        T.S_VALUE VAL,T.M_DEFAULTVALUE  FROM V_SETTINGS_ALARM T WHERE T.S_ID = 'aa3fcc9c-741c-4eab-a53b-9c0000fee79e'
+        AND  T.ST_ID =#{companyId} )
+        HAVING MAX(DECODE(NUM, '01', VAL, NULL)) = 'true'
+        <if test="alarmType != null and alarmType != ''">
+            and  MAX(DECODE(NUM, '08', M_DEFAULTVALUE, NULL)) = #{alarmType}
+        </if>
+        GROUP BY ALARMTYPE
+    </select>
+
+    <select id="getAlarmForDriver" parameterType="string" resultType="map">
+        select e.d_name car_driver_name, e.d_telephone car_driver_phone,b.car_no,
+        <choose>
+            <when test="alarmType != -1">
+                a.alarm_type,
+            </when>
+            <otherwise>
+                -1 as alarm_type,
+            </otherwise>
+        </choose>
+        COUNT (1) as NUM from lbs.t_msg_alarminfo a left join lbsbus.t_car b on a.keyid = b.key_id left join  T_CARGROUP_CAR c on b.CAR_ID = c.CARID
+        LEFT JOIN t_sys_group_user d  on c.GROUPID = d.GROUPID LEFT JOIN lbsbus.t_driver e on b.car_driver_name = e.d_id where 1 = 1
+        and d.userid =#{userId}
+        <if test="driverName != null and driverName != ''">
+            and b.car_driver_name = #{driverName}
+        </if>
+        <if test="carNo != null and carNo != ''">
+            and b.car_NO = #{car_NO}
+        </if>
+        <if test="alarmType != null and alarmType != '' and alarmType != '-1'">
+            and b.alarm_type = #{alarmType}
+        </if>
+        <if test="startTime != null and startTime != ''">
+             and a.ALARM_DATE>=to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss')
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and  <![CDATA[a.ALARM_DATE<=to_date(#{endTime},'yyyy-MM-dd hh24:mi:ss')]]>
+        </if>
+        GROUP BY e.d_name,e.d_telephone,b.car_NO
+        <if test="alarmType != -1">
+            ,a.alarm_type
+        </if>
+    </select>
+
+    <select id="searchAlarmForSupserMan" parameterType="map" resultType="map">
+        select a.ALARM_TYPE,a.ALARM_DURATION,b.car_no,b.platecolor,a.ALARM_TYPE,a.ALARM_SPEED,ALARM_DESC  from (select * from lbs.v_msg_alarminfo_latest_cu t where t.userid=#{userId} and t.ALARM_TYPESTR !='1'
+        and t.alarminfo_longitude>2 and t.alarminfo_latitude>2
+        and (
+        <foreach item="item" index="index" collection="list"
+                 open="(" separator="or" close=")">
+            t.alarm_type=${item.alarmType} and t.alarm_duration >=${item.duration}
+        </foreach
+        >
+        )order by t.ALARM_DATE desc )  a left join lbsbus.t_car b on a.keyid =b.key_id
+        <![CDATA[ where rownum<=50]]>
+    </select>
+
+    <select id="searchAlarm" parameterType="map" resultType="map">
+        select a.ALARM_TYPE,a.ALARM_DURATION,b.car_no,b.platecolor,a.ALARM_TYPE,a.ALARM_SPEED,ALARM_DESC  from (select * from lbs.v_msg_alarminfo_latest_ls t  where t.companyid=#{companyId} and t.ALARM_TYPESTR !='1'
+        and  t.alarminfo_longitude>2 and t.alarminfo_latitude>2 and (
+        <foreach item="item" index="index" collection="list"
+                 open="(" separator="or" close=")">
+            t.alarm_type=${item.alarmType} and t.alarm_duration >=${item.duration}
+        </foreach>
+        )  order by t.ALARM_DATE desc)  a left join lbsbus.t_car b on a.keyid =b.key_id
+        <![CDATA[ where rownum<=50]]>
+    </select>
+
+    <select id="getAlarmEvaluation" parameterType="map" resultType="map">
+        select a.createdon,a.COMPANYID,a.keyid,c.d_name,a.totalmileage,a.totaltime,(a.alarm_num+a.alarm_num_l2) alarm_count,a.alarm_num,a.alarm_num_l2,ALARM_501_NO,ALARM_502_NO
+        ,ALARM_503_NO,ALARM_504_NO,ALARM_505_NO,ALARM_506_NO,ALARM_507_NO,ALARM_508_NO,ALARM_509_NO,ALARM_501_NO_L2,ALARM_502_NO_L2,ALARM_503_NO_L2,ALARM_504_NO_L2,ALARM_505_NO_L2,
+        ALARM_506_NO_L2,ALARM_507_NO_L2,ALARM_508_NO_L2,ALARM_509_NO_L2
+        from t_driver_alarm_evalution a left join t_car b on a.keyid = b.key_id left join t_driver c on b.car_driver_name = c.d_id left join t_car d on a.keyid = d.key_id left join t_cargroup_car e on d.car_id = e.carid
+        where a.COMPANYID = #{companyId}
+        <if test="driverName!=null and driverName !=''">
+            <bind name="driverName2" value="'%'+driverName+'%'"/>
+            and  c.d_name like  #{driverName2}
+        </if>
+        <if test="time!=null and time !=''">
+            and a.createdon = #{time}
+        </if>
+        <if test="groupId!=null and groupId !=''">
+            and e.groupId = #{groupId}
+        </if>
+           <if test="keyIdList!= null and keyIdList.size() > 0">
+               and a.keyid in
+               <foreach item="item" index="index" collection="keyIdList"
+                        open="(" separator="," close=")">
+                   #{item}
+               </foreach>
+           </if>
+           <if test="groupIdList!= null and groupIdList.size() > 0">
+               and e.groupId in
+               <foreach item="item" index="index" collection="groupIdList"
+                        open="(" separator="," close=")">
+                   #{item}
+               </foreach>
+           </if>
+    </select>
+
+
+    <select id="getAlarmEvaluationForCompany" parameterType="map" resultType="map">
+        select count(1) num,a.createdon,a.COMPANYID, sum(TOTALMILEAGE) TOTALMILEAGE,sum(a.alarm_num) alarm_num,sum(a.alarm_num_l2) alarm_num_l2,sum(ALARM_501_NO) ALARM_501_NO,sum(ALARM_502_NO) ALARM_502_NO
+        ,sum(ALARM_503_NO) ALARM_503_NO,sum(ALARM_504_NO) ALARM_504_NO,sum(ALARM_505_NO) ALARM_505_NO,sum(ALARM_506_NO) ALARM_506_NO,
+        sum(ALARM_507_NO) ALARM_507_NO,sum(ALARM_508_NO) ALARM_508_NO,sum(ALARM_509_NO) ALARM_509_NO,sum(ALARM_501_NO_L2) ALARM_501_NO_L2,
+        sum(ALARM_502_NO_L2) ALARM_502_NO_L2,sum(ALARM_503_NO_L2) ALARM_503_NO_L2,sum(ALARM_504_NO_L2) ALARM_504_NO_L2,sum(ALARM_505_NO_L2) ALARM_505_NO_L2,
+        sum(ALARM_506_NO_L2) ALARM_506_NO_L2,sum(ALARM_507_NO_L2) ALARM_507_NO_L2,sum(ALARM_508_NO_L2) ALARM_508_NO_L2,sum(ALARM_509_NO_L2) ALARM_509_NO_L2
+        from t_driver_alarm_evalution a left join t_car b on a.keyid = b.key_id left join t_cargroup_car c on b.car_id = c.carid
+        where a.COMPANYID = #{companyId}
+        <if test="time!=null and time !=''">
+            and a.createdon = #{time}
+        </if>
+        <if test="keyIdList!= null and keyIdList.size() > 0">
+            and a.keyid in
+            <foreach item="item" index="index" collection="keyIdList"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="groupIdList!= null and groupIdList.size() > 0">
+            and e.groupId in
+            <foreach item="item" index="index" collection="groupIdList"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="groupId!=null and groupId !=''">
+            and e.groupId = #{groupId}
+        </if>
+        group by a.companyid,a.createdon
+    </select>
+
+    <insert id="saveAlarmLog" parameterType="map">
+        insert into lbsbus.t_msg_alarm_log(ID,USERID,USERNAME,IP,CARNO,ALARMTYPE,LOGCONTENT,STARTTIME,ENDTIME,CREATETIME
+        ) values (#{id},#{userId},#{userName},#{customIP},
+        <choose>
+            <when test="carNo != null and carNo != ''">
+                #{carNo},
+            </when>
+            <otherwise>
+                '',
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="alarmType != null and alarmType != ''">
+                #{alarmType},
+            </when>
+            <otherwise>
+                '',
+            </otherwise>
+        </choose>
+        #{logContent},
+        <choose>
+            <when test="startTime != null and startTime != ''">
+                #{startTime},
+            </when>
+            <otherwise>
+                '',
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="endTime != null and endTime != ''">
+                #{endTime},
+            </when>
+            <otherwise>
+               '',
+            </otherwise>
+        </choose>
+       to_date(#{date},'yyyy-MM-dd hh24:mi:ss'))
+    </insert>
+
+    <select id="searchAlarmLog" parameterType="map" resultType="map">
+        select USERNAME,to_char(createTime,'yyyy-MM-dd hh24:mi:ss') createTime,starttime,endtime,LOGCONTENT,IP from lbsbus.t_msg_alarm_log where 1=1
+        <if test="userName != null and userName != ''">
+            <bind name="userName2" value="'%'+userName+'%'"/>
+            and userName like #{userName2}
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and <![CDATA[to_date(#{startTime}, 'yyyy-MM-dd hh24:mi:ss') <= createTime]]>
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and to_date(#{endTime}, 'yyyy-MM-dd hh24:mi:ss') >=  createTime
+        </if>
+        order by createTime desc
+    </select>
+
+
+
+
+    <select id="getAlarmTreatInfoById" parameterType="map" resultType="map">
+    select  a.CAR_ID,a.CAR_NO,f.d_name car_driver_name,a.KEY_ID,a.PLATECOLOR,d.GROUPNAME,b.ALARM_TYPE,b.ALARM_DESC,b.alarm_Level,to_char(b.alarm_date,'yyyy-MM-dd hh24:mi:ss') ALARMDATE,
+    round((b.ALARM_ENDDATE-b.ALARM_DATE)*24*60*60) DURATION_SECEND,b.ALARM_SPEED,b.alarminfo_latitude,b.alarminfo_longitude,to_char(b.ALARM_ENDDATE,'yyyy-MM-dd hh24:mi:ss') ALARM_ENDDATE
+    ,to_char(g.ALARM_TREATTIME,'yyyy-MM-dd hh24:mi:ss') ALARM_TREATTIME,g.ALARM_TREAT,g.TREAT_PERSON,b.alarmno id,g.ALARM_TREATCONTENT from lbs.t_msg_alarminfo b LEFT JOIN LBSBUS.T_CAR a on b.keyid = a.key_id LEFT JOIN T_CARGROUP_CAR c on a.CAR_ID = c.CARID
+    LEFT JOIN  T_CARGROUP d on c.GROUPID = d.GROUPID LEFT JOIN t_sys_group_user e  on d.GROUPID = e.GROUPID   LEFT JOIN lbsbus.t_driver f on a.car_driver_name = f.d_id LEFT JOIN lbsbus.t_alarminfo_treat g
+    on b.alarmno = g.alarmno where 1=1  and e.USERID =#{userId} and g.alarmno = #{alarmNo}
+        <if test="alarmTypeList!= null and alarmTypeList.size() > 0">
+            and b.alarm_type in
+            <foreach item="item" index="index" collection="alarmTypeList"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="getSuperGroupName" parameterType="map" resultType="string">
+        select b.groupname from (select  groupid, pid, companyid, groupname,grouplevel from t_cargroup a  where a.companyid = #{companyId}
+        connect by prior  a.pid =a.groupid start with a.groupid = #{groupId}) b where b.pid is null
+    </select>
+
+    <update id="alarmInfoAddAlarmNO" parameterType="map" flushCache="true">
+        update lbs.t_msg_alarminfo set alarmNo = #{alarmNo} where keyid = #{keyId} and ALARM_TYPE = #{alarmType} and to_char(ALARM_DATE, 'yyyy-MM-dd hh24:mi:ss') = #{alarmDate}
+    </update>
+
+    <update id="alarmTreatAddAlarmNO" parameterType="map" flushCache="true">
+          update lbsbus.t_alarminfo_treat set alarmNo = #{alarmNo} where keyid = #{keyId} and ALARM_TYPE = #{alarmType} and to_char(ALARM_DATE, 'yyyy-MM-dd hh24:mi:ss') = #{alarmDate}
+    </update>
+
+    <select id="getMediaJSONForType" parameterType="map" resultType="map">
+        select * from lbsbus.adas_alarmfile where alarmNo = #{alarmNo} and fileType =#{fileType}
+    </select>
+</mapper>

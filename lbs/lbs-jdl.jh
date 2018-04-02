@@ -1,0 +1,68 @@
+/**
+ * The t_sys_user entity.
+ */
+entity SysUser (t_sys_user) {
+companyId String maxlength(40),
+userName String	maxlength(100),
+userPwd String	maxlength(100),
+userDesc String	maxlength(200),
+lastlogindate LocalDate,
+createdby String maxlength(40),
+createdon LocalDate,
+modifedby String maxlength(40),
+modifedon LocalDate,
+modifiedby String maxlength(40),
+modifiedon LocalDate,
+userphone String maxlength(40),
+email String maxlength(100),
+lastlogingroup String maxlength(50),
+groupid String	maxlength(40),
+realname String	maxlength(150),
+status	Integer,
+userCarid String maxlength(40),
+headicon String	maxlength(200),
+positions String maxlength(10),
+departmentauthor String	maxlength(10),
+userSex	String maxlength(10),
+lejiaNum String	maxlength(100),
+hasupdated Integer,
+userSort Integer
+}
+
+/**
+ * The t_sys_role entity.
+ */
+entity SysRole (t_sys_role) {
+roleName String maxlength(100),
+rolePid String maxlength(40),
+companyId String maxlength(40),
+roleDesc String maxlength(200),
+issys Integer,
+roleCode Integer,
+roleDeep String maxlength(20)
+}
+
+/**
+ * The t_sys_privilege entity.
+ */
+entity SysPrivilege (t_sys_privilege) {
+privilegePid String maxlength(40),
+privilegeName String maxlength(200),
+companyid String maxlength(40),
+priviligeDesc String maxlength(200),
+isflag Integer
+}
+
+
+
+// Set pagination options
+//paginate JobHistory, Employee with infinite-scroll
+paginate SysRole with pagination
+paginate SysPrivilege with pagination
+paginate SysUser with pagination
+//dto * with mapstruct
+
+// Set service options to all except few
+//service all with serviceImpl except Employee, Job
+// Set an angular suffix
+//angularSuffix * with mySuffix

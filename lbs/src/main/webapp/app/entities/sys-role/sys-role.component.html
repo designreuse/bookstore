@@ -1,0 +1,83 @@
+<div>
+    <h2>
+        <span jhiTranslate="lbsApp.sysRole.home.title">Sys Roles</span>
+        <button class="btn btn-primary float-right jh-create-entity create-sys-role" [routerLink]="['/', { outlets: { popup: ['sys-role-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="lbsApp.sysRole.home.createLabel">
+            Create new Sys Role
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="sysRoles">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="roleName"><span jhiTranslate="lbsApp.sysRole.roleName">Role Name</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="rolePid"><span jhiTranslate="lbsApp.sysRole.rolePid">Role Pid</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="companyId"><span jhiTranslate="lbsApp.sysRole.companyId">Company Id</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="roleDesc"><span jhiTranslate="lbsApp.sysRole.roleDesc">Role Desc</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="issys"><span jhiTranslate="lbsApp.sysRole.issys">Issys</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="roleCode"><span jhiTranslate="lbsApp.sysRole.roleCode">Role Code</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="roleDeep"><span jhiTranslate="lbsApp.sysRole.roleDeep">Role Deep</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let sysRole of sysRoles ;trackBy: trackId">
+                <td><a [routerLink]="['../sys-role', sysRole.id ]">{{sysRole.id}}</a></td>
+                <td>{{sysRole.roleName}}</td>
+                <td>{{sysRole.rolePid}}</td>
+                <td>{{sysRole.companyId}}</td>
+                <td>{{sysRole.roleDesc}}</td>
+                <td>{{sysRole.issys}}</td>
+                <td>{{sysRole.roleCode}}</td>
+                <td>{{sysRole.roleDeep}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../sys-role', sysRole.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'sys-role/'+ sysRole.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'sys-role-privilege/'+ sysRole.id + '/editPrivilege'} }]"
+                                replaceUrl="true"
+                                class="btn btn-success btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="hidden-md-down" >权限</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'sys-role/'+ sysRole.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+        <div *ngIf="sysRoles && sysRoles.length">
+            <div class="row justify-content-center">
+                <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+            </div>
+            <div class="row justify-content-center">
+                <ngb-pagination [collectionSize]="totalItems" [(page)]="page" (pageChange)="loadPage(page)"></ngb-pagination>
+            </div>
+        </div>
+</div>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jshx.lbs.service.mapper.SysPrivilegeMapper">
+
+    <select id="getPrivilegeInfo"  resultType="map">
+        select * from t_sys_privilege t
+    </select>
+
+    <insert id="savePrivilege"  parameterType="map" >
+    insert into t_sys_privilege (PRIVILEGE_ID, PRIVILEGE_PID, PRIVILEGE_NAME, COMPANYID, PRIVILIGE_DESC, ISFLAG)
+    values (#{privilege_id}, #{privilege_pid}, #{privilege_name}, '51A62DEF-3903-4e76-8D54-7E093917D0A2', #{privilige_desc}, 0)
+    </insert>
+
+    <delete id="delPrivilegeInfo"  parameterType="String" >
+        delete from t_sys_privilege t where t.privilege_id =#{privilege_id}
+    </delete>
+
+    <update id="updPrivilegeInfo" parameterType="map" >
+        update t_sys_privilege t
+        set t.privilege_name= #{privilege_name},t.privilige_desc = #{privilige_desc}
+        where t.privilege_id =#{privilege_id}
+    </update>
+
+</mapper>

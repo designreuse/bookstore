@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jshx.lbs.service.mapper.SysDriverMapper">
+
+    <select id="getDriverInfo" parameterType="String" resultType="map">
+        select * from t_driver t where t.d_companyid = #{companyid}
+    </select>
+
+    <select id="queryDriver" parameterType="String" resultType="map">
+        select * from t_driver t where t.d_companyid = #{companyid}
+        <if test="d_name != null and d_name!=''">
+            <bind name="d_name2" value="'%'+d_name+'%'"/>
+            and t.d_name like #{d_name2}
+        </if>
+    </select>
+
+    <select id="queryRepeatDriverInfo" parameterType="String" resultType="map">
+        select * from t_driver t where t.d_companyid = #{companyid}
+        and t.d_name = #{d_name}
+    </select>
+
+    <select id="queryRepeatDriverIC" parameterType="String" resultType="map">
+        select * from t_driver t where  t.d_icnumber = #{d_icnumber}
+    </select>
+
+    <select id="queryRepeatUpdDriverInfo" parameterType="String" resultType="map">
+        select * from t_driver t where t.d_companyid = #{companyid}
+        and t.d_name = #{d_name} and t.d_id!=#{d_id}
+    </select>
+
+    <select id="queryRepeatUpdDriverIC" parameterType="String" resultType="map">
+        select * from t_driver t where  t.d_icnumber = #{d_icnumber}  and t.d_id!=#{d_id}
+    </select>
+
+
+    <insert id="saveDriver"  parameterType="map" >
+        insert into t_driver (D_ID, D_DAGE, D_LICENSE, D_NAME, D_MOBILE, D_COMPANYID, D_ICNUMBER, D_SCORES, D_TELEPHONE, D_NUMBER, D_LICENCEDATE, D_BIRTHDATE, D_USER, D_LINCEID, D_GROUPID, D_SEX, D_LICENSEID, D_BLOOD, D_PIC, D_IDENTITYCARD, D_QUALIFICATION, D_QUALIFICATION_ORG, ISDELETED, DRIVER_PIC, D_LICENCE_PIC, DRIVER_PIC_BLO, D_LICENCE_PIC_BLO)
+        values(#{d_id}, #{d_dage}, #{d_license}, #{d_name}, #{d_mobile}, #{companyid}, #{d_icnumber}, null, #{d_tel}, '', #{d_licensedate}, #{d_birthdate}, '', '', #{d_group}, #{d_sex}, #{d_licenseid}, '', #{d_pic}, '', '', '', 0, '', '', #{d_driver_pic}, #{d_license_pic})
+    </insert>
+
+    <update id="updDriverCar" parameterType="String" >
+        update t_car t
+        set t.car_driver_name=''
+        where t.car_driver_name=#{d_id}
+    </update>
+
+    <delete id="delDriverInfo"  parameterType="String" >
+        delete from t_driver t where t.d_id =#{d_id}
+    </delete>
+
+    <update id="updDriverInfo" parameterType="map" >
+        update t_driver t
+        set t.d_name = #{d_name},t.d_dage = #{d_dage},
+        <choose>
+            <when test="d_license == null">
+                t.d_license = '',
+            </when>
+            <otherwise>
+                t.d_license = #{d_license},
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="d_mobile == null">
+                t.d_mobile = '',
+            </when>
+            <otherwise>
+                t.d_mobile = #{d_mobile},
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="d_icnumber == null">
+                t.d_icnumber = '',
+            </when>
+            <otherwise>
+                t.d_icnumber = #{d_icnumber},
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="d_tel == null">
+                t.d_telephone = '',
+            </when>
+            <otherwise>
+                t.d_telephone = #{d_tel},
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="d_licensedate == null">
+                t.d_licencedate = '',
+            </when>
+            <otherwise>
+                t.d_licencedate = #{d_licensedate},
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="d_birthdate == null">
+                t.d_birthdate = '',
+            </when>
+            <otherwise>
+                t.d_birthdate = #{d_birthdate},
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="d_group == null">
+                t.d_groupid = '',
+            </when>
+            <otherwise>
+                t.d_groupid = #{d_group},
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="d_sex == null">
+                t.d_sex = '',
+            </when>
+            <otherwise>
+                t.d_sex = #{d_sex},
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="d_licenseid == null">
+                t.d_licenseid = '',
+            </when>
+            <otherwise>
+                t.d_licenseid = #{d_licenseid},
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="d_pic == null">
+                t.d_pic = '',
+            </when>
+            <otherwise>
+                t.d_pic = #{d_pic},
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="d_driver_pic == null">
+                t.driver_pic_blo = '',
+            </when>
+            <otherwise>
+                t.driver_pic_blo = #{d_driver_pic},
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="d_license_pic == null">
+                t.d_licence_pic = '',
+            </when>
+            <otherwise>
+                t.d_licence_pic = #{d_license_pic},
+            </otherwise>
+        </choose>
+        where t.d_id =#{d_id}
+    </update>
+
+</mapper>

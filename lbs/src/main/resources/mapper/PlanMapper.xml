@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jshx.lbs.service.mapper.PlanMapper">
+    <insert id="savePlan" parameterType="map">
+        insert into T_MSG_SUBMIT_PLAN(id,PLAN_NAME,PLAN_TIME,COMMAND_PARA,COMMAND_ID,CREATEDON,CREATEDBY)values(
+        #{id},#{planName},#{planTime},
+            <choose>
+                <when test="commandPara == null">
+                    '',
+                </when>
+                <otherwise>
+                    #{commandPara},
+                </otherwise>
+            </choose>
+            #{commandId},#{createdon},#{userId})
+    </insert>
+
+
+    <select id="searchPlan" parameterType="map" resultType="map">
+        select a.ID,a.PLAN_NAME,a.COMMAND_ID,a.COMMAND_PARA, to_char(a.PLAN_TIME, 'yyyy-MM-dd hh24:mi:ss') PLAN_TIME,to_char(a.CREATEDON, 'yyyy-MM-dd hh24:mi:ss') CREATEDON,
+        to_char(a.MODIFIEDON, 'yyyy-MM-dd hh24:mi:ss') MODIFIEDON,
+        b.user_name createdby,c.user_name modifiedby from
+        T_MSG_SUBMIT_PLAN a left join t_sys_user b on a.createdby = b.user_id left join t_sys_user c on a.modifiedby = c.user_id    where 1=1 and DELFLAG != -1
+        <if test="planId != null and planId!=''">
+                and id = #{planId}
+        </if>
+        <if test="planName != null and planName!=''">
+            <bind name="planName2" value="'%'+planName+'%'"/>
+            and PLAN_NAME like #{planName2}
+        </if>
+        <if test="startTime != null and startTime!=''">
+            <![CDATA[ and to_Date( #{startTime},'yyyy-MM-dd hh24:mi:ss')<=PLAN_TIME]]>
+        </if>
+        <if test="endTime != null and endTime!=''">
+            and to_Date( #{endTime},'yyyy-MM-dd hh24:mi:ss')>=PLAN_TIME
+        </if>
+        order by PLAN_TIME desc
+    </select>
+
+    <update id="delPlan" parameterType="String">
+        update   T_MSG_SUBMIT_PLAN  set DELFLAG = -1 where id = #{id}
+    </update>
+
+    <update id="updatePlan" parameterType="map">
+        update   T_MSG_SUBMIT_PLAN set PLAN_NAME = #{planName},PLAN_TIME = #{planTime},
+        <choose>
+            <when test="commandPara == null">
+                COMMAND_PARA= '',
+            </when>
+            <otherwise>
+                COMMAND_PARA= #{commandPara},
+            </otherwise>
+        </choose>
+         COMMAND_ID = #{commandId},MODIFIEDON = #{modifiedon},MODIFIEDBY =#{userId}  where id = #{id}
+    </update>
+
+
+    <select  id="getPlanInfoList" parameterType="string" resultType="map">
+        select  a.keyid,d.car_no||'('||e.description||')' carNo_and_color,f.description companyName,h.DEVICE_ID,h.PRODUCT_TYPE,to_char(c.VERSION_TIME,'yyyy-MM-dd hh24:mi:ss') VERSION_TIME,h.SOFT_VESION from T_Msg_Submit_Interval a   left join  lbs.t_pmt_register_term b on a.keyid = b.keyid  left join lbs.t_msg_device_config c on a.keyid = c.keyid  left join lbsbus.t_car d
+         on a.keyid = d.key_id left join  dictionary e on d.platecolor = e.dictvalue left join  dictionary f on b.TERMCOMPANY = f.shortdesc left join lbs.T_MSG_OUT_DEVICE h on a.keyid = h.keyid where 1=1 and e.dictid='AP' and f.dictid='A7' and pid = #{pid}
+    </select>
+</mapper>

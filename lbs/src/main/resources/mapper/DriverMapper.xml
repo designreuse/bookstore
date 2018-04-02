@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jshx.lbs.service.mapper.DriverMapper">
+
+    <select id="getDriverComparaInfo" parameterType="map"  resultType="map">
+         select id,drivername,ic_card,photosteam,photo_compare_steam,deal_result,to_char(deal_time,'yyyy-MM-dd hh24:mi:ss') deal_time,deal_user,deal_content,compare_result,to_char(COMPARE_TIME,'yyyy-MM-dd hh24:mi:ss') COMPARE_TIME from t_driver_exception_deal where compare_result=0
+        <choose>
+        <when test="dealResult == -1">
+            and 1=1
+        </when>
+        <when test="dealResult == 0">
+            and deal_result = -1
+        </when>
+        <when test="dealResult == 1">
+            and deal_result in (0,1)
+        </when>
+        <otherwise>
+            and 1=1
+        </otherwise>
+        </choose>
+        <if test="startTime != null and startTime != ''">
+            and COMPARE_TIME>=to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss')
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and  <![CDATA[COMPARE_TIME<=to_date(#{endTime},'yyyy-MM-dd hh24:mi:ss')]]>
+        </if>
+    </select>
+
+
+    <select id="getDriverComparaInfoById" parameterType="map"  resultType="map">
+        select id,
+               drivername,
+               ic_card,
+               photosteam,
+               photo_compare_steam,
+               deal_result,
+               to_char(deal_time, 'yyyy-MM-dd hh24:mi:ss') deal_time,
+               deal_user,
+               deal_content,
+               compare_result,
+               to_char(compare_time, 'yyyy-MM-dd hh24:mi:ss') compare_time
+          from t_driver_exception_deal
+         where 1 = 1
+           and id = #{id}
+    </select>
+
+    <update id="dealDriverCompara" parameterType="map">
+        UPDATE t_driver_exception_deal
+        <set>
+            <if test="dealUser!=null">
+                deal_user = #{dealUser},
+            </if>
+            <if test="dealTime!=null">
+                deal_time = to_date(#{dealTime},'yyyy-MM-dd hh24:mi:ss'),
+            </if>
+            <if test="dealResult!=null">
+                deal_result = #{dealResult},
+            </if>
+            <if test="dealContent!=null">
+                deal_content = #{dealContent},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

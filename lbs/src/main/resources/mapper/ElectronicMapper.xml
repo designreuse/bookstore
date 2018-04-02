@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jshx.lbs.service.mapper.ElectronicMapper">
+
+    <select id="getElectronicInfo" parameterType="String" resultType="map">
+        select * from t_electronicfences t where t.c_companyid=#{companyid}
+    </select>
+
+    <insert id="saveElectronic"  parameterType="map" >
+        insert into t_electronicfences (E_ID, E_NAME, C_COMPANYID, E_STARTIME, E_ENDTIME, E_ALARMTYPE, E_FLAG, E_TYPE, DICTVALUE_ID, SERVICE_NAME, TIME_SPAN, CHANNEL_ID, PHOTO_NUM, SPEEDLIMIT, AREATYPE, E_WIDTH, E_ON, CHANNEL_IDS, IMGTYPE, IMGSIZE, ISDISP, SPEESPAN, REC_CHANNEL_ID, EF_ID, OVER_SPEED_TIME, SPEED_ON, IN_ALARM_DRIVER, IN_ALARM_PLATFORM, OUT_ALARM_DRIVER, OUT_ALARM_PLATFORM, LATITUDE_TYPE, LONGITUDE_TYPE, EF_START, EF_END, E_SEND, E_SENDDESC, E_CODE, CREATETIME, CREATEDBY, UPDATETIME, UPDATEBY, AREA_ALARMTYPE)
+        values (#{efId}, #{efName}, #{companyid}, #{efStartTime}, #{efEndTime}, 'A3', 0, 'lbstype00', #{alarmType}, '', #{timeSpan}, null, null, #{speedlimit}, #{areatype}, #{ewidth}, #{eon}, '', '', '', #{isdisp}, '', '', null, null, null, null, null, null, null, null, null, null, null, null, '', '', null, '', null, '', null)
+
+    </insert>
+
+    <delete id="delElectronicInfo"  parameterType="String" >
+        delete  from t_electronicfences t where t.e_id =#{ef_id}
+    </delete>
+
+    <update id="updElectronicInfo"  parameterType="map" >
+        update   t_electronicfences t set t.e_name = #{efName},t.e_startime = #{efStartTime},t.e_endtime = #{efEndTime},t.dictvalue_id = #{alarmType},
+        <choose>
+            <when test="timeSpan == null">
+                t.time_span = '',
+            </when>
+            <otherwise>
+                t.time_span = #{timeSpan},
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="speedlimit == null">
+                t.speedlimit = '',
+            </when>
+            <otherwise>
+                t.speedlimit = #{speedlimit},
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="ewidth == null">
+                t.e_width = '',
+            </when>
+            <otherwise>
+                t.e_width = #{ewidth},
+            </otherwise>
+        </choose>
+
+
+        <choose>
+            <when test="areaoutalarmToP == null">
+                t.out_alarm_platform = '',
+            </when>
+            <otherwise>
+                t.out_alarm_platform = #{areaoutalarmToP},
+            </otherwise>
+        </choose>
+
+        <choose>
+            <when test="areaoutalarmToD == null">
+                t.out_alarm_driver = '',
+            </when>
+            <otherwise>
+                t.out_alarm_driver = #{areaoutalarmToD},
+            </otherwise>
+        </choose>
+
+        <choose>
+        <when test="areainalarmToP == null">
+            t.in_alarm_platform = '',
+        </when>
+        <otherwise>
+            t.in_alarm_platform = #{areainalarmToP},
+        </otherwise>
+    </choose>
+
+        <choose>
+            <when test="areainalarmToD == null">
+                t.in_alarm_driver = '',
+            </when>
+            <otherwise>
+                t.in_alarm_driver = #{areainalarmToD},
+            </otherwise>
+        </choose>
+
+        <choose>
+            <when test="areasetSpeed == null">
+                t.speed_on = '',
+            </when>
+            <otherwise>
+                t.speed_on = #{areasetSpeed},
+            </otherwise>
+        </choose>
+
+        <choose>
+            <when test="AreaId == null">
+                t.ef_id = '',
+            </when>
+            <otherwise>
+                t.ef_id = #{AreaId},
+            </otherwise>
+        </choose>
+
+        <choose>
+            <when test="arealonSet == null">
+                t.longitude_type = '',
+            </when>
+            <otherwise>
+                t.longitude_type = #{arealonSet},
+            </otherwise>
+        </choose>
+
+        <choose>
+            <when test="arealatSet == null">
+                t.latitude_type = '',
+            </when>
+            <otherwise>
+                t.latitude_type = #{arealatSet},
+            </otherwise>
+        </choose>
+
+        <choose>
+            <when test="areaStartTime == null">
+                t.ef_start = '',
+            </when>
+            <otherwise>
+                t.ef_start = #{areaStartTime},
+            </otherwise>
+        </choose>
+
+        <choose>
+            <when test="areaEndTime == null">
+                t.ef_end = '',
+            </when>
+            <otherwise>
+                t.ef_end = #{areaEndTime},
+            </otherwise>
+        </choose>
+
+        <choose>
+            <when test="speedOn == null">
+                t.speedlimit = '',
+            </when>
+            <otherwise>
+                t.speedlimit = #{speedOn},
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="overTime == null">
+                t.over_speed_time = '',
+            </when>
+            <otherwise>
+                t.over_speed_time = #{overTime},
+            </otherwise>
+        </choose>
+
+        t.areatype = #{areatype},t.e_on = #{eon},t.isdisp = #{isdisp}  where t.e_id  = #{ef_id}
+    </update>
+
+    <select id="getElectCar" parameterType="String" resultType="map">
+        select * from t_cargroup_ef t where t.eid = #{ef_id}
+    </select>
+
+    <delete id="delElectCar" parameterType="String" >
+        delete from t_cargroup_ef t where t.eid = #{ef_id}
+    </delete>
+
+    <insert id="setElectCar"  parameterType="map" >
+        insert into t_cargroup_ef (CARID, EID)
+        values (#{carId}, #{ef_id})
+    </insert>
+
+</mapper>
